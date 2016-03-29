@@ -42,7 +42,7 @@ public class WelcomeScreen extends AbstractScreen implements View.OnClickListene
         mCenterText.setCompoundDrawables(null, drawable, null, null);
         mCenterText.setCompoundDrawablePadding(edge / 3);
         mCenterText.setText(getResources().getString(R.string.slogen));
-        mCenterText.setTextColor(getResources().getColor(R.color.default_black));
+        mCenterText.setTextColor(getResources().getColor(R.color.c2));
         mCenterText.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.common_text_size_20));
         mCenterText.setTypeface(FontManager.getInstance().getDefaultTypeface());
 
@@ -75,7 +75,7 @@ public class WelcomeScreen extends AbstractScreen implements View.OnClickListene
         textView.setText(text);
         textView.setGravity(Gravity.CENTER);
         textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.common_text_size_22));
-        textView.setTextColor(getResources().getColor(R.color.light_main_color));
+        textView.setTextColor(getResources().getColor(R.color.c1));
         textView.setTypeface(FontManager.getInstance().getDefaultTypeface());
 
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
@@ -89,7 +89,7 @@ public class WelcomeScreen extends AbstractScreen implements View.OnClickListene
     @Override
     public void onClick(View view) {
         if(view == mRegisterButton) {
-            Toast.makeText(getContext(), "点击注册", Toast.LENGTH_SHORT).show();
+            mCallBacks.handleAction(ActionId.OnLoginClick, null, null);
         } if (view == mLoginButton) {
             mCallBacks.handleAction(ActionId.OnLoginClick, null, null);
         }

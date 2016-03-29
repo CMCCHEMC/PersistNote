@@ -23,7 +23,7 @@ public class RootScreen extends DefaultScreen {
     public RootScreen(Context context, UICallBacks callBacks) {
         super(context, callBacks);
         init();
-        setBackgroundColor(ResTools.getColor(R.color.default_grey));
+        setBackgroundColor(ResTools.getColor(R.color.c7));
         setTitle(ResTools.getString(R.string.app_name));
     }
 

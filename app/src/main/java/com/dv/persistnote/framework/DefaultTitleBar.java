@@ -33,13 +33,13 @@ public class DefaultTitleBar extends RelativeLayout implements View.OnClickListe
         addView(mBackButton, lp);
 
         mTitleText = new TextView(getContext());
-        mTitleText.setTextColor(ResTools.getColor(R.color.default_black));
+        mTitleText.setTextColor(ResTools.getColor(R.color.c2));
         mTitleText.setTextSize(TypedValue.COMPLEX_UNIT_PX, ResTools.getDimenInt(R.dimen.title_bar_text));
         lp = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         lp.addRule(CENTER_IN_PARENT);
         addView(mTitleText, lp);
 
-        setBackgroundColor(ResTools.getColor(R.color.default_white));
+        setBackgroundColor(ResTools.getColor(R.color.c4));
         int padding = ResTools.getDimenInt(R.dimen.common_margin_16);
         setPadding(padding, 0, padding, 0);
     }

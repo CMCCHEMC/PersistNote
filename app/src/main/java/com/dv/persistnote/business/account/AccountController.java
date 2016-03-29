@@ -3,6 +3,8 @@ package com.dv.persistnote.business.account;
 import android.os.Message;
 import android.view.KeyEvent;
 
+import com.dv.persistnote.business.LoginScreen;
+import com.dv.persistnote.business.SignUpHomeScreen;
 import com.dv.persistnote.framework.ActionId;
 import com.dv.persistnote.business.WelcomeScreen;
 import com.dv.persistnote.framework.ui.AbstractScreen;
@@ -16,6 +18,10 @@ import com.dv.persistnote.framework.core.MsgDef;
 public class AccountController extends AbstractController{
 
     private WelcomeScreen mWelcomeScreen;
+
+    private LoginScreen mLoginScreen;
+
+    private SignUpHomeScreen mSignUpHomeScreen;
 
     public AccountController(BaseEnv baseEnv) {
         super(baseEnv);
@@ -47,7 +53,13 @@ public class AccountController extends AbstractController{
     public boolean handleAction(int actionId, Object arg, Object result) {
         switch (actionId) {
             case ActionId.OnLoginClick:
-                mWindowMgr.popScreen(true);
+                //mWindowMgr.popScreen(true);
+                mLoginScreen = new LoginScreen(mContext, this);
+                mWindowMgr.pushScreen(mLoginScreen, false);
+                break;
+            case ActionId.OnSignUpClick:
+                mSignUpHomeScreen = new SignUpHomeScreen(mContext, this);
+                mWindowMgr.pushScreen(mSignUpHomeScreen, false);
                 break;
         }
         return false;
