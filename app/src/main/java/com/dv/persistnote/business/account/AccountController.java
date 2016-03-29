@@ -4,7 +4,7 @@ import android.os.Message;
 import android.view.KeyEvent;
 
 import com.dv.persistnote.business.LoginScreen;
-import com.dv.persistnote.business.SignUpHomeScreen;
+import com.dv.persistnote.business.RegisterHomeScreen;
 import com.dv.persistnote.framework.ActionId;
 import com.dv.persistnote.business.WelcomeScreen;
 import com.dv.persistnote.framework.ui.AbstractScreen;
@@ -21,7 +21,7 @@ public class AccountController extends AbstractController{
 
     private LoginScreen mLoginScreen;
 
-    private SignUpHomeScreen mSignUpHomeScreen;
+    private RegisterHomeScreen mRegisterHomeScreen;
 
     public AccountController(BaseEnv baseEnv) {
         super(baseEnv);
@@ -57,9 +57,9 @@ public class AccountController extends AbstractController{
                 mLoginScreen = new LoginScreen(mContext, this);
                 mWindowMgr.pushScreen(mLoginScreen, false);
                 break;
-            case ActionId.OnSignUpClick:
-                mSignUpHomeScreen = new SignUpHomeScreen(mContext, this);
-                mWindowMgr.pushScreen(mSignUpHomeScreen, false);
+            case ActionId.OnRegisterClick:
+                mRegisterHomeScreen = new RegisterHomeScreen(mContext, this);
+                mWindowMgr.pushScreen(mRegisterHomeScreen, false);
                 break;
         }
         return false;

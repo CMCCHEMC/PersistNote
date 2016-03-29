@@ -6,5 +6,5 @@ package com.dv.persistnote.framework;
 public class ActionId {
 
     public static final int OnLoginClick = 101;
-    public static final int OnSignUpClick = 102;
+    public static final int OnRegisterClick = 102;
 }

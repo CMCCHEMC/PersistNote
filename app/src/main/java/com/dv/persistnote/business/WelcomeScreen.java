@@ -89,7 +89,7 @@ public class WelcomeScreen extends AbstractScreen implements View.OnClickListene
     @Override
     public void onClick(View view) {
         if(view == mRegisterButton) {
-            mCallBacks.handleAction(ActionId.OnLoginClick, null, null);
+            mCallBacks.handleAction(ActionId.OnRegisterClick, null, null);
         } if (view == mLoginButton) {
             mCallBacks.handleAction(ActionId.OnLoginClick, null, null);
         }

@@ -11,9 +11,9 @@ import com.dv.persistnote.framework.ui.UICallBacks;
 /**
  * Created by Admin2 on 2016/3/29.
  */
-public class SignUpHomeScreen extends DefaultScreen implements View.OnClickListener {
+public class RegisterHomeScreen extends DefaultScreen implements View.OnClickListener {
 
-    public SignUpHomeScreen(Context context, UICallBacks callBacks) {
+    public RegisterHomeScreen(Context context, UICallBacks callBacks) {
         super(context, callBacks);
         init();
         setTitle(ResTools.getString(R.string.register));
