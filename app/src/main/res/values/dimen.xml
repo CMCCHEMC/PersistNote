@@ -9,26 +9,28 @@
     <dimen name="title_bar_text">18dp</dimen>
     <dimen name="common_icon_width">44dp</dimen>
 
-    <dimen name="common_text_size_11">11dp</dimen>
-    <dimen name="common_text_size_16">16dp</dimen>
-    <dimen name="common_text_size_20">20dp</dimen>
-    <dimen name="common_text_size_22">22dp</dimen>
-    <dimen name="common_text_size_24">24dp</dimen>
-    <dimen name="common_text_size_30">30dp</dimen>
+    <dimen name="h1">16dp</dimen>
+    <dimen name="h2">14dp</dimen>
+    <dimen name="h3">13dp</dimen>
+    <dimen name="h4">12dp</dimen>
+    <dimen name="h5">10dp</dimen>
 
-    <dimen name="common_margin_16">16dp</dimen>
+    <dimen name="common_margin">16dp</dimen>
+    <dimen name="common_margin_top">22dp</dimen>
 
     <dimen name="common_line_height">1dp</dimen>
-    <dimen name="common_line_margin_top">7dp</dimen>
 
     <!--具体业务标注-->
     <dimen name="habit_icon_width">40dp</dimen>
     <dimen name="habit_item_height">80dp</dimen>
     <dimen name="habit_item_margin_top">16dp</dimen>
 
-    <dimen name="login_et_margin_top">36dp</dimen>
-    <dimen name="login_et_margin_left">24dp</dimen>
-    <dimen name="login_et_margin_right">24dp</dimen>
+    <dimen name="login_rl_phone_number_margin_top">36dp</dimen>
+    <dimen name="login_rl_margin_left">24dp</dimen>
+    <dimen name="login_rl_margin_right">24dp</dimen>
+
+    <dimen name="login_et_padding_top">13dp</dimen>
+    <dimen name="login_et_padding_bottom">7dp</dimen>
 
 
 </resources>

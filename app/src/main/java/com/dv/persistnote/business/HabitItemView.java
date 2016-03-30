@@ -24,9 +24,6 @@ import retrofit.client.Response;
  */
 public class HabitItemView extends RelativeLayout implements View.OnClickListener{
 
-    private final static int ID_ICON = 101;
-    private final static int ID_TITLE = 102;
-
     private ImageView mIcon;
     private TextView mTitle;
     private TextView mSubTitle;
@@ -37,7 +34,7 @@ public class HabitItemView extends RelativeLayout implements View.OnClickListene
 
         LayoutParams lp = new LayoutParams(ResTools.getDimenInt(R.dimen.habit_icon_width), ResTools.getDimenInt(R.dimen.habit_icon_width));
         mIcon = new ImageView(getContext());
-        mIcon.setId(ID_ICON);
+        mIcon.setId(R.id.id_icon);
         lp.addRule(ALIGN_PARENT_LEFT);
         lp.addRule(CENTER_VERTICAL);
         lp.rightMargin = 10;
@@ -45,17 +42,17 @@ public class HabitItemView extends RelativeLayout implements View.OnClickListene
 
         lp = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         mTitle = new TextView(getContext());
-        mTitle.setId(ID_TITLE);
+        mTitle.setId(R.id.id_title);
         mTitle.setTextColor(ResTools.getColor(R.color.c2));
-        mTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX, ResTools.getDimenInt(R.dimen.common_text_size_16));
-        lp.addRule(RIGHT_OF, ID_ICON);
-        lp.topMargin = ResTools.getDimenInt(R.dimen.common_text_size_22);
+        mTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX, ResTools.getDimenInt(R.dimen.h1));
+        lp.addRule(RIGHT_OF, R.id.id_icon);
+        lp.topMargin = ResTools.getDimenInt(R.dimen.common_margin_top);
         addView(mTitle, lp);
 
         lp = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         mSubTitle = new TextView(getContext());
-        lp.addRule(RIGHT_OF, ID_ICON);
-        lp.addRule(BELOW, ID_TITLE);
+        lp.addRule(RIGHT_OF, R.id.id_icon);
+        lp.addRule(BELOW, R.id.id_title);
         addView(mSubTitle, lp);
 
         lp = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
@@ -65,7 +62,7 @@ public class HabitItemView extends RelativeLayout implements View.OnClickListene
         addView(mCheckIcon, lp);
 
         setBackgroundColor(ResTools.getColor(R.color.c4));
-        int padding = ResTools.getDimenInt(R.dimen.common_margin_16);
+        int padding = ResTools.getDimenInt(R.dimen.common_margin);
         setPadding(padding, 0, padding, 0);
 
         setOnClickListener(this);

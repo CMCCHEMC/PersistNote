@@ -2,15 +2,16 @@ package com.dv.persistnote.business;
 
 import android.content.Context;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.dv.persistnote.R;
 import com.dv.persistnote.base.ResTools;
 import com.dv.persistnote.framework.DefaultScreen;
-import com.dv.persistnote.framework.ui.CustomEditText;
 import com.dv.persistnote.framework.ui.UICallBacks;
 
 import java.lang.reflect.Field;
@@ -22,7 +23,17 @@ public class LoginScreen extends DefaultScreen implements View.OnClickListener {
 
     private LinearLayout mContainer;
 
+    private RelativeLayout containerPhoneNumber;
+
+    private RelativeLayout containerPassword;
+
     private EditText etPhoneNumber;
+
+    private EditText etPassword;
+
+    private View linePhoneNumber;
+
+    private View linePassword;
 
     public LoginScreen(Context context, UICallBacks callBacks) {
         super(context, callBacks);
@@ -32,19 +43,28 @@ public class LoginScreen extends DefaultScreen implements View.OnClickListener {
 
     private void init() {
         mContainer = new LinearLayout(getContext());
-        mContainer.setOrientation(LinearLayout.VERTICAL);
         setContent(mContainer);
 
         mContainer.removeAllViews();
 
+        containerPhoneNumber = new RelativeLayout(getContext());
+        LinearLayout.LayoutParams lp1 = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+        lp1.topMargin = ResTools.getDimenInt(R.dimen.login_rl_phone_number_margin_top);
+        lp1.leftMargin = ResTools.getDimenInt(R.dimen.login_rl_margin_left);
+        lp1.rightMargin = ResTools.getDimenInt(R.dimen.login_rl_margin_right);
+
         etPhoneNumber = new EditText(getContext());
+        etPhoneNumber.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.h1));
+        etPhoneNumber.setPadding(0, ResTools.getDimenInt(R.dimen.login_et_padding_top),
+                0, ResTools.getDimenInt(R.dimen.login_et_padding_bottom));
+        etPhoneNumber.setId(R.id.login_et_phone_number);
         etPhoneNumber.setBackgroundColor(ResTools.getColor(R.color.c4));
         etPhoneNumber.setHint(R.string.login_et_hint_phone_number);
         etPhoneNumber.setSingleLine(true);
         etPhoneNumber.setOnFocusChangeListener(new OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if(!hasFocus) {
+                if (!hasFocus) {
                     etPhoneNumber.setHint(R.string.login_et_hint_phone_number);
                 } else {
                     etPhoneNumber.setHint(null);
@@ -60,24 +80,23 @@ public class LoginScreen extends DefaultScreen implements View.OnClickListener {
             Log.e(TAG, "Login Init : color_cursor Error");
         }
 
-        LinearLayout.LayoutParams lp1 =
-                new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-        lp1.topMargin = ResTools.getDimenInt(R.dimen.login_et_margin_top);
-        lp1.leftMargin = ResTools.getDimenInt(R.dimen.login_et_margin_left);
-        lp1.rightMargin = ResTools.getDimenInt(R.dimen.login_et_margin_right);
+        RelativeLayout.LayoutParams lp2 =
+                new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 
-        mContainer.addView(etPhoneNumber, lp1);
+        containerPhoneNumber.addView(etPhoneNumber, lp2);
 
-        View line1 = new View(getContext());
-        line1.setBackgroundColor(ResTools.getColor(R.color.c1));
+        linePhoneNumber = new View(getContext());
+        linePhoneNumber.setId(R.id.login_line_phone_number);
+        linePhoneNumber.setBackgroundColor(ResTools.getColor(R.color.c1));
 
-        LinearLayout.LayoutParams lp2 =
-                new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, ResTools.getDimenInt(R.dimen.common_line_height));
-        lp2.topMargin = ResTools.getDimenInt(R.dimen.common_line_margin_top);
-        lp2.leftMargin = ResTools.getDimenInt(R.dimen.login_et_margin_left);
-        lp2.rightMargin = ResTools.getDimenInt(R.dimen.login_et_margin_right);
+        RelativeLayout.LayoutParams lp3 =
+                new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, ResTools.getDimenInt(R.dimen.common_line_height));
+        lp3.addRule(RelativeLayout.BELOW, R.id.login_et_phone_number);
 
-        mContainer.addView(line1, lp2);
+        containerPhoneNumber.addView(linePhoneNumber, lp3);
+
+        mContainer.addView(containerPhoneNumber, lp1);
+
 
     }
 

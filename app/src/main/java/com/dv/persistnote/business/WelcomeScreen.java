@@ -43,7 +43,7 @@ public class WelcomeScreen extends AbstractScreen implements View.OnClickListene
         mCenterText.setCompoundDrawablePadding(edge / 3);
         mCenterText.setText(getResources().getString(R.string.slogen));
         mCenterText.setTextColor(getResources().getColor(R.color.c2));
-        mCenterText.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.common_text_size_20));
+        mCenterText.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.h4));
         mCenterText.setTypeface(FontManager.getInstance().getDefaultTypeface());
 
         LayoutParams lp = new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
@@ -74,7 +74,7 @@ public class WelcomeScreen extends AbstractScreen implements View.OnClickListene
         TextView textView = new TextView(getContext());
         textView.setText(text);
         textView.setGravity(Gravity.CENTER);
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.common_text_size_22));
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.common_margin_top));
         textView.setTextColor(getResources().getColor(R.color.c1));
         textView.setTypeface(FontManager.getInstance().getDefaultTypeface());
 

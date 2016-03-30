@@ -40,7 +40,7 @@ public class DefaultTitleBar extends RelativeLayout implements View.OnClickListe
         addView(mTitleText, lp);
 
         setBackgroundColor(ResTools.getColor(R.color.c4));
-        int padding = ResTools.getDimenInt(R.dimen.common_margin_16);
+        int padding = ResTools.getDimenInt(R.dimen.common_margin);
         setPadding(padding, 0, padding, 0);
     }
 

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--LoginScreen-->
+    <item name="login_et_phone_number" type="id" />
+    <item name="login_line_phone_number" type="id" />
+
+    <!--HabitItemView-->
+    <item name="id_icon" type="id" />
+    <item name="id_title" type="id" />
+
+</resources>
