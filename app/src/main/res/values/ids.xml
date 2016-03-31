@@ -4,6 +4,12 @@
     <!--LoginScreen-->
     <item name="login_et_phone_number" type="id" />
     <item name="login_line_phone_number" type="id" />
+    <item name="login_et_password" type="id" />
+    <item name="login_line_password" type="id" />
+
+    <item name="login_rl_phone_number" type="id" />
+    <item name="login_rl_password" type="id" />
+    <item name="login_rl_button" type="id" />
 
     <!--HabitItemView-->
     <item name="id_icon" type="id" />
