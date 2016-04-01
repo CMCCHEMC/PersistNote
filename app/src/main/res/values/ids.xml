@@ -6,6 +6,10 @@
     <item name="login_line_phone_number" type="id" />
     <item name="login_et_password" type="id" />
     <item name="login_line_password" type="id" />
+    <item name="login_iv_password" type="id" />
+    <item name="login_iv_button" type="id" />
+    <item name="login_v_button" type="id" />
+
 
     <item name="login_rl_phone_number" type="id" />
     <item name="login_rl_password" type="id" />

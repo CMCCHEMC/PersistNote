@@ -1,6 +1,8 @@
 package com.dv.persistnote.business;
 
 import android.content.Context;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
@@ -41,6 +43,10 @@ public class LoginScreen extends DefaultScreen implements View.OnClickListener {
     private CircleView okButton;
 
     private ImageView okButtonArrow;
+
+    private ImageView hidePassword;
+
+    private Boolean isHidden = true;
 
     public LoginScreen(Context context, UICallBacks callBacks) {
         super(context, callBacks);
@@ -125,6 +131,7 @@ public class LoginScreen extends DefaultScreen implements View.OnClickListener {
         etPassword.setBackgroundColor(ResTools.getColor(R.color.c4));
         etPassword.setHint(R.string.login_et_hint_password);
         etPassword.setSingleLine(true);
+        etPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
         etPassword.setOnFocusChangeListener(new OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -156,6 +163,18 @@ public class LoginScreen extends DefaultScreen implements View.OnClickListener {
 
         containerPassword.addView(linePassword, lp5);
 
+        hidePassword = new ImageView(getContext());
+        hidePassword.setId(R.id.login_iv_password);
+        hidePassword.setImageDrawable(ResTools.getDrawable(R.drawable.eyes_open));
+        hidePassword.setOnClickListener(this);
+
+        RelativeLayout.LayoutParams lp6 =
+                new RelativeLayout.LayoutParams(ResTools.getDimenInt(R.dimen.h1), ResTools.getDimenInt(R.dimen.h1));
+        lp6.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+        lp6.addRule(RelativeLayout.CENTER_VERTICAL);
+
+        containerPassword.addView(hidePassword, lp6);
+
         mContainer.addView(containerPassword, lp4);
 
         // containerOKButton
@@ -163,34 +182,46 @@ public class LoginScreen extends DefaultScreen implements View.OnClickListener {
         containerOKButton = new RelativeLayout(getContext());
         containerOKButton.setId(R.id.login_rl_button);
 
-        RelativeLayout.LayoutParams lp6 = new RelativeLayout.LayoutParams(ResTools.getDimenInt(R.dimen.login_rl_button_width_height),
+        RelativeLayout.LayoutParams lp7 = new RelativeLayout.LayoutParams(ResTools.getDimenInt(R.dimen.login_rl_button_width_height),
                 ResTools.getDimenInt(R.dimen.login_rl_button_width_height));
-        lp6.topMargin = ResTools.getDimenInt(R.dimen.login_rl_button_margin_top);
-        lp6.addRule(RelativeLayout.BELOW, R.id.login_rl_password);
-        lp6.addRule(RelativeLayout.CENTER_HORIZONTAL);
+        lp7.topMargin = ResTools.getDimenInt(R.dimen.login_rl_button_margin_top);
+        lp7.addRule(RelativeLayout.BELOW, R.id.login_rl_password);
+        lp7.addRule(RelativeLayout.CENTER_HORIZONTAL);
 
         okButton = new CircleView(getContext(), ResTools.getDimenInt(R.dimen.login_bt_radius),
                 ResTools.getDimenInt(R.dimen.login_bt_radius), ResTools.getDimenInt(R.dimen.login_bt_radius));
+        okButton.setId(R.id.login_v_button);
         okButton.setColor(ResTools.getColor(R.color.c1));
         okButton.setAlpha(0.3f);
 
         containerOKButton.addView(okButton);
 
         okButtonArrow = new ImageView(getContext());
+        okButtonArrow.setId(R.id.login_iv_button);
         okButtonArrow.setImageDrawable(ResTools.getDrawable(R.drawable.arrow_right));
 
-        RelativeLayout.LayoutParams lp7 = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-        lp7.addRule(RelativeLayout.CENTER_IN_PARENT);
+        RelativeLayout.LayoutParams lp8 = new RelativeLayout.LayoutParams(ResTools.getDimenInt(R.dimen.h1), ResTools.getDimenInt(R.dimen.h1));
+        lp8.addRule(RelativeLayout.CENTER_IN_PARENT);
 
-        containerOKButton.addView(okButtonArrow, lp7);
+        containerOKButton.addView(okButtonArrow, lp8);
 
-        mContainer.addView(containerOKButton, lp6);
+        mContainer.addView(containerOKButton, lp7);
 
 
     }
 
     @Override
     public void onClick(View view) {
-
+        if(view == hidePassword) {
+            if (isHidden) {
+                etPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                hidePassword.setImageDrawable(ResTools.getDrawable(R.drawable.eyes_close));
+                isHidden = false;
+            } else {
+                etPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                hidePassword.setImageDrawable(ResTools.getDrawable(R.drawable.eyes_open));
+                isHidden = true;
+            }
+        }
     }
 }
