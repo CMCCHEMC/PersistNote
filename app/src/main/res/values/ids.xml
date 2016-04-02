@@ -1,21 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!--LoginScreen-->
+    <!-- DefaultScreen -->
+    <item name="id_title_bar" type="id" />
+
+    <!-- LoginScreen -->
     <item name="login_et_phone_number" type="id" />
     <item name="login_line_phone_number" type="id" />
+    <item name="login_tv_phone_number_wrong" type="id" />
     <item name="login_et_password" type="id" />
     <item name="login_line_password" type="id" />
+    <item name="login_tv_password_wrong" type="id" />
     <item name="login_iv_password" type="id" />
-    <item name="login_iv_button" type="id" />
-    <item name="login_v_button" type="id" />
-
+    <item name="login_iv_ok" type="id" />
+    <item name="login_v_ok" type="id" />
 
     <item name="login_rl_phone_number" type="id" />
     <item name="login_rl_password" type="id" />
-    <item name="login_rl_button" type="id" />
+    <item name="login_rl_ok" type="id" />
 
-    <!--HabitItemView-->
+    <!-- RegisterHomeScreen -->
+    <item name="register_et_phone_number" type="id" />
+    <item name="register_line_phone_number" type="id" />
+    <item name="register_tv_phone_number_wrong" type="id" />
+    <item name="register_et_code" type="id" />
+    <item name="register_line_code" type="id" />
+    <item name="register_iv_code" type="id" />
+    <item name="register_bt_code" type="id" />
+    <item name="register_iv_ok" type="id" />
+    <item name="register_v_ok" type="id" />
+
+    <item name="register_rl_phone_number" type="id" />
+    <item name="register_rl_code" type="id" />
+    <item name="register_rl_ok" type="id" />
+
+    <!-- HabitItemView -->
     <item name="id_icon" type="id" />
     <item name="id_title" type="id" />
 

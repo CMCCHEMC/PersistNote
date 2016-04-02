@@ -14,8 +14,6 @@ import com.dv.persistnote.framework.ui.UICallBacks;
  */
 public class DefaultScreen extends AbstractScreen {
 
-    private final static int ID_TITLE_BAR = 101;
-
     protected DefaultTitleBar mTitleBar;
 
     public DefaultScreen(Context context, UICallBacks callBacks) {
@@ -25,7 +23,7 @@ public class DefaultScreen extends AbstractScreen {
 
     private void init() {
         mTitleBar = new DefaultTitleBar(getContext());
-        mTitleBar.setId(ID_TITLE_BAR);
+        mTitleBar.setId(R.id.id_title_bar);
         LayoutParams titleLp = new LayoutParams(LayoutParams.MATCH_PARENT, ResTools.getDimenInt(R.dimen.title_bar_height));
         addView(mTitleBar, titleLp);
     }
@@ -36,7 +34,7 @@ public class DefaultScreen extends AbstractScreen {
 
     public void setContent(View v) {
         LayoutParams contentLp = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-        contentLp.addRule(BELOW, ID_TITLE_BAR);
+        contentLp.addRule(BELOW, R.id.id_title_bar);
         addView(v, contentLp);
     }
 

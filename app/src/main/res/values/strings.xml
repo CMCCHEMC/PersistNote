@@ -5,10 +5,20 @@
     <string name="register">注册</string>
     <string name="login">登录</string>
 
-    <string name="login_et_hint_phone_number">输入手机号</string>
-    <string name="login_et_hint_password">输入6~12位数的密码</string>
-
     <string name="preset_fitness">健身</string>
     <string name="preset_reading">读书</string>
     <string name="preset_breakfast">吃早餐</string>
+
+    <!-- Login Strings -->
+    <string name="login_et_hint_phone_number">输入手机号</string>
+    <string name="login_et_hint_password">输入6~12位数的密码</string>
+    <string name="login_tv_wrong_phone_number">帐号错误提示</string>
+    <string name="login_tv_wrong_password">密码错误提示</string>
+
+    <!-- Register Strings -->
+    <string name="register_et_hint_phone_number">输入手机号</string>
+    <string name="register_et_hint_code">输入验证码</string>
+    <string name="register_tv_wrong_phone_number">该帐号已被注册</string>
+    <string name="register_bt_code">获取</string>
+
 </resources>
