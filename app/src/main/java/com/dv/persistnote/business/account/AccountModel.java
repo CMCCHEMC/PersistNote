@@ -2,7 +2,7 @@ package com.dv.persistnote.business.account;
 
 import com.dv.persistnote.base.network.TestServiceInterface;
 import com.dv.persistnote.base.network.bean.Result;
-import com.dv.persistnote.base.network.bean.TransResult;
+import com.dv.persistnote.base.network.bean.ZHResult;
 import com.dv.persistnote.business.ConstDef;
 
 import java.io.UnsupportedEncodingException;
@@ -11,8 +11,6 @@ import java.util.HashMap;
 
 import retrofit.Callback;
 import retrofit.RestAdapter;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 
 /**
  * Created by Hang on 2016/3/20.
@@ -46,6 +44,21 @@ public class AccountModel {
         }
         serviceInterface.getTranslate(params, ConstDef.apikey,
                 callback);
+
+    }
+
+    public void testJHRequest(String srcStr, Callback<ZHResult> callback) {
+        String API = "http://news-at.zhihu.com";
+
+        RestAdapter restAdapter = new RestAdapter.Builder().
+                setLogLevel(RestAdapter.LogLevel.FULL).setEndpoint(API).build();
+
+        TestServiceInterface serviceInterface = restAdapter.create(TestServiceInterface.class);
+
+        HashMap<String , String> params = new HashMap<>();
+        params.put("key", ConstDef.juheAPIKey);
+        params.put("info", srcStr);
+        serviceInterface.getZHResult(params, callback);
 
     }
 }

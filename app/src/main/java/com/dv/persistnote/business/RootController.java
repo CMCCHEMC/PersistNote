@@ -7,7 +7,10 @@ import android.view.KeyEvent;
 import com.dv.persistnote.base.network.TestServiceInterface;
 import com.dv.persistnote.base.network.bean.Result;
 import com.dv.persistnote.base.network.bean.TransResult;
+import com.dv.persistnote.base.network.bean.ZHOther;
+import com.dv.persistnote.base.network.bean.ZHResult;
 import com.dv.persistnote.business.account.AccountModel;
+import com.dv.persistnote.framework.ActionId;
 import com.dv.persistnote.framework.core.AbstractController;
 import com.dv.persistnote.framework.core.BaseEnv;
 import com.dv.persistnote.framework.core.MsgDef;
@@ -17,6 +20,7 @@ import com.dv.persistnote.framework.ui.AbstractTabContentView;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.HashMap;
+import java.util.List;
 
 import retrofit.Callback;
 import retrofit.RestAdapter;
@@ -61,6 +65,29 @@ public class RootController extends AbstractController{
 
     @Override
     public boolean handleAction(int actionId, Object arg, Object result) {
+        switch (actionId) {
+            case ActionId.OnHabitItemClick:
+                AccountModel.getInstance().testJHRequest("NetworkTest",
+                        new Callback<ZHResult>() {
+                            @Override
+                            public void success(ZHResult result, Response response) {
+                                try {
+                                    //网络接口测试代码
+                                    int count = result.getOthers().size();
+                                    int index = (int) (System.currentTimeMillis() % count);
+                                    mRootScreen.setCheckInText(result.getOthers().get(index).getName());
+                                }catch (Exception e) {
+                                }
+
+                            }
+
+                            @Override
+                            public void failure(RetrofitError error) {
+
+                            }
+                        });
+                break;
+        }
         return false;
     }
 

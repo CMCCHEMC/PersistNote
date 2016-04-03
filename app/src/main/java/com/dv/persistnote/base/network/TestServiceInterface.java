@@ -1,6 +1,7 @@
 package com.dv.persistnote.base.network;
 
 import com.dv.persistnote.base.network.bean.Result;
+import com.dv.persistnote.base.network.bean.ZHResult;
 
 import java.util.Map;
 
@@ -26,4 +27,7 @@ public interface TestServiceInterface {
                              @Header("apikey") String apikey,
                              Callback<Result> response);
 
+    @GET("/api/4/themes")      // here is the other url part.best way is to start using /
+    public void getZHResult(@QueryMap Map<String, String> options,
+                            Callback<ZHResult> response);
 }

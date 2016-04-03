@@ -12,8 +12,11 @@ import com.dv.persistnote.FakeDataHelper;
 import com.dv.persistnote.HabitIconHelper;
 import com.dv.persistnote.R;
 import com.dv.persistnote.base.ResTools;
-import com.dv.persistnote.base.network.bean.Result;
+import com.dv.persistnote.base.network.bean.ZHOther;
+import com.dv.persistnote.base.network.bean.ZHResult;
 import com.dv.persistnote.business.account.AccountModel;
+
+import java.util.List;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -22,7 +25,7 @@ import retrofit.client.Response;
 /**
  * Created by Hang on 2016/3/23.
  */
-public class HabitItemView extends RelativeLayout implements View.OnClickListener{
+public class HabitItemView extends RelativeLayout {
 
     private final static int ID_ICON = 101;
     private final static int ID_TITLE = 102;
@@ -68,7 +71,6 @@ public class HabitItemView extends RelativeLayout implements View.OnClickListene
         int padding = ResTools.getDimenInt(R.dimen.common_margin_16);
         setPadding(padding, 0, padding, 0);
 
-        setOnClickListener(this);
     }
 
     public void setChecked(boolean checked) {
@@ -85,21 +87,5 @@ public class HabitItemView extends RelativeLayout implements View.OnClickListene
         mIcon.setImageDrawable(HabitIconHelper.getHabitIcon(info.mHabitId));
         mTitle.setText(info.mHabitName);
         mSubTitle.setText("已经坚持"+info.mCount+"天");
-    }
-
-    @Override
-    public void onClick(View view) {
-        AccountModel.getInstance().testPostRequest("NetworkTest",
-                new Callback<Result>() {
-            @Override
-            public void success(Result result, Response response) {
-                mSubTitle.setText(result.getRetData().getTransResult().get(0).getDst());
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-
-            }
-        });
     }
 }

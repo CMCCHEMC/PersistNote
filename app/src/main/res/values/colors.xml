@@ -9,4 +9,9 @@
     <color name="default_black">#4a4a4a</color>
     <color name="light_main_color">#1a8b7a</color>
 
+    <color name="C1">#97c244</color>
+    <color name="C3">#8a9199</color>
+    <color name="C8">#8cb33e</color>
+    <color name="C9">#789936</color>
+
 </resources>

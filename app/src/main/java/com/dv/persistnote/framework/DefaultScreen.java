@@ -23,7 +23,7 @@ public class DefaultScreen extends AbstractScreen {
         init();
     }
 
-    private void init() {
+    protected void init() {
         mTitleBar = new DefaultTitleBar(getContext());
         mTitleBar.setId(ID_TITLE_BAR);
         LayoutParams titleLp = new LayoutParams(LayoutParams.MATCH_PARENT, ResTools.getDimenInt(R.dimen.title_bar_height));

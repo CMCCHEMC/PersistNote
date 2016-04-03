@@ -10,6 +10,8 @@ import java.util.List;
  */
 public class FakeDataHelper {
 
+    public static final int COMMUTIY_COUNT = 10;
+
     public static class HabitInfo {
         public int mHabitId;
         public String mHabitName;
