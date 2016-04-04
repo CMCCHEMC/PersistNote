@@ -5,7 +5,8 @@
     android:background="@color/default_white"
     android:orientation="vertical"
     android:paddingLeft="@dimen/common_margin_16"
-    android:paddingRight="@dimen/common_margin_16">
+    android:paddingRight="@dimen/common_margin_16"
+    android:layout_marginTop="8dp">
 
     <!--用户信息区域-->
     <RelativeLayout
@@ -27,7 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:layout_toRightOf="@+id/user_avatar"
-            android:text="晓玲"
+            android:text="晓玲sharlene"
             android:textColor="@color/C9" />
 
         <TextView
@@ -65,14 +66,15 @@
         android:layout_height="wrap_content"
         android:paddingBottom="8dp"
         android:paddingTop="8dp"
-        android:text="你可以喝一半，下一任来的时候再加进去一半，如果分了就再喝一半，再下一任加一半。最后调出一款菲波纳契亚女友的酒"
+        android:text="上海楼市调控初步见效 新房成交面积锐减60%"
         android:textColor="@color/default_black" />
 
     <!-- 底部区域-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="right">
+        android:gravity="right"
+        android:layout_marginBottom="8dp">
 
         <TextView
             android:id="@+id/card_support"

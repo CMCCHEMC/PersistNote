@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.dv.persistnote.R;
 import com.dv.persistnote.base.ResTools;
+import com.dv.persistnote.framework.ui.UICallBacks;
 
 import org.w3c.dom.Text;
 
@@ -20,8 +21,11 @@ public class DefaultTitleBar extends RelativeLayout implements View.OnClickListe
     private ImageView mBackButton;
     private TextView mTitleText;
 
-    public DefaultTitleBar(Context context) {
+    private UICallBacks mCallback;
+
+    public DefaultTitleBar(Context context, UICallBacks callback) {
         super(context);
+        mCallback = callback;
 
         mBackButton = new ImageView(getContext());
         mBackButton.setImageDrawable(ResTools.getDrawable(R.drawable.back));
@@ -42,6 +46,7 @@ public class DefaultTitleBar extends RelativeLayout implements View.OnClickListe
         setBackgroundColor(ResTools.getColor(R.color.default_white));
         int padding = ResTools.getDimenInt(R.dimen.common_margin_16);
         setPadding(padding, 0, padding, 0);
+
     }
 
     public void setTitle(String title) {
@@ -50,6 +55,6 @@ public class DefaultTitleBar extends RelativeLayout implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
-
+        mCallback.onWindowExitEvent(true);
     }
 }

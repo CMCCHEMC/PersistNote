@@ -3,6 +3,7 @@ package com.dv.persistnote.framework.core;
 import android.content.Context;
 import android.os.Message;
 
+import com.dv.persistnote.framework.ActionId;
 import com.dv.persistnote.framework.ui.ScreenManager;
 import com.dv.persistnote.framework.ui.UICallBacks;
 
@@ -77,6 +78,7 @@ public abstract class AbstractController implements UICallBacks, INotify {
 	
 	@Override
 	public void onWindowExitEvent(boolean withAnimation) {
+		mWindowMgr.popScreen(true);
 	}
 	
 	@Override
@@ -119,5 +121,5 @@ public abstract class AbstractController implements UICallBacks, INotify {
 	public Object sendMessageSync(Message message) {
         return mDispatcher.sendMessageSync(message);
     }
-	
+
 }
