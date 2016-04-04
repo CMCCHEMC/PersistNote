@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/default_white"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/common_margin_16"
+    android:paddingRight="@dimen/common_margin_16">
+
+    <!--用户信息区域-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+
+        <ImageView
+            android:id="@+id/user_avatar"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="8dp"
+            android:src="@drawable/main_logo" />
+
+        <TextView
+            android:id="@+id/user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_toRightOf="@+id/user_avatar"
+            android:text="晓玲"
+            android:textColor="@color/C9" />
+
+        <TextView
+            android:id="@+id/update_time"
+            android:textColor="@color/C3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="12dp"
+            android:layout_toRightOf="@+id/user_avatar"
+            android:text="昨天 10:20" />
+
+        <TextView
+            android:id="@+id/persist_duration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:text="27天"
+            android:textColor="@color/C9" />
+    </RelativeLayout>
+
+
+    <!-- 正文区域-->
+    <ImageView
+        android:id="@+id/card_image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        android:src="@drawable/fake_card_image" />
+
+    <TextView
+        android:id="@+id/card_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="8dp"
+        android:paddingTop="8dp"
+        android:text="你可以喝一半，下一任来的时候再加进去一半，如果分了就再喝一半，再下一任加一半。最后调出一款菲波纳契亚女友的酒"
+        android:textColor="@color/default_black" />
+
+    <!-- 底部区域-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right">
+
+        <TextView
+            android:id="@+id/card_support"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:drawableLeft="@drawable/fake_support"
+            android:gravity="center_vertical"
+            android:text="0" />
+
+        <TextView
+            android:id="@+id/card_comment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/fake_comment"
+            android:gravity="center_vertical"
+            android:text="12" />
+    </LinearLayout>
+
+</LinearLayout>

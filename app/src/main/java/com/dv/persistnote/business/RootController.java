@@ -4,11 +4,28 @@ import android.os.Message;
 import android.util.SparseArray;
 import android.view.KeyEvent;
 
-import com.dv.persistnote.framework.AbstractScreen;
-import com.dv.persistnote.framework.AbstractTabContentView;
-import com.dv.persistnote.framework.core.MsgDef;
+import com.dv.persistnote.base.network.TestServiceInterface;
+import com.dv.persistnote.base.network.bean.Result;
+import com.dv.persistnote.base.network.bean.TransResult;
+import com.dv.persistnote.base.network.bean.ZHOther;
+import com.dv.persistnote.base.network.bean.ZHResult;
+import com.dv.persistnote.business.account.AccountModel;
+import com.dv.persistnote.framework.ActionId;
 import com.dv.persistnote.framework.core.AbstractController;
 import com.dv.persistnote.framework.core.BaseEnv;
+import com.dv.persistnote.framework.core.MsgDef;
+import com.dv.persistnote.framework.ui.AbstractScreen;
+import com.dv.persistnote.framework.ui.AbstractTabContentView;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.List;
+
+import retrofit.Callback;
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 /**
  * Created by Hang on 2016/3/13.
@@ -19,20 +36,21 @@ public class RootController extends AbstractController{
     private RootScreen mRootScreen;
     private SparseArray<AbstractTabContentView> mTabViews = new SparseArray<AbstractTabContentView>();
 
+    public RootController(BaseEnv baseEnv) {
+        super(baseEnv);
+    }
     @Override
     public void handleMessage(Message msg) {
         if(msg.what == MsgDef.MSG_INIT_ROOTSCREEN) {
             mRootScreen = new RootScreen(mContext, this);
             mWindowMgr.createWindowStack(mRootScreen);
 
-            //未登录时显示登陆窗口
-            AbstractScreen screen = new WelcomeScreen(mContext,this);
-            mWindowMgr.pushScreen(screen, false);
+            checkLoginState();
         }
     }
 
-    public RootController(BaseEnv baseEnv) {
-        super(baseEnv);
+    private void checkLoginState() {
+        mDispatcher.sendMessage(MsgDef.MSG_SHOW_WELCOME_SCREEN);
     }
 
     @Override
@@ -44,4 +62,34 @@ public class RootController extends AbstractController{
     public boolean onWindowKeyEvent(AbstractScreen target, int keyCode, KeyEvent event) {
         return false;
     }
+
+    @Override
+    public boolean handleAction(int actionId, Object arg, Object result) {
+        switch (actionId) {
+            case ActionId.OnHabitItemClick:
+                AccountModel.getInstance().testJHRequest("NetworkTest",
+                        new Callback<ZHResult>() {
+                            @Override
+                            public void success(ZHResult result, Response response) {
+                                try {
+                                    //网络接口测试代码
+                                    int count = result.getOthers().size();
+                                    int index = (int) (System.currentTimeMillis() % count);
+                                    mRootScreen.setCheckInText(result.getOthers().get(index).getName());
+                                }catch (Exception e) {
+                                }
+
+                            }
+
+                            @Override
+                            public void failure(RetrofitError error) {
+
+                            }
+                        });
+                break;
+        }
+        return false;
+    }
+
+
 }
