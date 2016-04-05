@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.dv.persistnote.R;
 import com.dv.persistnote.base.ResTools;
+import com.dv.persistnote.framework.ActionId;
 import com.dv.persistnote.framework.DefaultScreen;
 import com.dv.persistnote.framework.ui.CircleView;
 import com.dv.persistnote.framework.ui.UICallBacks;
@@ -72,24 +73,24 @@ public class LoginScreen extends DefaultScreen implements View.OnClickListener {
         containerPhoneNumber = new RelativeLayout(getContext());
         containerPhoneNumber.setId(R.id.login_rl_phone_number);
 
-        RelativeLayout.LayoutParams lpC1 = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, ResTools.getDimenInt(R.dimen.login_rl_phone_number_height));
+        RelativeLayout.LayoutParams lpC1 = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, ResTools.getDimenInt(R.dimen.common_rl_height));
         lpC1.topMargin = ResTools.getDimenInt(R.dimen.login_rl_phone_number_margin_top);
-        lpC1.leftMargin = ResTools.getDimenInt(R.dimen.login_rl_margin_left);
-        lpC1.rightMargin = ResTools.getDimenInt(R.dimen.login_rl_margin_right);
+        lpC1.leftMargin = ResTools.getDimenInt(R.dimen.common_rl_margin_left);
+        lpC1.rightMargin = ResTools.getDimenInt(R.dimen.common_rl_margin_right);
 
         etPhoneNumber = new EditText(getContext());
         etPhoneNumber.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.h1));
-        etPhoneNumber.setPadding(0, ResTools.getDimenInt(R.dimen.login_et_padding_top),
-                0, ResTools.getDimenInt(R.dimen.login_et_padding_bottom));
+        etPhoneNumber.setPadding(0, ResTools.getDimenInt(R.dimen.common_et_padding_top),
+                0, ResTools.getDimenInt(R.dimen.common_et_padding_bottom));
         etPhoneNumber.setId(R.id.login_et_phone_number);
         etPhoneNumber.setBackgroundColor(ResTools.getColor(R.color.c4));
-        etPhoneNumber.setHint(R.string.login_et_hint_phone_number);
+        etPhoneNumber.setHint(R.string.common_et_hint_phone_number);
         etPhoneNumber.setSingleLine(true);
         etPhoneNumber.setOnFocusChangeListener(new OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
-                    etPhoneNumber.setHint(R.string.login_et_hint_phone_number);
+                    etPhoneNumber.setHint(R.string.common_et_hint_phone_number);
                 } else {
                     etPhoneNumber.setHint(null);
                 }
@@ -139,26 +140,26 @@ public class LoginScreen extends DefaultScreen implements View.OnClickListener {
         containerPassword = new RelativeLayout(getContext());
         containerPassword.setId(R.id.login_rl_password);
         RelativeLayout.LayoutParams lpC2 = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT,
-                ResTools.getDimenInt(R.dimen.login_rl_password_height));
+                ResTools.getDimenInt(R.dimen.common_rl_height));
         lpC2.topMargin = ResTools.getDimenInt(R.dimen.login_rl_password_margin_top);
-        lpC2.leftMargin = ResTools.getDimenInt(R.dimen.login_rl_margin_left);
-        lpC2.rightMargin = ResTools.getDimenInt(R.dimen.login_rl_margin_right);
+        lpC2.leftMargin = ResTools.getDimenInt(R.dimen.common_rl_margin_left);
+        lpC2.rightMargin = ResTools.getDimenInt(R.dimen.common_rl_margin_right);
         lpC2.addRule(RelativeLayout.BELOW, R.id.login_rl_phone_number);
 
         etPassword = new EditText(getContext());
         etPassword.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.h1));
-        etPassword.setPadding(0, ResTools.getDimenInt(R.dimen.login_et_padding_top),
-                0, ResTools.getDimenInt(R.dimen.login_et_padding_bottom));
+        etPassword.setPadding(0, ResTools.getDimenInt(R.dimen.common_et_padding_top),
+                0, ResTools.getDimenInt(R.dimen.common_et_padding_bottom));
         etPassword.setId(R.id.login_et_password);
         etPassword.setBackgroundColor(ResTools.getColor(R.color.c4));
-        etPassword.setHint(R.string.login_et_hint_password);
+        etPassword.setHint(R.string.common_et_hint_password);
         etPassword.setSingleLine(true);
         etPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
         etPassword.setOnFocusChangeListener(new OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
-                    etPassword.setHint(R.string.login_et_hint_password);
+                    etPassword.setHint(R.string.common_et_hint_password);
                 } else {
                     etPassword.setHint(null);
                 }
@@ -206,7 +207,7 @@ public class LoginScreen extends DefaultScreen implements View.OnClickListener {
         wrongPassword.setVisibility(View.GONE);
         RelativeLayout.LayoutParams lpC2V3 = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         lpC2V3.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-        lpC1V3.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+        lpC2V3.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
         lpC2V3.bottomMargin = ResTools.getDimenInt(R.dimen.common_margin_bottom);
 
         containerPassword.addView(wrongPassword, lpC2V3);
@@ -217,15 +218,16 @@ public class LoginScreen extends DefaultScreen implements View.OnClickListener {
 
         containerOKButton = new RelativeLayout(getContext());
         containerOKButton.setId(R.id.login_rl_ok);
+        containerOKButton.setOnClickListener(this);
 
-        RelativeLayout.LayoutParams lpC3 = new RelativeLayout.LayoutParams(ResTools.getDimenInt(R.dimen.login_rl_ok_width_height),
-                ResTools.getDimenInt(R.dimen.login_rl_ok_width_height));
-        lpC3.topMargin = ResTools.getDimenInt(R.dimen.login_rl_ok_margin_top);
+        RelativeLayout.LayoutParams lpC3 = new RelativeLayout.LayoutParams(ResTools.getDimenInt(R.dimen.common_rl_ok_width_height),
+                ResTools.getDimenInt(R.dimen.common_rl_ok_width_height));
+        lpC3.topMargin = ResTools.getDimenInt(R.dimen.common_rl_ok_margin_top);
         lpC3.addRule(RelativeLayout.BELOW, R.id.login_rl_password);
         lpC3.addRule(RelativeLayout.CENTER_HORIZONTAL);
 
-        okButton = new CircleView(getContext(), ResTools.getDimenInt(R.dimen.login_v_ok_radius),
-                ResTools.getDimenInt(R.dimen.login_v_ok_radius), ResTools.getDimenInt(R.dimen.login_v_ok_radius));
+        okButton = new CircleView(getContext(), ResTools.getDimenInt(R.dimen.common_cv_radius),
+                ResTools.getDimenInt(R.dimen.common_cv_radius), ResTools.getDimenInt(R.dimen.common_cv_radius));
         okButton.setId(R.id.login_v_ok);
         okButton.setColor(ResTools.getColor(R.color.c1));
         okButton.setAlpha(0.3f);
@@ -247,8 +249,8 @@ public class LoginScreen extends DefaultScreen implements View.OnClickListener {
     }
 
     @Override
-    public void onClick(View view) {
-        if(view == hidePassword) {
+    public void onClick(View v) {
+        if(v == hidePassword) {
             if (isHidden) {
                 etPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
                 hidePassword.setImageDrawable(ResTools.getDrawable(R.drawable.eyes_close));
@@ -264,6 +266,9 @@ public class LoginScreen extends DefaultScreen implements View.OnClickListener {
                 Spannable spanText = (Spannable) charSequence;
                 Selection.setSelection(spanText, charSequence.length());
             }
+        }
+        if (v == containerOKButton) {
+            mCallBacks.handleAction(ActionId.CommitLoginClick, null, null);
         }
     }
 }

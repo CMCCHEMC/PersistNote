@@ -7,4 +7,7 @@ public class ActionId {
 
     public static final int OnLoginClick = 101;
     public static final int OnRegisterClick = 102;
+    public static final int CommitLoginClick = 103;
+    public static final int CommitRegisterHomeClick = 104;
+    public static final int CommitRegisterUserInfoClick = 105;
 }

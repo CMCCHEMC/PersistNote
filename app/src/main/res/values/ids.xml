@@ -34,6 +34,17 @@
     <item name="register_rl_code" type="id" />
     <item name="register_rl_ok" type="id" />
 
+    <!-- RegisterPasswordScreen -->
+    <item name="register_p_et_password" type="id" />
+    <item name="register_p_line_password" type="id" />
+    <item name="register_p_tv_password_wrong" type="id" />
+    <item name="register_p_iv_password" type="id" />
+    <item name="register_p_iv_ok" type="id" />
+    <item name="register_p_v_ok" type="id" />
+
+    <item name="register_p_rl_password" type="id" />
+    <item name="register_p_rl_ok" type="id" />
+
     <!-- HabitItemView -->
     <item name="id_icon" type="id" />
     <item name="id_title" type="id" />

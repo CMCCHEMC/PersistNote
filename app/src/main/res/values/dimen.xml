@@ -19,7 +19,19 @@
     <dimen name="common_margin_top">22dp</dimen>
     <dimen name="common_margin_bottom">11dp</dimen>
 
+    <dimen name="common_rl_height">48dp</dimen>
+    <dimen name="common_rl_margin_left">24dp</dimen>
+    <dimen name="common_rl_margin_right">24dp</dimen>
+
     <dimen name="common_line_height">1dp</dimen>
+
+    <dimen name="common_cv_radius">28dp</dimen>
+
+    <dimen name="common_et_padding_top">18dp</dimen>
+    <dimen name="common_et_padding_bottom">7dp</dimen>
+
+    <dimen name="common_rl_ok_margin_top">40dp</dimen>
+    <dimen name="common_rl_ok_width_height">56dp</dimen>
 
     <!--具体业务标注-->
 
@@ -31,38 +43,19 @@
     <!-- LoginScreen -->
     <dimen name="login_rl_phone_number_margin_top">24dp</dimen>
     <dimen name="login_rl_password_margin_top">34dp</dimen>
-    <dimen name="login_rl_phone_number_height">48dp</dimen>
-    <dimen name="login_rl_password_height">48dp</dimen>
-    <dimen name="login_rl_margin_left">24dp</dimen>
-    <dimen name="login_rl_margin_right">24dp</dimen>
-    <dimen name="login_rl_ok_margin_top">40dp</dimen>
-    <dimen name="login_rl_ok_width_height">56dp</dimen>
-
-    <dimen name="login_v_ok_radius">28dp</dimen>
-
-    <dimen name="login_et_padding_top">18dp</dimen>
-    <!--<dimen name="login_et_password_padding_top">18dp</dimen>-->
-    <dimen name="login_et_padding_bottom">7dp</dimen>
 
     <!-- RegisterHomeScreen -->
     <dimen name="register_rl_phone_number_margin_top">24dp</dimen>
     <dimen name="register_rl_code_margin_top">34dp</dimen>
-    <dimen name="register_rl_phone_number_height">48dp</dimen>
-    <dimen name="register_rl_code_height">48dp</dimen>
-    <dimen name="register_rl_margin_left">24dp</dimen>
-    <dimen name="register_rl_margin_right">24dp</dimen>
-    <dimen name="register_rl_ok_margin_top">40dp</dimen>
-    <dimen name="register_rl_ok_width_height">56dp</dimen>
-
-    <dimen name="register_v_ok_radius">28dp</dimen>
 
     <dimen name="register_bt_code_width">76dp</dimen>
     <dimen name="register_bt_code_height">48dp</dimen>
+    <dimen name="register_iv_code_margin_right">15dp</dimen>
 
-    <dimen name="register_et_padding_top">18dp</dimen>
-    <!--<dimen name="register_et_code_padding_top">18dp</dimen>-->
-    <dimen name="register_et_padding_bottom">7dp</dimen>
     <dimen name="register_et_code_margin_right">8dp</dimen>
+
+    <!-- RegisterPasswordScreen -->
+    <dimen name="register_p_rl_password_margin_top">24dp</dimen>
 
 </resources>
 
