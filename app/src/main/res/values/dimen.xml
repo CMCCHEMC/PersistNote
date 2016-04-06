@@ -57,5 +57,8 @@
     <!-- RegisterPasswordScreen -->
     <dimen name="register_p_rl_password_margin_top">24dp</dimen>
 
+    <!-- RegisterUserInfoScreen -->
+    <dimen name="register_u_rl_user_name_margin_top">24dp</dimen>
+
 </resources>
 

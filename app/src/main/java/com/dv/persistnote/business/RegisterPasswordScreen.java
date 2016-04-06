@@ -130,7 +130,7 @@ public class RegisterPasswordScreen extends DefaultScreen implements View.OnClic
         wrongPassword.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.h4));
         wrongPassword.setTextColor(ResTools.getColor(R.color.c10));
         wrongPassword.setText(ResTools.getString(R.string.register_p_tv_wrong_password_long));
-        //wrongPassword.setVisibility(View.GONE);
+        wrongPassword.setVisibility(View.GONE);
         RelativeLayout.LayoutParams lpC1V4 = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         lpC1V4.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
         lpC1V4.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
@@ -144,6 +144,7 @@ public class RegisterPasswordScreen extends DefaultScreen implements View.OnClic
 
         containerOKButton = new RelativeLayout(getContext());
         containerOKButton.setId(R.id.register_p_rl_ok);
+        containerOKButton.setOnClickListener(this);
 
         RelativeLayout.LayoutParams lpC2 = new RelativeLayout.LayoutParams(ResTools.getDimenInt(R.dimen.common_rl_ok_width_height),
                 ResTools.getDimenInt(R.dimen.common_rl_ok_width_height));

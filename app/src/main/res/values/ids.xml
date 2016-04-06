@@ -45,6 +45,20 @@
     <item name="register_p_rl_password" type="id" />
     <item name="register_p_rl_ok" type="id" />
 
+    <!-- RegisterUserInfoScreen -->
+    <item name="register_u_et_user_name" type="id" />
+    <item name="register_u_line_user_name" type="id" />
+    <item name="register_u_v_user_sex_male" type="id" />
+    <item name="register_u_v_user_sex_female" type="id" />
+    <item name="register_u_iv_user_sex_male" type="id" />
+    <item name="register_u_iv_user_sex_female" type="id" />
+    <item name="register_u_iv_ok" type="id" />
+    <item name="register_u_v_ok" type="id" />
+
+    <item name="register_u_rl_user_name" type="id" />
+    <item name="register_u_rl_user_sex" type="id" />
+    <item name="register_u_rl_ok" type="id" />
+
     <!-- HabitItemView -->
     <item name="id_icon" type="id" />
     <item name="id_title" type="id" />
