@@ -2,7 +2,6 @@ package com.dv.persistnote.business;
 
 import android.content.Context;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.dv.persistnote.FakeDataHelper;
@@ -33,13 +32,15 @@ public class RootScreen extends DefaultScreen {
         mContainer = new LinearLayout(getContext());
         mContainer.setOrientation(LinearLayout.VERTICAL);
         setContent(mContainer);
-        updateViews();
-    }
-
-    private void updateViews() {
-        mContainer.removeAllViews();
 
         List<HabitInfo> habitInfos = FakeDataHelper.getMyHabitInfos();
+        updateData(habitInfos);
+    }
+
+    private void updateData(List<HabitInfo> habitInfos) {
+        mContainer.removeAllViews();
+
+
         for (HabitInfo info : habitInfos) {
             final HabitItemView itemView = new HabitItemView(getContext());
             LinearLayout.LayoutParams lp =
@@ -57,7 +58,6 @@ public class RootScreen extends DefaultScreen {
         }
 
     }
-
 
     public void setCheckInText(String checkInText) {
         //网络接口的测试返回结果

@@ -39,11 +39,6 @@ public class AccountController extends AbstractController{
     }
 
     @Override
-    public boolean onWindowKeyEvent(AbstractScreen target, int keyCode, KeyEvent event) {
-        return false;
-    }
-
-    @Override
     public boolean handleAction(int actionId, Object arg, Object result) {
         switch (actionId) {
             case ActionId.OnLoginClick:

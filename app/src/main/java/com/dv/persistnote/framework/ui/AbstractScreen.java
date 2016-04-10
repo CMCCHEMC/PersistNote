@@ -7,6 +7,7 @@ import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.os.SystemClock;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -14,6 +15,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
+import com.dv.persistnote.base.util.Utilities;
 import com.dv.persistnote.framework.core.INotify;
 import com.dv.persistnote.framework.core.Notification;
 import com.dv.persistnote.framework.core.NotificationCenter;
@@ -55,23 +57,13 @@ public abstract class AbstractScreen extends RelativeLayout implements INotify {
     public static final byte STATE_BEFORE_POP_OUT = 3;
     public static final byte STATE_AFTER_POP_OUT = 4;
     public static final byte STATE_ON_HIDE = 5;
-    public static final byte STATE_BEFORE_SWITCH_IN = 6; // reserved for later use
-    public static final byte STATE_AFTER_SWITCH_IN = 7; // reserved for later use
     public static final byte STATE_ON_SWITCH_IN = 8;
-    public static final byte STATE_BEFORE_SWITCH_OUT = 9;// reserved for later use
-    public static final byte STATE_AFTER_SWITCH_OUT = 10;// reserved for later use
     public static final byte STATE_ON_SWITCH_OUT = 11;
     public static final byte STATE_ON_ATTACH = 12;
     public static final byte STATE_ON_DETACH = 13;
     public static final byte STATE_ON_WIN_STACK_CREATE = 14;
     public static final byte STATE_ON_WIN_STACK_DESTROY = 15;
     
-
-
-    public static final LayoutParams WINDOW_LP = new LayoutParams(
-            LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-    
-
     protected UICallBacks mCallBacks;
     protected Rect mWindowRect;
     protected AbstractScreenInfo mWindowInfo = new AbstractScreenInfo();
@@ -239,52 +231,7 @@ public abstract class AbstractScreen extends RelativeLayout implements INotify {
         mCallBacks.onWindowStateChange(this, stateFlag);
     }
 
-    protected RelativeLayout onCreateButtonLayer() {
-        return createDefaultLayer();
-    }
 
-    protected RelativeLayout onCreateBarLayer() {
-        return createDefaultLayer();
-    }
-
-    protected RelativeLayout onCreateExtLayer() {
-        return createDefaultLayer();
-    }
-    
-    protected FrameLayout createDefaultStatusLayer(){
-        return new FrameLayout(getContext());
-    }
-
-    protected RelativeLayout createDefaultLayer() {
-        return new RelativeLayout(getContext());
-    }
-    
-    /****************************** Class Protected methods - End ******************************/
-    
-    /****************************** Class Private methods - Begin ******************************/
-    
-    private void disableWallPaperOnFirstTouchEvent(MotionEvent ev) {
-        if (ev.getAction() == MotionEvent.ACTION_DOWN && mWindowInfo.isEnableBackground()) {
-            mWindowInfo.setEnableBackground(false);
-        }
-    }
-
-    private String resolveLayerName(int index) {
-        switch (index) {
-        case 0:
-            return "BaseLayer";
-        case 1:
-            return "BtnLayer";
-        case 2:
-            return "ExtLayer";
-        case 3:
-            return "BarLayer";
-        default:
-            throw new IllegalStateException("AbstractWindow state illegal:"
-                    + index);
-        }
-    }
-    
     @Override
     public void notify(Notification notification) {
         if (notification.id == NotificationDef.N_THEME_CHANGE) {
@@ -292,6 +239,21 @@ public abstract class AbstractScreen extends RelativeLayout implements INotify {
         } else if (notification.id == NotificationDef.N_WALLPAPER_CHANGE) {
             onWallpaperChange();
         }
+    }
+
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        if (event.getAction() == KeyEvent.ACTION_DOWN) {
+            Utilities.isHaveKeyDownEvent = true;
+        }
+
+        boolean result = mCallBacks.onWindowKeyEvent(this, event.getKeyCode(), event)
+                || super.dispatchKeyEvent(event);
+
+        if (event.getAction() == KeyEvent.ACTION_UP) {
+            Utilities.isHaveKeyDownEvent = false;
+        }
+        return result;
     }
 
 

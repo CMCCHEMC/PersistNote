@@ -8,4 +8,6 @@
     <string name="preset_fitness">健身</string>
     <string name="preset_reading">读书</string>
     <string name="preset_breakfast">吃早餐</string>
+
+    <string name="more_click_back">再按一次退出哦</string>
 </resources>
