@@ -10,11 +10,9 @@
     <string name="preset_breakfast">吃早餐</string>
 
     <string name="common_et_hint_phone_number">输入手机号</string>
-    <string name="common_et_hint_password">输入6~12位数的密码</string>
+    <string name="common_et_hint_password">输入6~16位数的密码</string>
 
     <!-- Login Strings -->
-    <string name="login_tv_wrong_phone_number">帐号错误提示</string>
-    <string name="login_tv_wrong_password">密码错误提示</string>
 
     <!-- Register Strings -->
     <string name="register_et_hint_code">输入验证码</string>
@@ -25,5 +23,9 @@
     <string name="register_p_tv_wrong_password_short">字数不足</string>
 
     <string name="register_u_et_hint_user_name">起个炫酷的名字吧</string>
+
+    <string name="register_u_tv_wrong_user_name_long">用户名过长</string>
+
+    <string name="register_ok_tv">注册成功</string>
 
 </resources>

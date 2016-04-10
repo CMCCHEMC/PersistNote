@@ -1,6 +1,7 @@
 package com.dv.persistnote.business;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import com.dv.persistnote.R;
 import com.dv.persistnote.base.ResTools;
+import com.dv.persistnote.framework.ActionId;
 import com.dv.persistnote.framework.DefaultScreen;
 import com.dv.persistnote.framework.ui.CircleView;
 import com.dv.persistnote.framework.ui.UICallBacks;
@@ -34,6 +36,8 @@ public class RegisterUserInfoScreen extends DefaultScreen implements View.OnClic
 
     private View lineUserName;
 
+    private TextView wrongUserName;
+
     private View backgroundMale;
 
     private View backgroundFemale;
@@ -45,6 +49,8 @@ public class RegisterUserInfoScreen extends DefaultScreen implements View.OnClic
     private CircleView okButton;
 
     private ImageView okButtonArrow;
+
+    private boolean isOkButtonAvailable = true;
 
     public RegisterUserInfoScreen(Context context, UICallBacks callBacks) {
         super(context, callBacks);
@@ -110,12 +116,120 @@ public class RegisterUserInfoScreen extends DefaultScreen implements View.OnClic
 
         containerUserName.addView(lineUserName, lpC1V2);
 
+        wrongUserName = new TextView(getContext());
+        wrongUserName.setId(R.id.register_u_tv_user_name_wrong);
+        wrongUserName.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.h4));
+        wrongUserName.setTextColor(ResTools.getColor(R.color.c10));
+        wrongUserName.setText(ResTools.getString(R.string.register_u_tv_wrong_user_name_long));
+        wrongUserName.setVisibility(View.GONE);
+        RelativeLayout.LayoutParams lpC1V3 = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        lpC1V3.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+        lpC1V3.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+        lpC1V3.bottomMargin = ResTools.getDimenInt(R.dimen.common_margin_bottom);
+
+        containerUserName.addView(wrongUserName, lpC1V3);
+
         mContainer.addView(containerUserName, lpC1);
+
+        /************** containerUserSex ******************/
+
+        containerUserSex = new RelativeLayout(getContext());
+        containerUserSex.setId(R.id.register_u_rl_user_sex);
+
+        RelativeLayout.LayoutParams lpC2 = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT,
+                ResTools.getDimenInt(R.dimen.register_u_rl_user_sex_height));
+        lpC2.topMargin = ResTools.getDimenInt(R.dimen.register_u_rl_user_sex_margin_top);
+        lpC2.leftMargin = ResTools.getDimenInt(R.dimen.common_rl_margin_left);
+        lpC2.rightMargin = ResTools.getDimenInt(R.dimen.common_rl_margin_right);
+        lpC2.addRule(RelativeLayout.BELOW, R.id.register_u_rl_user_name);
+
+        backgroundMale = new View(getContext());
+        backgroundMale.setId(R.id.register_u_v_user_sex_male);
+        backgroundMale.setBackgroundColor(Color.parseColor("#7dd8ef"));
+        backgroundMale.setAlpha(0.3f);
+        backgroundMale.setOnClickListener(this);
+
+        RelativeLayout.LayoutParams lpC2V1 = new RelativeLayout.LayoutParams(ResTools.getDimenInt(R.dimen.register_u_rl_user_sex_height),
+                        ResTools.getDimenInt(R.dimen.register_u_rl_user_sex_height));
+        lpC2V1.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+
+        containerUserSex.addView(backgroundMale, lpC2V1);
+
+        ivMale = new ImageView(getContext());
+        ivMale.setImageDrawable(ResTools.getDrawable(R.drawable.male));
+        ivMale.setId(R.id.register_u_iv_user_sex_male);
+
+        RelativeLayout.LayoutParams lpC2V2 = new RelativeLayout.LayoutParams(ResTools.getDimenInt(R.dimen.register_u_iv_user_sex_width_height),
+                ResTools.getDimenInt(R.dimen.register_u_iv_user_sex_width_height));
+        lpC2V2.addRule(RelativeLayout.CENTER_VERTICAL);
+        lpC2V2.leftMargin = ResTools.getDimenInt(R.dimen.register_u_iv_user_sex_width_height);
+
+        containerUserSex.addView(ivMale, lpC2V2);
+
+        backgroundFemale = new View(getContext());
+        backgroundFemale.setId(R.id.register_u_v_user_sex_female);
+        backgroundFemale.setBackgroundColor(Color.parseColor("#f9a7b8"));
+        backgroundFemale.setAlpha(0.3f);
+        backgroundFemale.setOnClickListener(this);
+
+        RelativeLayout.LayoutParams lpC2V3 = new RelativeLayout.LayoutParams(ResTools.getDimenInt(R.dimen.register_u_rl_user_sex_height),
+                ResTools.getDimenInt(R.dimen.register_u_rl_user_sex_height));
+        lpC2V3.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+
+        containerUserSex.addView(backgroundFemale, lpC2V3);
+
+        ivFemale = new ImageView(getContext());
+        ivFemale.setImageDrawable(ResTools.getDrawable(R.drawable.female));
+        ivFemale.setId(R.id.register_u_iv_user_sex_female);
+
+        RelativeLayout.LayoutParams lpC2V4 = new RelativeLayout.LayoutParams(ResTools.getDimenInt(R.dimen.register_u_iv_user_sex_width_height),
+                ResTools.getDimenInt(R.dimen.register_u_iv_user_sex_width_height));
+        lpC2V4.addRule(RelativeLayout.CENTER_VERTICAL);
+        lpC2V4.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+        lpC2V4.rightMargin = ResTools.getDimenInt(R.dimen.register_u_iv_user_sex_width_height);
+
+        containerUserSex.addView(ivFemale, lpC2V4);
+
+        mContainer.addView(containerUserSex, lpC2);
+
+        /************** containerOKButton ******************/
+
+        containerOKButton = new RelativeLayout(getContext());
+        containerOKButton.setId(R.id.register_u_rl_ok);
+        containerOKButton.setOnClickListener(this);
+
+        RelativeLayout.LayoutParams lpC3 = new RelativeLayout.LayoutParams(ResTools.getDimenInt(R.dimen.common_rl_ok_width_height),
+                ResTools.getDimenInt(R.dimen.common_rl_ok_width_height));
+        lpC3.topMargin = ResTools.getDimenInt(R.dimen.register_u_rl_ok_margin_top);
+        lpC3.addRule(RelativeLayout.BELOW, R.id.register_u_rl_user_sex);
+        lpC3.addRule(RelativeLayout.CENTER_HORIZONTAL);
+
+        okButton = new CircleView(getContext(), ResTools.getDimenInt(R.dimen.common_cv_radius),
+                ResTools.getDimenInt(R.dimen.common_cv_radius), ResTools.getDimenInt(R.dimen.common_cv_radius));
+        okButton.setId(R.id.register_u_v_ok);
+        okButton.setColor(ResTools.getColor(R.color.c1));
+        okButton.setAlpha(0.3f);
+
+        containerOKButton.addView(okButton);
+
+        okButtonArrow = new ImageView(getContext());
+        okButtonArrow.setId(R.id.register_u_iv_ok);
+        okButtonArrow.setImageDrawable(ResTools.getDrawable(R.drawable.arrow_right));
+
+        RelativeLayout.LayoutParams lpC3V1 = new RelativeLayout.LayoutParams(ResTools.getDimenInt(R.dimen.h1), ResTools.getDimenInt(R.dimen.h1));
+        lpC3V1.addRule(RelativeLayout.CENTER_IN_PARENT);
+
+        containerOKButton.addView(okButtonArrow, lpC3V1);
+
+        mContainer.addView(containerOKButton, lpC3);
 
     }
 
     @Override
     public void onClick(View v) {
-
+        if (v == containerOKButton) {
+            if(isOkButtonAvailable)
+                mCallBacks.handleAction(ActionId.CommitRegisterUserInfoClick, null, null);
+        }
     }
 }

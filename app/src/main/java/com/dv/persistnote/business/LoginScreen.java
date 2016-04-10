@@ -1,8 +1,10 @@
 package com.dv.persistnote.business;
 
 import android.content.Context;
+import android.text.Editable;
 import android.text.Selection;
 import android.text.Spannable;
+import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
@@ -50,6 +52,8 @@ public class LoginScreen extends DefaultScreen implements View.OnClickListener {
     private ImageView hidePassword;
 
     private Boolean isHidden = true;
+
+    private Boolean isOkButtonAvailable = false;
 
     private TextView wrongPhoneNumber;
 
@@ -105,6 +109,29 @@ public class LoginScreen extends DefaultScreen implements View.OnClickListener {
             Log.e(TAG, "Login Init : color_cursor Error");
         }
 
+        etPhoneNumber.addTextChangedListener(new TextWatcher(){
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(s.toString().length() > 0 && etPassword.getText().toString().length() > 0) {
+                    isOkButtonAvailable = true;
+                    okButton.setAlpha(1.0f);
+                } else {
+                    isOkButtonAvailable = false;
+                    okButton.setAlpha(0.3f);
+                }
+            }
+        });
+
         RelativeLayout.LayoutParams lpC1V1 =
                 new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 
@@ -119,19 +146,6 @@ public class LoginScreen extends DefaultScreen implements View.OnClickListener {
         lpC1V2.addRule(RelativeLayout.BELOW, R.id.login_et_phone_number);
 
         containerPhoneNumber.addView(linePhoneNumber, lpC1V2);
-
-        wrongPhoneNumber = new TextView(getContext());
-        wrongPhoneNumber.setId(R.id.login_tv_phone_number_wrong);
-        wrongPhoneNumber.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.h4));
-        wrongPhoneNumber.setTextColor(ResTools.getColor(R.color.c10));
-        wrongPhoneNumber.setText(ResTools.getString(R.string.login_tv_wrong_phone_number));
-        wrongPhoneNumber.setVisibility(View.GONE);
-        RelativeLayout.LayoutParams lpC1V3 = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-        lpC1V3.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-        lpC1V3.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-        lpC1V3.bottomMargin = ResTools.getDimenInt(R.dimen.common_margin_bottom);
-
-        containerPhoneNumber.addView(wrongPhoneNumber, lpC1V3);
 
         mContainer.addView(containerPhoneNumber, lpC1);
 
@@ -174,6 +188,29 @@ public class LoginScreen extends DefaultScreen implements View.OnClickListener {
             Log.e(TAG, "Login Init : color_cursor Error");
         }
 
+        etPassword.addTextChangedListener(new TextWatcher(){
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(s.toString().length() > 0 && etPhoneNumber.getText().toString().length() > 0) {
+                    isOkButtonAvailable = true;
+                    okButton.setAlpha(1.0f);
+                } else {
+                    isOkButtonAvailable = false;
+                    okButton.setAlpha(0.3f);
+                }
+            }
+        });
+
         containerPassword.addView(etPassword, lpC1V1);
 
         linePassword = new View(getContext());
@@ -198,19 +235,6 @@ public class LoginScreen extends DefaultScreen implements View.OnClickListener {
         lpC2V2.bottomMargin = ResTools.getDimenInt(R.dimen.common_margin_bottom);
 
         containerPassword.addView(hidePassword, lpC2V2);
-
-        wrongPassword = new TextView(getContext());
-        wrongPassword.setId(R.id.login_tv_password_wrong);
-        wrongPassword.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.h4));
-        wrongPassword.setTextColor(ResTools.getColor(R.color.c10));
-        wrongPassword.setText(ResTools.getString(R.string.login_tv_wrong_password));
-        wrongPassword.setVisibility(View.GONE);
-        RelativeLayout.LayoutParams lpC2V3 = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-        lpC2V3.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-        lpC2V3.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-        lpC2V3.bottomMargin = ResTools.getDimenInt(R.dimen.common_margin_bottom);
-
-        containerPassword.addView(wrongPassword, lpC2V3);
 
         mContainer.addView(containerPassword, lpC2);
 
@@ -268,7 +292,8 @@ public class LoginScreen extends DefaultScreen implements View.OnClickListener {
             }
         }
         if (v == containerOKButton) {
-            mCallBacks.handleAction(ActionId.CommitLoginClick, null, null);
+            if(isOkButtonAvailable)
+                mCallBacks.handleAction(ActionId.CommitLoginClick, null, null);
         }
     }
 }

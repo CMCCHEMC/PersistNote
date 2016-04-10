@@ -7,10 +7,8 @@
     <!-- LoginScreen -->
     <item name="login_et_phone_number" type="id" />
     <item name="login_line_phone_number" type="id" />
-    <item name="login_tv_phone_number_wrong" type="id" />
     <item name="login_et_password" type="id" />
     <item name="login_line_password" type="id" />
-    <item name="login_tv_password_wrong" type="id" />
     <item name="login_iv_password" type="id" />
     <item name="login_iv_ok" type="id" />
     <item name="login_v_ok" type="id" />
@@ -48,6 +46,7 @@
     <!-- RegisterUserInfoScreen -->
     <item name="register_u_et_user_name" type="id" />
     <item name="register_u_line_user_name" type="id" />
+    <item name="register_u_tv_user_name_wrong" type="id" />
     <item name="register_u_v_user_sex_male" type="id" />
     <item name="register_u_v_user_sex_female" type="id" />
     <item name="register_u_iv_user_sex_male" type="id" />
@@ -58,6 +57,10 @@
     <item name="register_u_rl_user_name" type="id" />
     <item name="register_u_rl_user_sex" type="id" />
     <item name="register_u_rl_ok" type="id" />
+
+    <!-- RegisterOKScreen -->
+    <item name="register_ok_iv" type="id" />
+    <item name="register_ok_tv" type="id" />
 
     <!-- HabitItemView -->
     <item name="id_icon" type="id" />

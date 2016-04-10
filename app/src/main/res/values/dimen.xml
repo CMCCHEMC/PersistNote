@@ -59,6 +59,20 @@
 
     <!-- RegisterUserInfoScreen -->
     <dimen name="register_u_rl_user_name_margin_top">24dp</dimen>
+    <dimen name="register_u_rl_user_sex_height">144dp</dimen>
+    <dimen name="register_u_rl_user_sex_margin_top">40dp</dimen>
+    <dimen name="register_u_rl_ok_margin_top">50dp</dimen>
+
+    <dimen name="register_u_iv_user_sex_width_height">48dp</dimen>
+
+    <!-- RegisterOKScreen -->
+    <dimen name="register_ok_iv_margin_top">154dp</dimen>
+    <dimen name="register_ok_tv_margin_top">38dp</dimen>
+
+    <dimen name="register_ok_iv_width">78dp</dimen>
+    <dimen name="register_ok_iv_height">54dp</dimen>
+
+    <dimen name="register_ok_tv_text_size">18dp</dimen>
 
 </resources>
 

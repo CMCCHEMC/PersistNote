@@ -1,6 +1,8 @@
 package com.dv.persistnote.business;
 
 import android.content.Context;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
@@ -35,6 +37,8 @@ public class RegisterHomeScreen extends DefaultScreen implements View.OnClickLis
     private EditText etPhoneNumber;
 
     private EditText etCode;
+
+    private Boolean isOkButtonAvailable = false;
 
     private Button getCode;
 
@@ -98,6 +102,29 @@ public class RegisterHomeScreen extends DefaultScreen implements View.OnClickLis
         } catch (Exception ignored) {
             Log.e(TAG, "Register Init : color_cursor Error");
         }
+
+        etPhoneNumber.addTextChangedListener(new TextWatcher(){
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(s.toString().length() > 0 && etCode.getText().toString().length() > 0) {
+                    isOkButtonAvailable = true;
+                    okButton.setAlpha(1.0f);
+                } else {
+                    isOkButtonAvailable = false;
+                    okButton.setAlpha(0.3f);
+                }
+            }
+        });
 
         RelativeLayout.LayoutParams lpC1V1 =
                 new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
@@ -181,6 +208,29 @@ public class RegisterHomeScreen extends DefaultScreen implements View.OnClickLis
             Log.e(TAG, "Register Init : color_cursor Error");
         }
 
+        etCode.addTextChangedListener(new TextWatcher(){
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(s.toString().length() > 0 && etPhoneNumber.getText().toString().length() > 0) {
+                    isOkButtonAvailable = true;
+                    okButton.setAlpha(1.0f);
+                } else {
+                    isOkButtonAvailable = false;
+                    okButton.setAlpha(0.3f);
+                }
+            }
+        });
+
         RelativeLayout.LayoutParams lpC2V2 = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT,
                 LayoutParams.WRAP_CONTENT);
         lpC2V2.addRule(RelativeLayout.LEFT_OF, R.id.register_bt_code);
@@ -254,7 +304,8 @@ public class RegisterHomeScreen extends DefaultScreen implements View.OnClickLis
     @Override
     public void onClick(View v) {
         if (v == containerOKButton) {
-            mCallBacks.handleAction(ActionId.CommitRegisterHomeClick, null, null);
+            if(isOkButtonAvailable)
+                mCallBacks.handleAction(ActionId.CommitRegisterHomeClick, null, null);
         }
     }
 }

@@ -5,6 +5,7 @@ import android.view.KeyEvent;
 
 import com.dv.persistnote.business.LoginScreen;
 import com.dv.persistnote.business.RegisterHomeScreen;
+import com.dv.persistnote.business.RegisterOKScreen;
 import com.dv.persistnote.business.RegisterPasswordScreen;
 import com.dv.persistnote.business.RegisterUserInfoScreen;
 import com.dv.persistnote.framework.ActionId;
@@ -28,6 +29,8 @@ public class AccountController extends AbstractController{
     private RegisterPasswordScreen mRegisterPasswordScreen;
 
     private RegisterUserInfoScreen mRegisterUserInfoScreen;
+
+    private RegisterOKScreen mRegisterOKScreen;
 
     public AccountController(BaseEnv baseEnv) {
         super(baseEnv);
@@ -74,9 +77,13 @@ public class AccountController extends AbstractController{
                 mRegisterPasswordScreen = new RegisterPasswordScreen(mContext, this);
                 mWindowMgr.pushScreen(mRegisterPasswordScreen, false);
                 break;
-            case ActionId.CommitRegisterUserInfoClick:
+            case ActionId.CommitRegisterPasswordClick:
                 mRegisterUserInfoScreen = new RegisterUserInfoScreen(mContext, this);
                 mWindowMgr.pushScreen(mRegisterUserInfoScreen, false);
+                break;
+            case ActionId.CommitRegisterUserInfoClick:
+                mRegisterOKScreen = new RegisterOKScreen(mContext, this);
+                mWindowMgr.pushScreen(mRegisterOKScreen, false);
                 break;
         }
         return false;

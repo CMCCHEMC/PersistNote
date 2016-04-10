@@ -1,8 +1,10 @@
 package com.dv.persistnote.business;
 
 import android.content.Context;
+import android.text.Editable;
 import android.text.Selection;
 import android.text.Spannable;
+import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
@@ -44,6 +46,8 @@ public class RegisterPasswordScreen extends DefaultScreen implements View.OnClic
     private ImageView hidePassword;
 
     private Boolean isHidden = true;
+
+    private Boolean isOkButtonAvailable = false;
 
     private TextView wrongPassword;
 
@@ -97,6 +101,42 @@ public class RegisterPasswordScreen extends DefaultScreen implements View.OnClic
             Log.e(TAG, "Login Init : color_cursor Error");
         }
 
+        etPassword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.toString().length() > 6 && s.toString().length() < 16) {
+                    linePassword.setBackgroundColor(ResTools.getColor(R.color.c4));
+                    wrongPassword.setText(null);
+
+                } else {
+                    if (s.toString().length() < 6) {
+                        wrongPassword.setText(ResTools.getString(R.string.register_p_tv_wrong_password_short));
+                    } else {
+                        wrongPassword.setText(ResTools.getString(R.string.register_p_tv_wrong_password_long));
+                    }
+                    linePassword.setBackgroundColor(ResTools.getColor(R.color.c10));
+
+                }
+                if (s.toString().length() > 0) {
+                    isOkButtonAvailable = true;
+                    okButton.setAlpha(1.0f);
+                } else {
+                    isOkButtonAvailable = false;
+                    okButton.setAlpha(0.3f);
+                }
+            }
+        });
+
         RelativeLayout.LayoutParams lpC1V1 =
                 new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 
@@ -129,7 +169,6 @@ public class RegisterPasswordScreen extends DefaultScreen implements View.OnClic
         wrongPassword.setId(R.id.register_p_tv_password_wrong);
         wrongPassword.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.h4));
         wrongPassword.setTextColor(ResTools.getColor(R.color.c10));
-        wrongPassword.setText(ResTools.getString(R.string.register_p_tv_wrong_password_long));
         wrongPassword.setVisibility(View.GONE);
         RelativeLayout.LayoutParams lpC1V4 = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         lpC1V4.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
@@ -192,7 +231,8 @@ public class RegisterPasswordScreen extends DefaultScreen implements View.OnClic
             }
         }
         if (v == containerOKButton) {
-            mCallBacks.handleAction(ActionId.CommitRegisterUserInfoClick, null, null);
+            if(isOkButtonAvailable)
+                mCallBacks.handleAction(ActionId.CommitRegisterPasswordClick, null, null);
         }
     }
 }
