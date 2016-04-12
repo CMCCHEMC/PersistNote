@@ -1,7 +1,6 @@
 package com.dv.persistnote.business.habit;
 
 import android.os.Message;
-import android.view.KeyEvent;
 
 import com.dv.persistnote.framework.core.AbstractController;
 import com.dv.persistnote.framework.core.BaseEnv;
@@ -25,7 +24,9 @@ public class HabitDetailController extends AbstractController{
             if(mDetailScreen == null) {
                 mDetailScreen = new HabitDetailScreen(mContext, this);
             }
-            mDetailScreen.setHabitId();
+            if(msg.obj instanceof Long) {
+                mDetailScreen.setHabitDataById((long) msg.obj);
+            }
             mWindowMgr.pushScreen(mDetailScreen, true);
         }
     }

@@ -13,6 +13,8 @@ import com.dv.persistnote.base.ResTools;
 import com.dv.persistnote.framework.DefaultScreen;
 import com.dv.persistnote.framework.ui.UICallBacks;
 
+import habit.dao.HabitRecord;
+
 /**
  * Created by Hang on 2016/4/3.
  */
@@ -68,8 +70,16 @@ public class HabitDetailScreen extends DefaultScreen{
         setContent(mDetailListView);
     }
 
-    public void setHabitId() {
-        setTitle("健身");
+    public void setHabitDataById(long habitId) {
+        HabitRecord habit = HabitModel.getInstance().getHabitById(habitId);
+        if(habit != null) {
+            setTitle(habit.getHabitName());
+            setPersistCounts(habit.getPersistCount());
+        }
+    }
+
+    private void setPersistCounts(int counts) {
+        mPersistDuration.setText("第"+counts+"天");
     }
 
     @Override

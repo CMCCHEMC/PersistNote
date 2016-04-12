@@ -18,6 +18,7 @@ import com.dv.persistnote.business.account.AccountModel;
 
 import java.util.List;
 
+import habit.dao.HabitRecord;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -83,9 +84,9 @@ public class HabitItemView extends RelativeLayout {
         mSubTitle.setText(subTitle);
     }
 
-    public void bindData(FakeDataHelper.HabitInfo info) {
-        mIcon.setImageDrawable(HabitIconHelper.getHabitIcon(info.mHabitId));
-        mTitle.setText(info.mHabitName);
-        mSubTitle.setText("已经坚持"+info.mCount+"天");
+    public void bindData(HabitRecord info) {
+        mIcon.setImageDrawable(HabitIconHelper.getHabitIcon((int)info.getHabitId()));
+        mTitle.setText(info.getHabitName());
+        mSubTitle.setText("已经坚持"+info.getPersistCount()+"天");
     }
 }

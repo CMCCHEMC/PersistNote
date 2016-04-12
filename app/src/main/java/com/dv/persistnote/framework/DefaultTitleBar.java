@@ -57,4 +57,8 @@ public class DefaultTitleBar extends RelativeLayout implements View.OnClickListe
     public void onClick(View view) {
         mCallback.onWindowExitEvent(true);
     }
+
+    public void enableTitleBack(boolean enable) {
+        mBackButton.setVisibility(enable ? View.VISIBLE : View.GONE);
+    }
 }

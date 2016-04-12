@@ -14,7 +14,7 @@ import habit.dao.HabitRecord;
 /** 
  * DAO for table HABIT_RECORD.
 */
-public class HabitRecordDao extends AbstractDao<HabitRecord, Long> {
+public class HabitRecordDao extends AbstractDao<HabitRecord, Void> {
 
     public static final String TABLENAME = "HABIT_RECORD";
 
@@ -23,11 +23,10 @@ public class HabitRecordDao extends AbstractDao<HabitRecord, Long> {
      * Can be used for QueryBuilder and for referencing column names.
     */
     public static class Properties {
-        public final static Property Id = new Property(0, Long.class, "id", true, "_id");
-        public final static Property HabitId = new Property(1, String.class, "habitId", false, "HABIT_ID");
-        public final static Property HabitName = new Property(2, String.class, "habitName", false, "HABIT_NAME");
-        public final static Property PersistCount = new Property(3, Integer.class, "persistCount", false, "PERSIST_COUNT");
-        public final static Property IconUrl = new Property(4, String.class, "iconUrl", false, "ICON_URL");
+        public final static Property HabitId = new Property(0, long.class, "habitId", false, "HABIT_ID");
+        public final static Property HabitName = new Property(1, String.class, "habitName", false, "HABIT_NAME");
+        public final static Property PersistCount = new Property(2, Integer.class, "persistCount", false, "PERSIST_COUNT");
+        public final static Property IconUrl = new Property(3, String.class, "iconUrl", false, "ICON_URL");
     };
 
 
@@ -43,11 +42,10 @@ public class HabitRecordDao extends AbstractDao<HabitRecord, Long> {
     public static void createTable(SQLiteDatabase db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "'HABIT_RECORD' (" + //
-                "'_id' INTEGER PRIMARY KEY ," + // 0: id
-                "'HABIT_ID' TEXT NOT NULL ," + // 1: habitId
-                "'HABIT_NAME' TEXT NOT NULL ," + // 2: habitName
-                "'PERSIST_COUNT' INTEGER," + // 3: persistCount
-                "'ICON_URL' TEXT);"); // 4: iconUrl
+                "'HABIT_ID' INTEGER NOT NULL ," + // 0: habitId
+                "'HABIT_NAME' TEXT NOT NULL ," + // 1: habitName
+                "'PERSIST_COUNT' INTEGER," + // 2: persistCount
+                "'ICON_URL' TEXT);"); // 3: iconUrl
     }
 
     /** Drops the underlying database table. */
@@ -60,40 +58,34 @@ public class HabitRecordDao extends AbstractDao<HabitRecord, Long> {
     @Override
     protected void bindValues(SQLiteStatement stmt, HabitRecord entity) {
         stmt.clearBindings();
- 
-        Long id = entity.getId();
-        if (id != null) {
-            stmt.bindLong(1, id);
-        }
-        stmt.bindString(2, entity.getHabitId());
-        stmt.bindString(3, entity.getHabitName());
+        stmt.bindLong(1, entity.getHabitId());
+        stmt.bindString(2, entity.getHabitName());
  
         Integer persistCount = entity.getPersistCount();
         if (persistCount != null) {
-            stmt.bindLong(4, persistCount);
+            stmt.bindLong(3, persistCount);
         }
  
         String iconUrl = entity.getIconUrl();
         if (iconUrl != null) {
-            stmt.bindString(5, iconUrl);
+            stmt.bindString(4, iconUrl);
         }
     }
 
     /** @inheritdoc */
     @Override
-    public Long readKey(Cursor cursor, int offset) {
-        return cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0);
+    public Void readKey(Cursor cursor, int offset) {
+        return null;
     }    
 
     /** @inheritdoc */
     @Override
     public HabitRecord readEntity(Cursor cursor, int offset) {
         HabitRecord entity = new HabitRecord( //
-            cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
-            cursor.getString(offset + 1), // habitId
-            cursor.getString(offset + 2), // habitName
-            cursor.isNull(offset + 3) ? null : cursor.getInt(offset + 3), // persistCount
-            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4) // iconUrl
+            cursor.getLong(offset + 0), // habitId
+            cursor.getString(offset + 1), // habitName
+            cursor.isNull(offset + 2) ? null : cursor.getInt(offset + 2), // persistCount
+            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3) // iconUrl
         );
         return entity;
     }
@@ -101,28 +93,23 @@ public class HabitRecordDao extends AbstractDao<HabitRecord, Long> {
     /** @inheritdoc */
     @Override
     public void readEntity(Cursor cursor, HabitRecord entity, int offset) {
-        entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
-        entity.setHabitId(cursor.getString(offset + 1));
-        entity.setHabitName(cursor.getString(offset + 2));
-        entity.setPersistCount(cursor.isNull(offset + 3) ? null : cursor.getInt(offset + 3));
-        entity.setIconUrl(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
+        entity.setHabitId(cursor.getLong(offset + 0));
+        entity.setHabitName(cursor.getString(offset + 1));
+        entity.setPersistCount(cursor.isNull(offset + 2) ? null : cursor.getInt(offset + 2));
+        entity.setIconUrl(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
      }
     
     /** @inheritdoc */
     @Override
-    protected Long updateKeyAfterInsert(HabitRecord entity, long rowId) {
-        entity.setId(rowId);
-        return rowId;
+    protected Void updateKeyAfterInsert(HabitRecord entity, long rowId) {
+        // Unsupported or missing PK type
+        return null;
     }
     
     /** @inheritdoc */
     @Override
-    public Long getKey(HabitRecord entity) {
-        if(entity != null) {
-            return entity.getId();
-        } else {
-            return null;
-        }
+    public Void getKey(HabitRecord entity) {
+        return null;
     }
 
     /** @inheritdoc */

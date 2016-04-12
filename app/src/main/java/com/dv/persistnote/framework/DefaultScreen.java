@@ -41,5 +41,11 @@ public class DefaultScreen extends AbstractScreen {
         addView(v, contentLp);
     }
 
+    public void enableTitleBack(boolean enable) {
+        if(mTitleBar != null) {
+            mTitleBar.enableTitleBack(enable);
+        }
+    }
+
 
 }

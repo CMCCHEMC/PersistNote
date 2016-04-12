@@ -8,6 +8,7 @@ public class HabitConstDef {
     public final static int ID_RUNNING = 101;
     public final static int ID_PAINTING = 102;
     public final static int ID_BREAKFAST = 103;
+    public final static int ID_SUNDOG = 104;
 
 
 }

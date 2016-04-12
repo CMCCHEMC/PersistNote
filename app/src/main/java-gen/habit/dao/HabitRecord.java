@@ -6,9 +6,7 @@ package habit.dao;
  */
 public class HabitRecord {
 
-    private Long id;
-    /** Not-null value. */
-    private String habitId;
+    private long habitId;
     /** Not-null value. */
     private String habitName;
     private Integer persistCount;
@@ -17,33 +15,18 @@ public class HabitRecord {
     public HabitRecord() {
     }
 
-    public HabitRecord(Long id) {
-        this.id = id;
-    }
-
-    public HabitRecord(Long id, String habitId, String habitName, Integer persistCount, String iconUrl) {
-        this.id = id;
+    public HabitRecord(long habitId, String habitName, Integer persistCount, String iconUrl) {
         this.habitId = habitId;
         this.habitName = habitName;
         this.persistCount = persistCount;
         this.iconUrl = iconUrl;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    /** Not-null value. */
-    public String getHabitId() {
+    public long getHabitId() {
         return habitId;
     }
 
-    /** Not-null value; ensure this value is available before it is saved to the database. */
-    public void setHabitId(String habitId) {
+    public void setHabitId(long habitId) {
         this.habitId = habitId;
     }
 

@@ -11,7 +11,7 @@ public class GreenDaoGenerator {
     public static void main(String[] args) throws Exception {
         // 正如你所见的，你创建了一个用于添加实体（Entity）的模式（Schema）对象。
         // 两个参数分别代表：数据库版本号与自动生成代码的包路径。
-        Schema schema = new Schema(1, "habit.dao");
+        Schema schema = new Schema(2, "habit.dao");
 //      当然，如果你愿意，你也可以分别指定生成的 Bean 与 DAO 类所在的目录，只要如下所示：
 //      Schema schema = new Schema(1, "me.itangqi.bean");
 //      schema.setDefaultJavaPackageDao("me.itangqi.dao");
@@ -39,8 +39,7 @@ public class GreenDaoGenerator {
         // note.setTableName("NODE");
         // greenDAO 会自动根据实体类的属性值来创建表字段，并赋予默认值
         // 接下来你便可以设置表中的字段：
-        habit.addIdProperty();
-        habit.addStringProperty("habitId").notNull();
+        habit.addLongProperty("habitId").notNull();
         habit.addStringProperty("habitName").notNull();
         // 与在 Java 中使用驼峰命名法不同，默认数据库中的命名是使用大写和下划线来分割单词的。
         // For example, a property called “creationDate” will become a database column “CREATION_DATE”.

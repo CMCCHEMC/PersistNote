@@ -3,6 +3,8 @@ package com.dv.persistnote.base.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.dv.persistnote.base.ContextManager;
+
 /**
  * Created by Hang on 2016/4/10.
  */
@@ -17,10 +19,10 @@ public class SharedPreferencesUtil {
      * @param key
      * @param data
      */
-    public static void saveData(Context context, String key,Object data){
+    public static void saveData(String key,Object data){
 
         String type = data.getClass().getSimpleName();
-        SharedPreferences sharedPreferences = context
+        SharedPreferences sharedPreferences = ContextManager.getContext()
                 .getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
@@ -46,10 +48,10 @@ public class SharedPreferencesUtil {
      * @param defValue
      * @return
      */
-    public static Object getData(Context context, String key, Object defValue){
+    public static Object getData(String key, Object defValue){
 
         String type = defValue.getClass().getSimpleName();
-        SharedPreferences sharedPreferences = context.getSharedPreferences
+        SharedPreferences sharedPreferences = ContextManager.getContext().getSharedPreferences
                 (FILE_NAME, Context.MODE_PRIVATE);
 
         //defValue为为默认值，如果当前获取不到数据就返回它
@@ -66,6 +68,10 @@ public class SharedPreferencesUtil {
         }
 
         return null;
+    }
+
+    public static boolean getBooleanValue(String key) {
+        return (boolean) getData(key, false);
     }
 
 }

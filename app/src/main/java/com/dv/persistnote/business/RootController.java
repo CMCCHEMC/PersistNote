@@ -20,6 +20,7 @@ import com.dv.persistnote.framework.ActionId;
 import com.dv.persistnote.framework.core.AbstractController;
 import com.dv.persistnote.framework.core.BaseEnv;
 import com.dv.persistnote.framework.core.MsgDef;
+import com.dv.persistnote.framework.model.ModelId;
 import com.dv.persistnote.framework.ui.AbstractScreen;
 import com.dv.persistnote.framework.ui.AbstractTabContentView;
 
@@ -37,7 +38,7 @@ import retrofit.client.Response;
  * Created by Hang on 2016/3/13.
  * 最底部的窗口，用于承载各个Tab
  */
-public class RootController extends AbstractController{
+public class RootController extends AbstractController {
 
     private RootScreen mRootScreen;
     private SparseArray<AbstractTabContentView> mTabViews = new SparseArray<AbstractTabContentView>();
@@ -52,7 +53,7 @@ public class RootController extends AbstractController{
         if(msg.what == MsgDef.MSG_INIT_ROOTSCREEN) {
             mRootScreen = new RootScreen(mContext, this);
             mWindowMgr.createWindowStack(mRootScreen);
-
+            HabitModel.getInstance().requestHabitList(this);
             checkLoginState();
         }
     }
@@ -71,7 +72,10 @@ public class RootController extends AbstractController{
         switch (actionId) {
             case ActionId.OnHabitItemClick:
 //                handleHabitClick();
-                mDispatcher.sendMessage(MsgDef.MSG_OPEN_HABIT_DETAIL);
+                Message msg = Message.obtain();
+                msg.what = MsgDef.MSG_OPEN_HABIT_DETAIL;
+                msg.obj = arg;
+                mDispatcher.sendMessage(msg);
                 break;
         }
         return false;
@@ -121,4 +125,13 @@ public class RootController extends AbstractController{
         return retVal;
     }
 
+    @Override
+    public boolean handleData(int dataId, Object arg, Object result) {
+        switch (dataId) {
+            case ModelId.OnHabitListLoaded:
+                mRootScreen.notifyDataChange();
+                break;
+        }
+        return super.handleData(dataId, arg, result);
+    }
 }

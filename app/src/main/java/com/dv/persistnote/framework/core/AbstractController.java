@@ -5,14 +5,14 @@ import android.os.Message;
 import android.view.KeyEvent;
 
 import com.dv.persistnote.base.util.Utilities;
-import com.dv.persistnote.framework.ActionId;
+import com.dv.persistnote.framework.model.IModelObserver;
 import com.dv.persistnote.framework.ui.AbstractScreen;
 import com.dv.persistnote.framework.ui.ScreenManager;
 import com.dv.persistnote.framework.ui.UICallBacks;
 
 import java.util.ArrayList;
 
-public abstract class AbstractController implements UICallBacks, INotify {
+public abstract class AbstractController implements UICallBacks, INotify, IModelObserver {
 
 	@Override
 	public abstract void handleMessage(Message msg);
@@ -139,4 +139,8 @@ public abstract class AbstractController implements UICallBacks, INotify {
         return mDispatcher.sendMessageSync(message);
     }
 
+	@Override
+	public boolean handleData(int dataId, Object arg, Object result) {
+		return false;
+	}
 }

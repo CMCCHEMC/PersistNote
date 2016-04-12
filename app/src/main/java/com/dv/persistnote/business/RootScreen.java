@@ -4,15 +4,16 @@ import android.content.Context;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import com.dv.persistnote.FakeDataHelper;
-import com.dv.persistnote.FakeDataHelper.HabitInfo;
 import com.dv.persistnote.R;
 import com.dv.persistnote.base.ResTools;
+import com.dv.persistnote.business.habit.HabitModel;
 import com.dv.persistnote.framework.ActionId;
 import com.dv.persistnote.framework.DefaultScreen;
 import com.dv.persistnote.framework.ui.UICallBacks;
 
 import java.util.List;
+
+import habit.dao.HabitRecord;
 
 /**
  * Created by Hang on 2016/3/13.
@@ -25,6 +26,7 @@ public class RootScreen extends DefaultScreen {
         super(context, callBacks);
         init();
         setTitle(ResTools.getString(R.string.app_name));
+        enableTitleBack(false);
     }
 
     protected void init() {
@@ -33,15 +35,18 @@ public class RootScreen extends DefaultScreen {
         mContainer.setOrientation(LinearLayout.VERTICAL);
         setContent(mContainer);
 
-        List<HabitInfo> habitInfos = FakeDataHelper.getMyHabitInfos();
-        updateData(habitInfos);
     }
 
-    private void updateData(List<HabitInfo> habitInfos) {
+    public void updateData() {
         mContainer.removeAllViews();
 
+        List<HabitRecord> habitInfos = HabitModel.getInstance().getHabitList();
 
-        for (HabitInfo info : habitInfos) {
+        if (habitInfos == null) {
+            return;
+        }
+
+        for (final HabitRecord info : habitInfos) {
             final HabitItemView itemView = new HabitItemView(getContext());
             LinearLayout.LayoutParams lp =
                     new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, ResTools.getDimenInt(R.dimen.habit_item_height));
@@ -49,7 +54,7 @@ public class RootScreen extends DefaultScreen {
             itemView.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    mCallBacks.handleAction(ActionId.OnHabitItemClick, null, null);
+                    mCallBacks.handleAction(ActionId.OnHabitItemClick, info.getHabitId() , null);
                 }
             });
 
@@ -65,4 +70,7 @@ public class RootScreen extends DefaultScreen {
     }
 
 
+    public void notifyDataChange() {
+        updateData();
+    }
 }
