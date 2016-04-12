@@ -46,7 +46,7 @@ public class HabitItemView extends RelativeLayout implements View.OnClickListene
         mTitle.setTextColor(ResTools.getColor(R.color.c2));
         mTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX, ResTools.getDimenInt(R.dimen.h1));
         lp.addRule(RIGHT_OF, R.id.id_icon);
-        lp.topMargin = ResTools.getDimenInt(R.dimen.common_margin_top);
+        lp.topMargin = ResTools.getDimenInt(R.dimen.common_margin_top_22);
         addView(mTitle, lp);
 
         lp = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
@@ -62,7 +62,7 @@ public class HabitItemView extends RelativeLayout implements View.OnClickListene
         addView(mCheckIcon, lp);
 
         setBackgroundColor(ResTools.getColor(R.color.c4));
-        int padding = ResTools.getDimenInt(R.dimen.common_margin);
+        int padding = ResTools.getDimenInt(R.dimen.common_margin_16);
         setPadding(padding, 0, padding, 0);
 
         setOnClickListener(this);

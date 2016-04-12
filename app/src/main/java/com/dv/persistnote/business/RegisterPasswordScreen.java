@@ -161,7 +161,7 @@ public class RegisterPasswordScreen extends DefaultScreen implements View.OnClic
                 new RelativeLayout.LayoutParams(ResTools.getDimenInt(R.dimen.h1), ResTools.getDimenInt(R.dimen.h1));
         lpC1V3.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
         lpC1V3.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-        lpC1V3.bottomMargin = ResTools.getDimenInt(R.dimen.common_margin_bottom);
+        lpC1V3.bottomMargin = ResTools.getDimenInt(R.dimen.common_margin_bottom_11);
 
         containerPassword.addView(hidePassword, lpC1V3);
 
@@ -173,7 +173,7 @@ public class RegisterPasswordScreen extends DefaultScreen implements View.OnClic
         RelativeLayout.LayoutParams lpC1V4 = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         lpC1V4.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
         lpC1V4.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-        lpC1V4.bottomMargin = ResTools.getDimenInt(R.dimen.common_margin_bottom);
+        lpC1V4.bottomMargin = ResTools.getDimenInt(R.dimen.common_margin_bottom_11);
 
         containerPassword.addView(wrongPassword, lpC1V4);
 

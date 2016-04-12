@@ -15,9 +15,9 @@
     <dimen name="h4">12dp</dimen>
     <dimen name="h5">10dp</dimen>
 
-    <dimen name="common_margin">16dp</dimen>
-    <dimen name="common_margin_top">22dp</dimen>
-    <dimen name="common_margin_bottom">11dp</dimen>
+    <dimen name="common_margin_16">16dp</dimen>
+    <dimen name="common_margin_top_22">22dp</dimen>
+    <dimen name="common_margin_bottom_11">11dp</dimen>
 
     <dimen name="common_rl_height">48dp</dimen>
     <dimen name="common_rl_margin_left">24dp</dimen>
@@ -29,6 +29,11 @@
 
     <dimen name="common_et_padding_top">18dp</dimen>
     <dimen name="common_et_padding_bottom">7dp</dimen>
+
+    <dimen name="common_rl_remove_width">30dp</dimen>
+    <dimen name="common_rl_remove_hide_width">44dp</dimen>
+    <dimen name="common_rl_hide_width">30dp</dimen>
+    <dimen name="common_et_remove_hide_margin_right">75dp</dimen>
 
     <dimen name="common_rl_ok_margin_top">40dp</dimen>
     <dimen name="common_rl_ok_width_height">56dp</dimen>
@@ -50,9 +55,11 @@
 
     <dimen name="register_bt_code_width">76dp</dimen>
     <dimen name="register_bt_code_height">48dp</dimen>
-    <dimen name="register_iv_code_margin_right">15dp</dimen>
+    <dimen name="register_rl_code_remove_margin_right">15dp</dimen>
 
-    <dimen name="register_et_code_margin_right">8dp</dimen>
+    <dimen name="register_et_code_margin_right">45dp</dimen>
+
+    <dimen name="register_line_code_margin_right">8dp</dimen>
 
     <!-- RegisterPasswordScreen -->
     <dimen name="register_p_rl_password_margin_top">24dp</dimen>

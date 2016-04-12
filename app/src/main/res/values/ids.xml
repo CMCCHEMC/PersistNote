@@ -31,6 +31,8 @@
     <item name="register_rl_phone_number" type="id" />
     <item name="register_rl_code" type="id" />
     <item name="register_rl_ok" type="id" />
+    <item name="register_rl_phone_number_remove" type="id" />
+    <item name="register_rl_code_remove" type="id" />
 
     <!-- RegisterPasswordScreen -->
     <item name="register_p_et_password" type="id" />

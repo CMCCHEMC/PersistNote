@@ -49,15 +49,13 @@ public class LoginScreen extends DefaultScreen implements View.OnClickListener {
 
     private ImageView okButtonArrow;
 
+    private ImageView removeCode;
+
     private ImageView hidePassword;
 
     private Boolean isHidden = true;
 
     private Boolean isOkButtonAvailable = false;
-
-    private TextView wrongPhoneNumber;
-
-    private TextView wrongPassword;
 
     public LoginScreen(Context context, UICallBacks callBacks) {
         super(context, callBacks);
@@ -232,7 +230,7 @@ public class LoginScreen extends DefaultScreen implements View.OnClickListener {
                 new RelativeLayout.LayoutParams(ResTools.getDimenInt(R.dimen.h1), ResTools.getDimenInt(R.dimen.h1));
         lpC2V2.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
         lpC2V2.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-        lpC2V2.bottomMargin = ResTools.getDimenInt(R.dimen.common_margin_bottom);
+        lpC2V2.bottomMargin = ResTools.getDimenInt(R.dimen.common_margin_bottom_11);
 
         containerPassword.addView(hidePassword, lpC2V2);
 

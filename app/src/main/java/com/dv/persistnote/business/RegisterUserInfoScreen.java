@@ -125,7 +125,7 @@ public class RegisterUserInfoScreen extends DefaultScreen implements View.OnClic
         RelativeLayout.LayoutParams lpC1V3 = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         lpC1V3.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
         lpC1V3.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-        lpC1V3.bottomMargin = ResTools.getDimenInt(R.dimen.common_margin_bottom);
+        lpC1V3.bottomMargin = ResTools.getDimenInt(R.dimen.common_margin_bottom_11);
 
         containerUserName.addView(wrongUserName, lpC1V3);
 

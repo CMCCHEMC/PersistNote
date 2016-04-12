@@ -10,8 +10,6 @@ import android.widget.TextView;
 import com.dv.persistnote.R;
 import com.dv.persistnote.base.ResTools;
 
-import org.w3c.dom.Text;
-
 /**
  * Created by Hang on 2016/3/21.
  */
@@ -40,7 +38,7 @@ public class DefaultTitleBar extends RelativeLayout implements View.OnClickListe
         addView(mTitleText, lp);
 
         setBackgroundColor(ResTools.getColor(R.color.c4));
-        int padding = ResTools.getDimenInt(R.dimen.common_margin);
+        int padding = ResTools.getDimenInt(R.dimen.common_margin_16);
         setPadding(padding, 0, padding, 0);
     }
 

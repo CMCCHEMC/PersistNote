@@ -5,10 +5,8 @@ import android.graphics.drawable.Drawable;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.dv.persistnote.R;
 import com.dv.persistnote.framework.ActionId;
@@ -74,7 +72,7 @@ public class WelcomeScreen extends AbstractScreen implements View.OnClickListene
         TextView textView = new TextView(getContext());
         textView.setText(text);
         textView.setGravity(Gravity.CENTER);
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.common_margin_top));
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.common_margin_top_22));
         textView.setTextColor(getResources().getColor(R.color.c1));
         textView.setTypeface(FontManager.getInstance().getDefaultTypeface());
 

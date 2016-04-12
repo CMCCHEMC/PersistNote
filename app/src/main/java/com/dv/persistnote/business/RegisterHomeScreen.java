@@ -30,7 +30,11 @@ public class RegisterHomeScreen extends DefaultScreen implements View.OnClickLis
 
     private RelativeLayout containerPhoneNumber;
 
+    private RelativeLayout containerPhoneNumberRemoveEZTouch;
+
     private RelativeLayout containerCode;
+
+    private RelativeLayout containerCodeRemoveEZTouch;
 
     private RelativeLayout containerOKButton;
 
@@ -48,11 +52,15 @@ public class RegisterHomeScreen extends DefaultScreen implements View.OnClickLis
 
     private ImageView removeCode;
 
+    private ImageView removePhoneNumber;
+
     private CircleView okButton;
 
     private ImageView okButtonArrow;
 
     private TextView wrongPhoneNumber;
+
+    private TextView wrongCode;
 
     public RegisterHomeScreen(Context context, UICallBacks callBacks) {
         super(context, callBacks);
@@ -89,8 +97,11 @@ public class RegisterHomeScreen extends DefaultScreen implements View.OnClickLis
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
                     etPhoneNumber.setHint(R.string.common_et_hint_phone_number);
+                    removePhoneNumber.setVisibility(View.GONE);
                 } else {
                     etPhoneNumber.setHint(null);
+                    if (etPhoneNumber.getText().toString().length() > 0)
+                        removePhoneNumber.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -103,7 +114,7 @@ public class RegisterHomeScreen extends DefaultScreen implements View.OnClickLis
             Log.e(TAG, "Register Init : color_cursor Error");
         }
 
-        etPhoneNumber.addTextChangedListener(new TextWatcher(){
+        etPhoneNumber.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -116,18 +127,24 @@ public class RegisterHomeScreen extends DefaultScreen implements View.OnClickLis
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(s.toString().length() > 0 && etCode.getText().toString().length() > 0) {
+                if (s.toString().length() > 0 && etCode.getText().toString().length() > 0) {
                     isOkButtonAvailable = true;
                     okButton.setAlpha(1.0f);
                 } else {
                     isOkButtonAvailable = false;
                     okButton.setAlpha(0.3f);
                 }
+                if (s.toString().length() > 0) {
+                    removePhoneNumber.setVisibility(View.VISIBLE);
+                } else {
+                    removePhoneNumber.setVisibility(View.GONE);
+                }
             }
         });
 
         RelativeLayout.LayoutParams lpC1V1 =
                 new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+        lpC1V1.rightMargin = ResTools.getDimenInt(R.dimen.common_rl_remove_width);
 
         containerPhoneNumber.addView(etPhoneNumber, lpC1V1);
 
@@ -141,18 +158,31 @@ public class RegisterHomeScreen extends DefaultScreen implements View.OnClickLis
 
         containerPhoneNumber.addView(linePhoneNumber, lpC1V2);
 
-        wrongPhoneNumber = new TextView(getContext());
-        wrongPhoneNumber.setId(R.id.register_tv_phone_number_wrong);
-        wrongPhoneNumber.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.h4));
-        wrongPhoneNumber.setTextColor(ResTools.getColor(R.color.c10));
-        wrongPhoneNumber.setText(ResTools.getString(R.string.register_tv_wrong_phone_number));
-        wrongPhoneNumber.setVisibility(View.GONE);
-        RelativeLayout.LayoutParams lpC1V3 = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-        lpC1V3.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-        lpC1V3.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-        lpC1V3.bottomMargin = ResTools.getDimenInt(R.dimen.common_margin_bottom);
+        /** EZ Touch start **/
 
-        containerPhoneNumber.addView(wrongPhoneNumber, lpC1V3);
+        containerPhoneNumberRemoveEZTouch = new RelativeLayout(getContext());
+        containerPhoneNumberRemoveEZTouch.setId(R.id.register_rl_phone_number_remove);
+        containerPhoneNumberRemoveEZTouch.setOnClickListener(this);
+
+        RelativeLayout.LayoutParams lpC1C1 = new RelativeLayout.LayoutParams(ResTools.getDimenInt(R.dimen.common_rl_remove_width),
+                LayoutParams.MATCH_PARENT);
+        lpC1C1.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+
+        removePhoneNumber = new ImageView(getContext());
+        removePhoneNumber.setId(R.id.register_iv_code);
+        removePhoneNumber.setImageDrawable(ResTools.getDrawable(R.drawable.delete));
+        removePhoneNumber.setVisibility(View.GONE);
+
+        RelativeLayout.LayoutParams lpC1C1V1 = new RelativeLayout.LayoutParams(ResTools.getDimenInt(R.dimen.h1), ResTools.getDimenInt(R.dimen.h1));
+        lpC1C1V1.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+        lpC1C1V1.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+        lpC1C1V1.bottomMargin = ResTools.getDimenInt(R.dimen.common_margin_bottom_11);
+
+        containerPhoneNumberRemoveEZTouch.addView(removePhoneNumber, lpC1C1V1);
+
+        containerPhoneNumber.addView(containerPhoneNumberRemoveEZTouch, lpC1C1);
+
+        /** EZ Touch end **/
 
         mContainer.addView(containerPhoneNumber, lpC1);
 
@@ -194,8 +224,11 @@ public class RegisterHomeScreen extends DefaultScreen implements View.OnClickLis
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
                     etCode.setHint(R.string.register_et_hint_code);
+                    removeCode.setVisibility(View.GONE);
                 } else {
                     etCode.setHint(null);
+                    if (etCode.getText().toString().length() > 0)
+                    removeCode.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -208,7 +241,7 @@ public class RegisterHomeScreen extends DefaultScreen implements View.OnClickLis
             Log.e(TAG, "Register Init : color_cursor Error");
         }
 
-        etCode.addTextChangedListener(new TextWatcher(){
+        etCode.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -221,12 +254,17 @@ public class RegisterHomeScreen extends DefaultScreen implements View.OnClickLis
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(s.toString().length() > 0 && etPhoneNumber.getText().toString().length() > 0) {
+                if (s.toString().length() > 0 && etPhoneNumber.getText().toString().length() > 0) {
                     isOkButtonAvailable = true;
                     okButton.setAlpha(1.0f);
                 } else {
                     isOkButtonAvailable = false;
                     okButton.setAlpha(0.3f);
+                }
+                if (s.toString().length() > 0) {
+                    removeCode.setVisibility(View.VISIBLE);
+                } else {
+                    removeCode.setVisibility(View.GONE);
                 }
             }
         });
@@ -247,24 +285,36 @@ public class RegisterHomeScreen extends DefaultScreen implements View.OnClickLis
         lpC2V3.addRule(RelativeLayout.BELOW, R.id.register_et_code);
         lpC2V3.addRule(RelativeLayout.LEFT_OF, R.id.register_bt_code);
         lpC2V3.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
-        lpC2V3.rightMargin = ResTools.getDimenInt(R.dimen.register_et_code_margin_right);
+        lpC2V3.rightMargin = ResTools.getDimenInt(R.dimen.register_line_code_margin_right);
 
         containerCode.addView(lineCode, lpC2V3);
 
+        /** EZ Touch start **/
+
+        containerCodeRemoveEZTouch = new RelativeLayout(getContext());
+        containerCodeRemoveEZTouch.setId(R.id.register_rl_code_remove);
+        containerCodeRemoveEZTouch.setOnClickListener(this);
+
+        RelativeLayout.LayoutParams lpC2C1 = new RelativeLayout.LayoutParams(ResTools.getDimenInt(R.dimen.common_rl_remove_width),
+                LayoutParams.MATCH_PARENT);
+        lpC2C1.addRule(RelativeLayout.LEFT_OF, R.id.register_bt_code);
+        lpC2C1.rightMargin = ResTools.getDimenInt(R.dimen.register_rl_code_remove_margin_right);
+
         removeCode = new ImageView(getContext());
         removeCode.setId(R.id.register_iv_code);
-        removeCode.setImageDrawable(ResTools.getDrawable(R.drawable.cross_wrong));
-        removeCode.setOnClickListener(this);
+        removeCode.setImageDrawable(ResTools.getDrawable(R.drawable.delete));
         removeCode.setVisibility(View.GONE);
 
-        RelativeLayout.LayoutParams lpC2V4 = new RelativeLayout.LayoutParams(ResTools.getDimenInt(R.dimen.h1),
-                ResTools.getDimenInt(R.dimen.h1));
-        lpC2V4.addRule(RelativeLayout.LEFT_OF, R.id.register_bt_code);
-        lpC2V4.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-        lpC2V4.rightMargin = ResTools.getDimenInt(R.dimen.register_iv_code_margin_right);
-        lpC2V4.bottomMargin = ResTools.getDimenInt(R.dimen.common_margin_bottom);
+        RelativeLayout.LayoutParams lpC2C1V1 = new RelativeLayout.LayoutParams(ResTools.getDimenInt(R.dimen.h1), ResTools.getDimenInt(R.dimen.h1));
+        lpC2C1V1.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+        lpC2C1V1.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+        lpC2C1V1.bottomMargin = ResTools.getDimenInt(R.dimen.common_margin_bottom_11);
 
-        containerCode.addView(removeCode, lpC2V4);
+        containerCodeRemoveEZTouch.addView(removeCode, lpC2C1V1);
+
+        containerCode.addView(containerCodeRemoveEZTouch, lpC2C1);
+
+        /** EZ Touch end **/
 
         mContainer.addView(containerCode, lpC2);
 
@@ -299,6 +349,10 @@ public class RegisterHomeScreen extends DefaultScreen implements View.OnClickLis
 
         mContainer.addView(containerOKButton, lpC3);
 
+        /************** wrongPhoneNumber ******************/
+
+        /************** wrongCode ******************/
+
     }
 
     @Override
@@ -306,6 +360,12 @@ public class RegisterHomeScreen extends DefaultScreen implements View.OnClickLis
         if (v == containerOKButton) {
             if(isOkButtonAvailable)
                 mCallBacks.handleAction(ActionId.CommitRegisterHomeClick, null, null);
+        }
+        if (v == containerCodeRemoveEZTouch) {
+            etCode.setText(null);
+        }
+        if (v == containerPhoneNumberRemoveEZTouch) {
+            etPhoneNumber.setText(null);
         }
     }
 }
