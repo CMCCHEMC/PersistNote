@@ -20,7 +20,7 @@ import com.dv.persistnote.framework.ui.UICallBacks;
 import java.lang.reflect.Field;
 
 /**
- * Created by Admin2 on 2016/4/5.
+ * Created by QinZheng on 2016/4/5.
  */
 public class RegisterUserInfoScreen extends DefaultScreen implements View.OnClickListener{
 

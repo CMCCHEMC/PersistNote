@@ -9,21 +9,29 @@
     <item name="login_line_phone_number" type="id" />
     <item name="login_et_password" type="id" />
     <item name="login_line_password" type="id" />
-    <item name="login_iv_password" type="id" />
+    <item name="login_iv_password_hide" type="id" />
+    <item name="login_iv_phone_number_remove" type="id" />
+    <item name="login_iv_password_remove" type="id" />
     <item name="login_iv_ok" type="id" />
     <item name="login_v_ok" type="id" />
+    <item name="login_divider_password" type="id" />
 
     <item name="login_rl_phone_number" type="id" />
     <item name="login_rl_password" type="id" />
     <item name="login_rl_ok" type="id" />
+    <item name="login_rl_phone_number_remove" type="id" />
+    <item name="login_rl_password_remove" type="id" />
+    <item name="login_rl_password_hide" type="id" />
 
     <!-- RegisterHomeScreen -->
     <item name="register_et_phone_number" type="id" />
     <item name="register_line_phone_number" type="id" />
     <item name="register_tv_phone_number_wrong" type="id" />
+    <item name="register_tv_code_wrong" type="id" />
     <item name="register_et_code" type="id" />
     <item name="register_line_code" type="id" />
-    <item name="register_iv_code" type="id" />
+    <item name="register_iv_phone_number_remove" type="id" />
+    <item name="register_iv_code_remove" type="id" />
     <item name="register_bt_code" type="id" />
     <item name="register_iv_ok" type="id" />
     <item name="register_v_ok" type="id" />

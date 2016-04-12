@@ -2,6 +2,7 @@ package com.dv.persistnote.business;
 
 import android.content.Context;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.Selection;
 import android.text.Spannable;
 import android.text.TextWatcher;
@@ -25,37 +26,47 @@ import com.dv.persistnote.framework.ui.UICallBacks;
 import java.lang.reflect.Field;
 
 /**
- * Created by Admin2 on 2016/3/29.
+ * Created by QinZheng on 2016/3/29.
  */
 public class LoginScreen extends DefaultScreen implements View.OnClickListener {
 
     private RelativeLayout mContainer;
 
-    private RelativeLayout containerPhoneNumber;
+    private RelativeLayout mContainerPhoneNumber;
 
-    private RelativeLayout containerPassword;
+    private RelativeLayout mContainerPassword;
 
-    private RelativeLayout containerOKButton;
+    private RelativeLayout mContainerOKButton;
 
-    private EditText etPhoneNumber;
+    private RelativeLayout mContainerPhoneNumberRemoveEZTouch;
 
-    private EditText etPassword;
+    private RelativeLayout mContainerPasswordRemoveEZTouch;
 
-    private View linePhoneNumber;
+    private RelativeLayout mContainerPasswordHideEZTouch;
 
-    private View linePassword;
+    private EditText mEtPhoneNumber;
 
-    private CircleView okButton;
+    private EditText mEtPassword;
 
-    private ImageView okButtonArrow;
+    private View mLinePhoneNumber;
 
-    private ImageView removeCode;
+    private View mLinePassword;
 
-    private ImageView hidePassword;
+    private View mDividerPassword;
 
-    private Boolean isHidden = true;
+    private CircleView mOkButton;
 
-    private Boolean isOkButtonAvailable = false;
+    private ImageView mOkButtonArrow;
+
+    private ImageView mRemovePhoneNumber;
+
+    private ImageView mRemovePassword;
+
+    private ImageView mHidePassword;
+
+    private Boolean mIsHidden = true;
+
+    private Boolean mIsOkButtonAvailable = false;
 
     public LoginScreen(Context context, UICallBacks callBacks) {
         super(context, callBacks);
@@ -70,31 +81,35 @@ public class LoginScreen extends DefaultScreen implements View.OnClickListener {
 
         mContainer.removeAllViews();
 
-        /************** containerPhoneNumber ******************/
+        /************** mContainerPhoneNumber ******************/
 
-        containerPhoneNumber = new RelativeLayout(getContext());
-        containerPhoneNumber.setId(R.id.login_rl_phone_number);
+        mContainerPhoneNumber = new RelativeLayout(getContext());
+        mContainerPhoneNumber.setId(R.id.login_rl_phone_number);
 
         RelativeLayout.LayoutParams lpC1 = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, ResTools.getDimenInt(R.dimen.common_rl_height));
         lpC1.topMargin = ResTools.getDimenInt(R.dimen.login_rl_phone_number_margin_top);
         lpC1.leftMargin = ResTools.getDimenInt(R.dimen.common_rl_margin_left);
         lpC1.rightMargin = ResTools.getDimenInt(R.dimen.common_rl_margin_right);
 
-        etPhoneNumber = new EditText(getContext());
-        etPhoneNumber.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.h1));
-        etPhoneNumber.setPadding(0, ResTools.getDimenInt(R.dimen.common_et_padding_top),
+        mEtPhoneNumber = new EditText(getContext());
+        mEtPhoneNumber.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.h1));
+        mEtPhoneNumber.setPadding(0, ResTools.getDimenInt(R.dimen.common_et_padding_top),
                 0, ResTools.getDimenInt(R.dimen.common_et_padding_bottom));
-        etPhoneNumber.setId(R.id.login_et_phone_number);
-        etPhoneNumber.setBackgroundColor(ResTools.getColor(R.color.c4));
-        etPhoneNumber.setHint(R.string.common_et_hint_phone_number);
-        etPhoneNumber.setSingleLine(true);
-        etPhoneNumber.setOnFocusChangeListener(new OnFocusChangeListener() {
+        mEtPhoneNumber.setId(R.id.login_et_phone_number);
+        mEtPhoneNumber.setBackgroundColor(ResTools.getColor(R.color.c4));
+        mEtPhoneNumber.setHint(R.string.common_et_hint_phone_number);
+        mEtPhoneNumber.setSingleLine(true);
+        mEtPhoneNumber.setInputType(InputType.TYPE_CLASS_PHONE);
+        mEtPhoneNumber.setOnFocusChangeListener(new OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
-                    etPhoneNumber.setHint(R.string.common_et_hint_phone_number);
+                    mEtPhoneNumber.setHint(R.string.common_et_hint_phone_number);
+                    mRemovePhoneNumber.setVisibility(View.GONE);
                 } else {
-                    etPhoneNumber.setHint(null);
+                    mEtPhoneNumber.setHint(null);
+                    if (mEtPhoneNumber.getText().toString().length() > 0)
+                        mRemovePhoneNumber.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -102,12 +117,12 @@ public class LoginScreen extends DefaultScreen implements View.OnClickListener {
             // https://github.com/android/platform_frameworks_base/blob/kitkat-release/core/java/android/widget/TextView.java#L562-564
             Field f = TextView.class.getDeclaredField("mCursorDrawableRes");
             f.setAccessible(true);
-            f.set(etPhoneNumber, R.drawable.color_cursor);
+            f.set(mEtPhoneNumber, R.drawable.color_cursor);
         } catch (Exception ignored) {
             Log.e(TAG, "Login Init : color_cursor Error");
         }
 
-        etPhoneNumber.addTextChangedListener(new TextWatcher(){
+        mEtPhoneNumber.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -120,37 +135,69 @@ public class LoginScreen extends DefaultScreen implements View.OnClickListener {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(s.toString().length() > 0 && etPassword.getText().toString().length() > 0) {
-                    isOkButtonAvailable = true;
-                    okButton.setAlpha(1.0f);
+                if (s.toString().length() > 0 && mEtPassword.getText().toString().length() > 0) {
+                    mIsOkButtonAvailable = true;
+                    mOkButton.setAlpha(1.0f);
                 } else {
-                    isOkButtonAvailable = false;
-                    okButton.setAlpha(0.3f);
+                    mIsOkButtonAvailable = false;
+                    mOkButton.setAlpha(0.3f);
+                }
+                if (s.toString().length() > 0) {
+                    mRemovePhoneNumber.setVisibility(View.VISIBLE);
+                } else {
+                    mRemovePhoneNumber.setVisibility(View.GONE);
                 }
             }
         });
 
         RelativeLayout.LayoutParams lpC1V1 =
                 new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+        lpC1V1.rightMargin = ResTools.getDimenInt(R.dimen.common_rl_remove_width);
 
-        containerPhoneNumber.addView(etPhoneNumber, lpC1V1);
+        mContainerPhoneNumber.addView(mEtPhoneNumber, lpC1V1);
 
-        linePhoneNumber = new View(getContext());
-        linePhoneNumber.setId(R.id.login_line_phone_number);
-        linePhoneNumber.setBackgroundColor(ResTools.getColor(R.color.c1));
+        mLinePhoneNumber = new View(getContext());
+        mLinePhoneNumber.setId(R.id.login_line_phone_number);
+        mLinePhoneNumber.setBackgroundColor(ResTools.getColor(R.color.c1));
 
         RelativeLayout.LayoutParams lpC1V2 =
                 new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, ResTools.getDimenInt(R.dimen.common_line_height));
         lpC1V2.addRule(RelativeLayout.BELOW, R.id.login_et_phone_number);
 
-        containerPhoneNumber.addView(linePhoneNumber, lpC1V2);
+        mContainerPhoneNumber.addView(mLinePhoneNumber, lpC1V2);
 
-        mContainer.addView(containerPhoneNumber, lpC1);
+        /** EZ Touch start **/
 
-        /************** containerPassword ******************/
+        mContainerPhoneNumberRemoveEZTouch = new RelativeLayout(getContext());
+        mContainerPhoneNumberRemoveEZTouch.setId(R.id.login_rl_phone_number_remove);
+        mContainerPhoneNumberRemoveEZTouch.setOnClickListener(this);
 
-        containerPassword = new RelativeLayout(getContext());
-        containerPassword.setId(R.id.login_rl_password);
+        RelativeLayout.LayoutParams lpC1C1 = new RelativeLayout.LayoutParams(ResTools.getDimenInt(R.dimen.common_rl_remove_width),
+                LayoutParams.MATCH_PARENT);
+        lpC1C1.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+
+        mRemovePhoneNumber = new ImageView(getContext());
+        mRemovePhoneNumber.setId(R.id.login_iv_password_remove);
+        mRemovePhoneNumber.setImageDrawable(ResTools.getDrawable(R.drawable.delete));
+        mRemovePhoneNumber.setVisibility(View.GONE);
+
+        RelativeLayout.LayoutParams lpC1C1V1 = new RelativeLayout.LayoutParams(ResTools.getDimenInt(R.dimen.h2), ResTools.getDimenInt(R.dimen.h2));
+        lpC1C1V1.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+        lpC1C1V1.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+        lpC1C1V1.bottomMargin = ResTools.getDimenInt(R.dimen.common_margin_bottom_12);
+
+        mContainerPhoneNumberRemoveEZTouch.addView(mRemovePhoneNumber, lpC1C1V1);
+
+        mContainerPhoneNumber.addView(mContainerPhoneNumberRemoveEZTouch, lpC1C1);
+
+        /** EZ Touch end **/
+
+        mContainer.addView(mContainerPhoneNumber, lpC1);
+
+        /************** mContainerPassword ******************/
+
+        mContainerPassword = new RelativeLayout(getContext());
+        mContainerPassword.setId(R.id.login_rl_password);
         RelativeLayout.LayoutParams lpC2 = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT,
                 ResTools.getDimenInt(R.dimen.common_rl_height));
         lpC2.topMargin = ResTools.getDimenInt(R.dimen.login_rl_password_margin_top);
@@ -158,22 +205,29 @@ public class LoginScreen extends DefaultScreen implements View.OnClickListener {
         lpC2.rightMargin = ResTools.getDimenInt(R.dimen.common_rl_margin_right);
         lpC2.addRule(RelativeLayout.BELOW, R.id.login_rl_phone_number);
 
-        etPassword = new EditText(getContext());
-        etPassword.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.h1));
-        etPassword.setPadding(0, ResTools.getDimenInt(R.dimen.common_et_padding_top),
+        mEtPassword = new EditText(getContext());
+        mEtPassword.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.h1));
+        mEtPassword.setPadding(0, ResTools.getDimenInt(R.dimen.common_et_padding_top),
                 0, ResTools.getDimenInt(R.dimen.common_et_padding_bottom));
-        etPassword.setId(R.id.login_et_password);
-        etPassword.setBackgroundColor(ResTools.getColor(R.color.c4));
-        etPassword.setHint(R.string.common_et_hint_password);
-        etPassword.setSingleLine(true);
-        etPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
-        etPassword.setOnFocusChangeListener(new OnFocusChangeListener() {
+        mEtPassword.setId(R.id.login_et_password);
+        mEtPassword.setBackgroundColor(ResTools.getColor(R.color.c4));
+        mEtPassword.setHint(R.string.common_et_hint_password);
+        mEtPassword.setSingleLine(true);
+        mEtPassword.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+        mEtPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+        mEtPassword.setOnFocusChangeListener(new OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
-                    etPassword.setHint(R.string.common_et_hint_password);
+                    mEtPassword.setHint(R.string.common_et_hint_password);
+                    mDividerPassword.setVisibility(View.INVISIBLE);
+                    mRemovePassword.setVisibility(View.GONE);
                 } else {
-                    etPassword.setHint(null);
+                    mEtPassword.setHint(null);
+                    if (mEtPassword.getText().toString().length() > 0) {
+                        mDividerPassword.setVisibility(View.VISIBLE);
+                        mRemovePassword.setVisibility(View.VISIBLE);
+                    }
                 }
             }
         });
@@ -181,12 +235,12 @@ public class LoginScreen extends DefaultScreen implements View.OnClickListener {
             // https://github.com/android/platform_frameworks_base/blob/kitkat-release/core/java/android/widget/TextView.java#L562-564
             Field f = TextView.class.getDeclaredField("mCursorDrawableRes");
             f.setAccessible(true);
-            f.set(etPassword, R.drawable.color_cursor);
+            f.set(mEtPassword, R.drawable.color_cursor);
         } catch (Exception ignored) {
             Log.e(TAG, "Login Init : color_cursor Error");
         }
 
-        etPassword.addTextChangedListener(new TextWatcher(){
+        mEtPassword.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -199,48 +253,109 @@ public class LoginScreen extends DefaultScreen implements View.OnClickListener {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(s.toString().length() > 0 && etPhoneNumber.getText().toString().length() > 0) {
-                    isOkButtonAvailable = true;
-                    okButton.setAlpha(1.0f);
+                if (s.toString().length() > 0 && mEtPhoneNumber.getText().toString().length() > 0) {
+                    mIsOkButtonAvailable = true;
+                    mOkButton.setAlpha(1.0f);
                 } else {
-                    isOkButtonAvailable = false;
-                    okButton.setAlpha(0.3f);
+                    mIsOkButtonAvailable = false;
+                    mOkButton.setAlpha(0.3f);
+                }
+                if (s.toString().length() > 0) {
+                    mDividerPassword.setVisibility(View.VISIBLE);
+                    mRemovePassword.setVisibility(View.VISIBLE);
+                } else {
+                    mDividerPassword.setVisibility(View.INVISIBLE);
+                    mRemovePassword.setVisibility(View.GONE);
                 }
             }
         });
 
-        containerPassword.addView(etPassword, lpC1V1);
-
-        linePassword = new View(getContext());
-        linePassword.setId(R.id.login_line_password);
-        linePassword.setBackgroundColor(ResTools.getColor(R.color.c1));
-
         RelativeLayout.LayoutParams lpC2V1 =
-                new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, ResTools.getDimenInt(R.dimen.common_line_height));
-        lpC2V1.addRule(RelativeLayout.BELOW, R.id.login_et_password);
+                new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+        lpC2V1.rightMargin = ResTools.getDimenInt(R.dimen.common_et_remove_hide_margin_right);
 
-        containerPassword.addView(linePassword, lpC2V1);
+        mContainerPassword.addView(mEtPassword, lpC2V1);
 
-        hidePassword = new ImageView(getContext());
-        hidePassword.setId(R.id.login_iv_password);
-        hidePassword.setImageDrawable(ResTools.getDrawable(R.drawable.eyes_open));
-        hidePassword.setOnClickListener(this);
+        mLinePassword = new View(getContext());
+        mLinePassword.setId(R.id.login_line_password);
+        mLinePassword.setBackgroundColor(ResTools.getColor(R.color.c1));
 
-        RelativeLayout.LayoutParams lpC2V2 =
+        RelativeLayout.LayoutParams lpC2V2 = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT,
+                ResTools.getDimenInt(R.dimen.common_line_height));
+        lpC2V2.addRule(RelativeLayout.BELOW, R.id.login_et_password);
+
+        mContainerPassword.addView(mLinePassword, lpC2V2);
+
+        /** EZ Touch start **/
+
+
+        mContainerPasswordHideEZTouch = new RelativeLayout(getContext());
+        mContainerPasswordHideEZTouch.setId(R.id.login_rl_password_hide);
+        mContainerPasswordHideEZTouch.setOnClickListener(this);
+
+        RelativeLayout.LayoutParams lpC2C1 = new RelativeLayout.LayoutParams(ResTools.getDimenInt(R.dimen.common_rl_remove_width),
+                LayoutParams.MATCH_PARENT);
+        lpC2C1.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+
+        mContainerPassword.addView(mContainerPasswordHideEZTouch, lpC2C1);
+
+        mHidePassword = new ImageView(getContext());
+        mHidePassword.setId(R.id.login_iv_password_hide);
+        mHidePassword.setImageDrawable(ResTools.getDrawable(R.drawable.eyes_open));
+
+        RelativeLayout.LayoutParams lpC2C1V1 =
                 new RelativeLayout.LayoutParams(ResTools.getDimenInt(R.dimen.h1), ResTools.getDimenInt(R.dimen.h1));
-        lpC2V2.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-        lpC2V2.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-        lpC2V2.bottomMargin = ResTools.getDimenInt(R.dimen.common_margin_bottom_11);
+        lpC2C1V1.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+        lpC2C1V1.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+        lpC2C1V1.bottomMargin = ResTools.getDimenInt(R.dimen.common_margin_bottom_11);
 
-        containerPassword.addView(hidePassword, lpC2V2);
+        mContainerPasswordHideEZTouch.addView(mHidePassword, lpC2C1V1);
 
-        mContainer.addView(containerPassword, lpC2);
+        mDividerPassword = new View(getContext());
+        mDividerPassword.setId(R.id.login_divider_password);
+        mDividerPassword.setBackgroundColor(ResTools.getColor(R.color.c7));
+        mDividerPassword.setVisibility(View.INVISIBLE);
 
-        /************** containerOKButton ******************/
+        RelativeLayout.LayoutParams lpC2V3 = new RelativeLayout.LayoutParams(ResTools.getDimenInt(R.dimen.common_line_height),
+                ResTools.getDimenInt(R.dimen.common_divider_height));
+        lpC2V3.addRule(RelativeLayout.LEFT_OF, R.id.login_rl_password_hide);
+        lpC2V3.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+        lpC2V3.bottomMargin = ResTools.getDimenInt(R.dimen.common_margin_bottom_11);
 
-        containerOKButton = new RelativeLayout(getContext());
-        containerOKButton.setId(R.id.login_rl_ok);
-        containerOKButton.setOnClickListener(this);
+        mContainerPassword.addView(mDividerPassword, lpC2V3);
+
+        mContainerPasswordRemoveEZTouch = new RelativeLayout(getContext());
+        mContainerPasswordRemoveEZTouch.setId(R.id.login_rl_password_remove);
+        mContainerPasswordRemoveEZTouch.setOnClickListener(this);
+
+        RelativeLayout.LayoutParams lpC2C2 = new RelativeLayout.LayoutParams(ResTools.getDimenInt(R.dimen.common_rl_remove_hide_width),
+                LayoutParams.MATCH_PARENT);
+        lpC2C2.addRule(RelativeLayout.LEFT_OF, R.id.login_divider_password);
+
+        mContainerPassword.addView(mContainerPasswordRemoveEZTouch, lpC2C2);
+
+        mRemovePassword = new ImageView(getContext());
+        mRemovePassword.setId(R.id.login_iv_password_remove);
+        mRemovePassword.setImageDrawable(ResTools.getDrawable(R.drawable.delete));
+        mRemovePassword.setVisibility(View.GONE);
+
+        RelativeLayout.LayoutParams lpC2C2V1 = new RelativeLayout.LayoutParams(ResTools.getDimenInt(R.dimen.h2), ResTools.getDimenInt(R.dimen.h2));
+        lpC2C2V1.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+        lpC2C2V1.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+        lpC2C2V1.bottomMargin = ResTools.getDimenInt(R.dimen.common_margin_bottom_12);
+        lpC2C2V1.rightMargin = ResTools.getDimenInt(R.dimen.h2);
+
+        mContainerPasswordRemoveEZTouch.addView(mRemovePassword, lpC2C2V1);
+
+        /** EZ Touch end **/
+
+        mContainer.addView(mContainerPassword, lpC2);
+
+        /************** mContainerOKButton ******************/
+
+        mContainerOKButton = new RelativeLayout(getContext());
+        mContainerOKButton.setId(R.id.login_rl_ok);
+        mContainerOKButton.setOnClickListener(this);
 
         RelativeLayout.LayoutParams lpC3 = new RelativeLayout.LayoutParams(ResTools.getDimenInt(R.dimen.common_rl_ok_width_height),
                 ResTools.getDimenInt(R.dimen.common_rl_ok_width_height));
@@ -248,49 +363,55 @@ public class LoginScreen extends DefaultScreen implements View.OnClickListener {
         lpC3.addRule(RelativeLayout.BELOW, R.id.login_rl_password);
         lpC3.addRule(RelativeLayout.CENTER_HORIZONTAL);
 
-        okButton = new CircleView(getContext(), ResTools.getDimenInt(R.dimen.common_cv_radius),
+        mOkButton = new CircleView(getContext(), ResTools.getDimenInt(R.dimen.common_cv_radius),
                 ResTools.getDimenInt(R.dimen.common_cv_radius), ResTools.getDimenInt(R.dimen.common_cv_radius));
-        okButton.setId(R.id.login_v_ok);
-        okButton.setColor(ResTools.getColor(R.color.c1));
-        okButton.setAlpha(0.3f);
+        mOkButton.setId(R.id.login_v_ok);
+        mOkButton.setColor(ResTools.getColor(R.color.c1));
+        mOkButton.setAlpha(0.3f);
 
-        containerOKButton.addView(okButton);
+        mContainerOKButton.addView(mOkButton);
 
-        okButtonArrow = new ImageView(getContext());
-        okButtonArrow.setId(R.id.login_iv_ok);
-        okButtonArrow.setImageDrawable(ResTools.getDrawable(R.drawable.arrow_right));
+        mOkButtonArrow = new ImageView(getContext());
+        mOkButtonArrow.setId(R.id.login_iv_ok);
+        mOkButtonArrow.setImageDrawable(ResTools.getDrawable(R.drawable.arrow_right));
 
         RelativeLayout.LayoutParams lpC3V1 = new RelativeLayout.LayoutParams(ResTools.getDimenInt(R.dimen.h1), ResTools.getDimenInt(R.dimen.h1));
         lpC3V1.addRule(RelativeLayout.CENTER_IN_PARENT);
 
-        containerOKButton.addView(okButtonArrow, lpC3V1);
+        mContainerOKButton.addView(mOkButtonArrow, lpC3V1);
 
-        mContainer.addView(containerOKButton, lpC3);
+        mContainer.addView(mContainerOKButton, lpC3);
 
 
     }
 
     @Override
     public void onClick(View v) {
-        if(v == hidePassword) {
-            if (isHidden) {
-                etPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                hidePassword.setImageDrawable(ResTools.getDrawable(R.drawable.eyes_close));
-                isHidden = false;
+        if(v == mContainerPasswordHideEZTouch) {
+            if (mIsHidden) {
+                mEtPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                mHidePassword.setImageDrawable(ResTools.getDrawable(R.drawable.eyes_close));
+                mIsHidden = false;
             } else {
-                etPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                hidePassword.setImageDrawable(ResTools.getDrawable(R.drawable.eyes_open));
-                isHidden = true;
+                mEtPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                mHidePassword.setImageDrawable(ResTools.getDrawable(R.drawable.eyes_open));
+                mIsHidden = true;
             }
-            etPassword.postInvalidate();
-            CharSequence charSequence = etPassword.getText();
+            mEtPassword.postInvalidate();
+            CharSequence charSequence = mEtPassword.getText();
             if (charSequence instanceof Spannable) {
                 Spannable spanText = (Spannable) charSequence;
                 Selection.setSelection(spanText, charSequence.length());
             }
         }
-        if (v == containerOKButton) {
-            if(isOkButtonAvailable)
+        if (v == mContainerPasswordRemoveEZTouch) {
+            mEtPassword.setText(null);
+        }
+        if (v == mContainerPhoneNumberRemoveEZTouch) {
+            mEtPhoneNumber.setText(null);
+        }
+        if (v == mContainerOKButton) {
+            if(mIsOkButtonAvailable)
                 mCallBacks.handleAction(ActionId.CommitLoginClick, null, null);
         }
     }

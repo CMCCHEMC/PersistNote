@@ -2,6 +2,7 @@ package com.dv.persistnote.business;
 
 import android.content.Context;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.util.TypedValue;
@@ -22,45 +23,45 @@ import com.dv.persistnote.framework.ui.UICallBacks;
 import java.lang.reflect.Field;
 
 /**
- * Created by Admin2 on 2016/3/29.
+ * Created by QinZheng on 2016/3/29.
  */
 public class RegisterHomeScreen extends DefaultScreen implements View.OnClickListener {
 
     private RelativeLayout mContainer;
 
-    private RelativeLayout containerPhoneNumber;
+    private RelativeLayout mContainerPhoneNumber;
 
-    private RelativeLayout containerPhoneNumberRemoveEZTouch;
+    private RelativeLayout mContainerPhoneNumberRemoveEZTouch;
 
-    private RelativeLayout containerCode;
+    private RelativeLayout mContainerCode;
 
-    private RelativeLayout containerCodeRemoveEZTouch;
+    private RelativeLayout mContainerCodeRemoveEZTouch;
 
-    private RelativeLayout containerOKButton;
+    private RelativeLayout mContainerOKButton;
 
-    private EditText etPhoneNumber;
+    private EditText mEtPhoneNumber;
 
-    private EditText etCode;
+    private EditText mEtCode;
 
-    private Boolean isOkButtonAvailable = false;
+    private Boolean mIsOkButtonAvailable = false;
 
-    private Button getCode;
+    private Button mGetCode;
 
-    private View linePhoneNumber;
+    private View mLinePhoneNumber;
 
-    private View lineCode;
+    private View mLineCode;
 
-    private ImageView removeCode;
+    private ImageView mRemoveCode;
 
-    private ImageView removePhoneNumber;
+    private ImageView mRemovePhoneNumber;
 
-    private CircleView okButton;
+    private CircleView mOkButton;
 
-    private ImageView okButtonArrow;
+    private ImageView mOkButtonArrow;
 
-    private TextView wrongPhoneNumber;
+    private TextView mWrongPhoneNumber;
 
-    private TextView wrongCode;
+    private TextView mWrongCode;
 
     public RegisterHomeScreen(Context context, UICallBacks callBacks) {
         super(context, callBacks);
@@ -74,34 +75,35 @@ public class RegisterHomeScreen extends DefaultScreen implements View.OnClickLis
 
         mContainer.removeAllViews();
 
-        /************** containerPhoneNumber ******************/
+        /************** mContainerPhoneNumber ******************/
 
-        containerPhoneNumber = new RelativeLayout(getContext());
-        containerPhoneNumber.setId(R.id.register_rl_phone_number);
+        mContainerPhoneNumber = new RelativeLayout(getContext());
+        mContainerPhoneNumber.setId(R.id.register_rl_phone_number);
 
         RelativeLayout.LayoutParams lpC1 = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, ResTools.getDimenInt(R.dimen.common_rl_height));
         lpC1.topMargin = ResTools.getDimenInt(R.dimen.register_rl_phone_number_margin_top);
         lpC1.leftMargin = ResTools.getDimenInt(R.dimen.common_rl_margin_left);
         lpC1.rightMargin = ResTools.getDimenInt(R.dimen.common_rl_margin_right);
 
-        etPhoneNumber = new EditText(getContext());
-        etPhoneNumber.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.h1));
-        etPhoneNumber.setPadding(0, ResTools.getDimenInt(R.dimen.common_et_padding_top),
+        mEtPhoneNumber = new EditText(getContext());
+        mEtPhoneNumber.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.h1));
+        mEtPhoneNumber.setPadding(0, ResTools.getDimenInt(R.dimen.common_et_padding_top),
                 0, ResTools.getDimenInt(R.dimen.common_et_padding_bottom));
-        etPhoneNumber.setId(R.id.register_et_phone_number);
-        etPhoneNumber.setBackgroundColor(ResTools.getColor(R.color.c4));
-        etPhoneNumber.setHint(R.string.common_et_hint_phone_number);
-        etPhoneNumber.setSingleLine(true);
-        etPhoneNumber.setOnFocusChangeListener(new OnFocusChangeListener() {
+        mEtPhoneNumber.setId(R.id.register_et_phone_number);
+        mEtPhoneNumber.setBackgroundColor(ResTools.getColor(R.color.c4));
+        mEtPhoneNumber.setHint(R.string.common_et_hint_phone_number);
+        mEtPhoneNumber.setSingleLine(true);
+        mEtPhoneNumber.setInputType(InputType.TYPE_CLASS_PHONE);
+        mEtPhoneNumber.setOnFocusChangeListener(new OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
-                    etPhoneNumber.setHint(R.string.common_et_hint_phone_number);
-                    removePhoneNumber.setVisibility(View.GONE);
+                    mEtPhoneNumber.setHint(R.string.common_et_hint_phone_number);
+                    mRemovePhoneNumber.setVisibility(View.GONE);
                 } else {
-                    etPhoneNumber.setHint(null);
-                    if (etPhoneNumber.getText().toString().length() > 0)
-                        removePhoneNumber.setVisibility(View.VISIBLE);
+                    mEtPhoneNumber.setHint(null);
+                    if (mEtPhoneNumber.getText().toString().length() > 0)
+                        mRemovePhoneNumber.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -109,12 +111,12 @@ public class RegisterHomeScreen extends DefaultScreen implements View.OnClickLis
             // https://github.com/android/platform_frameworks_base/blob/kitkat-release/core/java/android/widget/TextView.java#L562-564
             Field f = TextView.class.getDeclaredField("mCursorDrawableRes");
             f.setAccessible(true);
-            f.set(etPhoneNumber, R.drawable.color_cursor);
+            f.set(mEtPhoneNumber, R.drawable.color_cursor);
         } catch (Exception ignored) {
             Log.e(TAG, "Register Init : color_cursor Error");
         }
 
-        etPhoneNumber.addTextChangedListener(new TextWatcher() {
+        mEtPhoneNumber.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -127,17 +129,17 @@ public class RegisterHomeScreen extends DefaultScreen implements View.OnClickLis
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (s.toString().length() > 0 && etCode.getText().toString().length() > 0) {
-                    isOkButtonAvailable = true;
-                    okButton.setAlpha(1.0f);
+                if (s.toString().length() > 0 && mEtCode.getText().toString().length() > 0) {
+                    mIsOkButtonAvailable = true;
+                    mOkButton.setAlpha(1.0f);
                 } else {
-                    isOkButtonAvailable = false;
-                    okButton.setAlpha(0.3f);
+                    mIsOkButtonAvailable = false;
+                    mOkButton.setAlpha(0.3f);
                 }
                 if (s.toString().length() > 0) {
-                    removePhoneNumber.setVisibility(View.VISIBLE);
+                    mRemovePhoneNumber.setVisibility(View.VISIBLE);
                 } else {
-                    removePhoneNumber.setVisibility(View.GONE);
+                    mRemovePhoneNumber.setVisibility(View.GONE);
                 }
             }
         });
@@ -146,50 +148,50 @@ public class RegisterHomeScreen extends DefaultScreen implements View.OnClickLis
                 new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
         lpC1V1.rightMargin = ResTools.getDimenInt(R.dimen.common_rl_remove_width);
 
-        containerPhoneNumber.addView(etPhoneNumber, lpC1V1);
+        mContainerPhoneNumber.addView(mEtPhoneNumber, lpC1V1);
 
-        linePhoneNumber = new View(getContext());
-        linePhoneNumber.setId(R.id.register_line_phone_number);
-        linePhoneNumber.setBackgroundColor(ResTools.getColor(R.color.c1));
+        mLinePhoneNumber = new View(getContext());
+        mLinePhoneNumber.setId(R.id.register_line_phone_number);
+        mLinePhoneNumber.setBackgroundColor(ResTools.getColor(R.color.c1));
 
         RelativeLayout.LayoutParams lpC1V2 =
                 new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, ResTools.getDimenInt(R.dimen.common_line_height));
         lpC1V2.addRule(RelativeLayout.BELOW, R.id.register_et_phone_number);
 
-        containerPhoneNumber.addView(linePhoneNumber, lpC1V2);
+        mContainerPhoneNumber.addView(mLinePhoneNumber, lpC1V2);
 
         /** EZ Touch start **/
 
-        containerPhoneNumberRemoveEZTouch = new RelativeLayout(getContext());
-        containerPhoneNumberRemoveEZTouch.setId(R.id.register_rl_phone_number_remove);
-        containerPhoneNumberRemoveEZTouch.setOnClickListener(this);
+        mContainerPhoneNumberRemoveEZTouch = new RelativeLayout(getContext());
+        mContainerPhoneNumberRemoveEZTouch.setId(R.id.register_rl_phone_number_remove);
+        mContainerPhoneNumberRemoveEZTouch.setOnClickListener(this);
 
         RelativeLayout.LayoutParams lpC1C1 = new RelativeLayout.LayoutParams(ResTools.getDimenInt(R.dimen.common_rl_remove_width),
                 LayoutParams.MATCH_PARENT);
         lpC1C1.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
 
-        removePhoneNumber = new ImageView(getContext());
-        removePhoneNumber.setId(R.id.register_iv_code);
-        removePhoneNumber.setImageDrawable(ResTools.getDrawable(R.drawable.delete));
-        removePhoneNumber.setVisibility(View.GONE);
+        mRemovePhoneNumber = new ImageView(getContext());
+        mRemovePhoneNumber.setId(R.id.register_iv_phone_number_remove);
+        mRemovePhoneNumber.setImageDrawable(ResTools.getDrawable(R.drawable.delete));
+        mRemovePhoneNumber.setVisibility(View.GONE);
 
-        RelativeLayout.LayoutParams lpC1C1V1 = new RelativeLayout.LayoutParams(ResTools.getDimenInt(R.dimen.h1), ResTools.getDimenInt(R.dimen.h1));
+        RelativeLayout.LayoutParams lpC1C1V1 = new RelativeLayout.LayoutParams(ResTools.getDimenInt(R.dimen.h2), ResTools.getDimenInt(R.dimen.h2));
         lpC1C1V1.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
         lpC1C1V1.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-        lpC1C1V1.bottomMargin = ResTools.getDimenInt(R.dimen.common_margin_bottom_11);
+        lpC1C1V1.bottomMargin = ResTools.getDimenInt(R.dimen.common_margin_bottom_12);
 
-        containerPhoneNumberRemoveEZTouch.addView(removePhoneNumber, lpC1C1V1);
+        mContainerPhoneNumberRemoveEZTouch.addView(mRemovePhoneNumber, lpC1C1V1);
 
-        containerPhoneNumber.addView(containerPhoneNumberRemoveEZTouch, lpC1C1);
+        mContainerPhoneNumber.addView(mContainerPhoneNumberRemoveEZTouch, lpC1C1);
 
         /** EZ Touch end **/
 
-        mContainer.addView(containerPhoneNumber, lpC1);
+        mContainer.addView(mContainerPhoneNumber, lpC1);
 
-        /************** containerCode ******************/
+        /************** mContainerCode ******************/
 
-        containerCode = new RelativeLayout(getContext());
-        containerCode.setId(R.id.register_rl_code);
+        mContainerCode = new RelativeLayout(getContext());
+        mContainerCode.setId(R.id.register_rl_code);
         RelativeLayout.LayoutParams lpC2 = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT,
                 ResTools.getDimenInt(R.dimen.common_rl_height));
         lpC2.topMargin = ResTools.getDimenInt(R.dimen.register_rl_code_margin_top);
@@ -197,38 +199,39 @@ public class RegisterHomeScreen extends DefaultScreen implements View.OnClickLis
         lpC2.rightMargin = ResTools.getDimenInt(R.dimen.common_rl_margin_right);
         lpC2.addRule(RelativeLayout.BELOW, R.id.register_rl_phone_number);
 
-        getCode = new Button(getContext());
-        getCode.setId(R.id.register_bt_code);
-        getCode.setBackgroundColor(ResTools.getColor(R.color.c2));
-        getCode.setAlpha(0.2f);
-        getCode.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.h4));
-        getCode.setTextColor(ResTools.getColor(R.color.c4));
-        getCode.setText(ResTools.getString(R.string.register_bt_code));
+        mGetCode = new Button(getContext());
+        mGetCode.setId(R.id.register_bt_code);
+        mGetCode.setBackgroundColor(ResTools.getColor(R.color.c2));
+        mGetCode.setAlpha(0.2f);
+        mGetCode.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.h4));
+        mGetCode.setTextColor(ResTools.getColor(R.color.c4));
+        mGetCode.setText(ResTools.getString(R.string.register_bt_code));
 
         RelativeLayout.LayoutParams lpC2V1 = new RelativeLayout.LayoutParams(ResTools.getDimenInt(R.dimen.register_bt_code_width),
                 ResTools.getDimenInt(R.dimen.register_bt_code_height));
         lpC2V1.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
 
-        containerCode.addView(getCode, lpC2V1);
+        mContainerCode.addView(mGetCode, lpC2V1);
 
-        etCode = new EditText(getContext());
-        etCode.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.h1));
-        etCode.setId(R.id.register_et_code);
-        etCode.setPadding(0, ResTools.getDimenInt(R.dimen.common_et_padding_top),
+        mEtCode = new EditText(getContext());
+        mEtCode.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.h1));
+        mEtCode.setId(R.id.register_et_code);
+        mEtCode.setPadding(0, ResTools.getDimenInt(R.dimen.common_et_padding_top),
                 0, ResTools.getDimenInt(R.dimen.common_et_padding_bottom));
-        etCode.setBackgroundColor(ResTools.getColor(R.color.c4));
-        etCode.setHint(R.string.register_et_hint_code);
-        etCode.setSingleLine(true);
-        etCode.setOnFocusChangeListener(new OnFocusChangeListener() {
+        mEtCode.setBackgroundColor(ResTools.getColor(R.color.c4));
+        mEtCode.setHint(R.string.register_et_hint_code);
+        mEtCode.setSingleLine(true);
+        mEtCode.setInputType(InputType.TYPE_CLASS_NUMBER);
+        mEtCode.setOnFocusChangeListener(new OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
-                    etCode.setHint(R.string.register_et_hint_code);
-                    removeCode.setVisibility(View.GONE);
+                    mEtCode.setHint(R.string.register_et_hint_code);
+                    mRemoveCode.setVisibility(View.GONE);
                 } else {
-                    etCode.setHint(null);
-                    if (etCode.getText().toString().length() > 0)
-                    removeCode.setVisibility(View.VISIBLE);
+                    mEtCode.setHint(null);
+                    if (mEtCode.getText().toString().length() > 0)
+                        mRemoveCode.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -236,12 +239,12 @@ public class RegisterHomeScreen extends DefaultScreen implements View.OnClickLis
             // https://github.com/android/platform_frameworks_base/blob/kitkat-release/core/java/android/widget/TextView.java#L562-564
             Field f = TextView.class.getDeclaredField("mCursorDrawableRes");
             f.setAccessible(true);
-            f.set(etCode, R.drawable.color_cursor);
+            f.set(mEtCode, R.drawable.color_cursor);
         } catch (Exception ignored) {
             Log.e(TAG, "Register Init : color_cursor Error");
         }
 
-        etCode.addTextChangedListener(new TextWatcher() {
+        mEtCode.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -254,17 +257,17 @@ public class RegisterHomeScreen extends DefaultScreen implements View.OnClickLis
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (s.toString().length() > 0 && etPhoneNumber.getText().toString().length() > 0) {
-                    isOkButtonAvailable = true;
-                    okButton.setAlpha(1.0f);
+                if (s.toString().length() > 0 && mEtPhoneNumber.getText().toString().length() > 0) {
+                    mIsOkButtonAvailable = true;
+                    mOkButton.setAlpha(1.0f);
                 } else {
-                    isOkButtonAvailable = false;
-                    okButton.setAlpha(0.3f);
+                    mIsOkButtonAvailable = false;
+                    mOkButton.setAlpha(0.3f);
                 }
                 if (s.toString().length() > 0) {
-                    removeCode.setVisibility(View.VISIBLE);
+                    mRemoveCode.setVisibility(View.VISIBLE);
                 } else {
-                    removeCode.setVisibility(View.GONE);
+                    mRemoveCode.setVisibility(View.GONE);
                 }
             }
         });
@@ -275,11 +278,11 @@ public class RegisterHomeScreen extends DefaultScreen implements View.OnClickLis
         lpC2V2.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
         lpC2V2.rightMargin = ResTools.getDimenInt(R.dimen.register_et_code_margin_right);
 
-        containerCode.addView(etCode, lpC2V2);
+        mContainerCode.addView(mEtCode, lpC2V2);
 
-        lineCode = new View(getContext());
-        lineCode.setId(R.id.register_line_code);
-        lineCode.setBackgroundColor(ResTools.getColor(R.color.c1));
+        mLineCode = new View(getContext());
+        mLineCode.setId(R.id.register_line_code);
+        mLineCode.setBackgroundColor(ResTools.getColor(R.color.c1));
         RelativeLayout.LayoutParams lpC2V3 = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT,
                 ResTools.getDimenInt(R.dimen.common_line_height));
         lpC2V3.addRule(RelativeLayout.BELOW, R.id.register_et_code);
@@ -287,42 +290,42 @@ public class RegisterHomeScreen extends DefaultScreen implements View.OnClickLis
         lpC2V3.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
         lpC2V3.rightMargin = ResTools.getDimenInt(R.dimen.register_line_code_margin_right);
 
-        containerCode.addView(lineCode, lpC2V3);
+        mContainerCode.addView(mLineCode, lpC2V3);
 
         /** EZ Touch start **/
 
-        containerCodeRemoveEZTouch = new RelativeLayout(getContext());
-        containerCodeRemoveEZTouch.setId(R.id.register_rl_code_remove);
-        containerCodeRemoveEZTouch.setOnClickListener(this);
+        mContainerCodeRemoveEZTouch = new RelativeLayout(getContext());
+        mContainerCodeRemoveEZTouch.setId(R.id.register_rl_code_remove);
+        mContainerCodeRemoveEZTouch.setOnClickListener(this);
 
         RelativeLayout.LayoutParams lpC2C1 = new RelativeLayout.LayoutParams(ResTools.getDimenInt(R.dimen.common_rl_remove_width),
                 LayoutParams.MATCH_PARENT);
         lpC2C1.addRule(RelativeLayout.LEFT_OF, R.id.register_bt_code);
         lpC2C1.rightMargin = ResTools.getDimenInt(R.dimen.register_rl_code_remove_margin_right);
 
-        removeCode = new ImageView(getContext());
-        removeCode.setId(R.id.register_iv_code);
-        removeCode.setImageDrawable(ResTools.getDrawable(R.drawable.delete));
-        removeCode.setVisibility(View.GONE);
+        mRemoveCode = new ImageView(getContext());
+        mRemoveCode.setId(R.id.register_iv_code_remove);
+        mRemoveCode.setImageDrawable(ResTools.getDrawable(R.drawable.delete));
+        mRemoveCode.setVisibility(View.GONE);
 
-        RelativeLayout.LayoutParams lpC2C1V1 = new RelativeLayout.LayoutParams(ResTools.getDimenInt(R.dimen.h1), ResTools.getDimenInt(R.dimen.h1));
+        RelativeLayout.LayoutParams lpC2C1V1 = new RelativeLayout.LayoutParams(ResTools.getDimenInt(R.dimen.h2), ResTools.getDimenInt(R.dimen.h2));
         lpC2C1V1.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
         lpC2C1V1.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-        lpC2C1V1.bottomMargin = ResTools.getDimenInt(R.dimen.common_margin_bottom_11);
+        lpC2C1V1.bottomMargin = ResTools.getDimenInt(R.dimen.common_margin_bottom_12);
 
-        containerCodeRemoveEZTouch.addView(removeCode, lpC2C1V1);
+        mContainerCodeRemoveEZTouch.addView(mRemoveCode, lpC2C1V1);
 
-        containerCode.addView(containerCodeRemoveEZTouch, lpC2C1);
+        mContainerCode.addView(mContainerCodeRemoveEZTouch, lpC2C1);
 
         /** EZ Touch end **/
 
-        mContainer.addView(containerCode, lpC2);
+        mContainer.addView(mContainerCode, lpC2);
 
-        /************** containerOKButton ******************/
+        /************** mContainerOKButton ******************/
 
-        containerOKButton = new RelativeLayout(getContext());
-        containerOKButton.setId(R.id.register_rl_ok);
-        containerOKButton.setOnClickListener(this);
+        mContainerOKButton = new RelativeLayout(getContext());
+        mContainerOKButton.setId(R.id.register_rl_ok);
+        mContainerOKButton.setOnClickListener(this);
 
         RelativeLayout.LayoutParams lpC3 = new RelativeLayout.LayoutParams(ResTools.getDimenInt(R.dimen.common_rl_ok_width_height),
                 ResTools.getDimenInt(R.dimen.common_rl_ok_width_height));
@@ -330,42 +333,70 @@ public class RegisterHomeScreen extends DefaultScreen implements View.OnClickLis
         lpC3.addRule(RelativeLayout.BELOW, R.id.register_rl_code);
         lpC3.addRule(RelativeLayout.CENTER_HORIZONTAL);
 
-        okButton = new CircleView(getContext(), ResTools.getDimenInt(R.dimen.common_cv_radius),
+        mOkButton = new CircleView(getContext(), ResTools.getDimenInt(R.dimen.common_cv_radius),
                 ResTools.getDimenInt(R.dimen.common_cv_radius), ResTools.getDimenInt(R.dimen.common_cv_radius));
-        okButton.setId(R.id.register_v_ok);
-        okButton.setColor(ResTools.getColor(R.color.c1));
-        okButton.setAlpha(0.3f);
+        mOkButton.setId(R.id.register_v_ok);
+        mOkButton.setColor(ResTools.getColor(R.color.c1));
+        mOkButton.setAlpha(0.3f);
 
-        containerOKButton.addView(okButton);
+        mContainerOKButton.addView(mOkButton);
 
-        okButtonArrow = new ImageView(getContext());
-        okButtonArrow.setId(R.id.register_iv_ok);
-        okButtonArrow.setImageDrawable(ResTools.getDrawable(R.drawable.arrow_right));
+        mOkButtonArrow = new ImageView(getContext());
+        mOkButtonArrow.setId(R.id.register_iv_ok);
+        mOkButtonArrow.setImageDrawable(ResTools.getDrawable(R.drawable.arrow_right));
 
         RelativeLayout.LayoutParams lpC3V1 = new RelativeLayout.LayoutParams(ResTools.getDimenInt(R.dimen.h1), ResTools.getDimenInt(R.dimen.h1));
         lpC3V1.addRule(RelativeLayout.CENTER_IN_PARENT);
 
-        containerOKButton.addView(okButtonArrow, lpC3V1);
+        mContainerOKButton.addView(mOkButtonArrow, lpC3V1);
 
-        mContainer.addView(containerOKButton, lpC3);
+        mContainer.addView(mContainerOKButton, lpC3);
 
-        /************** wrongPhoneNumber ******************/
+        /************** mWrongPhoneNumber ******************/
 
-        /************** wrongCode ******************/
+        mWrongPhoneNumber = new TextView(getContext());
+        mWrongPhoneNumber.setId(R.id.register_tv_phone_number_wrong);
+        mWrongPhoneNumber.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.h3));
+        mWrongPhoneNumber.setTextColor(ResTools.getColor(R.color.c10));
+        mWrongPhoneNumber.setText(null);
+        mWrongPhoneNumber.setVisibility(View.GONE);
+
+        RelativeLayout.LayoutParams lpV1 = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        lpV1.addRule(RelativeLayout.BELOW, R.id.register_rl_phone_number);
+        lpV1.topMargin = ResTools.getDimenInt(R.dimen.common_tv_margin_top);
+        lpV1.leftMargin = ResTools.getDimenInt(R.dimen.common_rl_margin_left);
+
+        mContainer.addView(mWrongPhoneNumber, lpV1);
+
+        /************** mWrongCode ******************/
+
+        mWrongCode = new TextView(getContext());
+        mWrongCode.setId(R.id.register_tv_code_wrong);
+        mWrongCode.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.h3));
+        mWrongCode.setTextColor(ResTools.getColor(R.color.c10));
+        mWrongCode.setText(ResTools.getString(R.string.register_tv_wrong_code));
+        mWrongCode.setVisibility(View.GONE);
+
+        RelativeLayout.LayoutParams lpV2 = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        lpV2.addRule(RelativeLayout.BELOW, R.id.register_rl_code);
+        lpV2.topMargin = ResTools.getDimenInt(R.dimen.common_tv_margin_top);
+        lpV2.leftMargin = ResTools.getDimenInt(R.dimen.common_rl_margin_left);
+
+        mContainer.addView(mWrongCode, lpV2);
 
     }
 
     @Override
     public void onClick(View v) {
-        if (v == containerOKButton) {
-            if(isOkButtonAvailable)
+        if (v == mContainerOKButton) {
+            if(mIsOkButtonAvailable)
                 mCallBacks.handleAction(ActionId.CommitRegisterHomeClick, null, null);
         }
-        if (v == containerCodeRemoveEZTouch) {
-            etCode.setText(null);
+        if (v == mContainerCodeRemoveEZTouch) {
+            mEtCode.setText(null);
         }
-        if (v == containerPhoneNumberRemoveEZTouch) {
-            etPhoneNumber.setText(null);
+        if (v == mContainerPhoneNumberRemoveEZTouch) {
+            mEtPhoneNumber.setText(null);
         }
     }
 }

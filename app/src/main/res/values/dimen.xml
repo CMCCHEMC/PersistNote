@@ -18,6 +18,7 @@
     <dimen name="common_margin_16">16dp</dimen>
     <dimen name="common_margin_top_22">22dp</dimen>
     <dimen name="common_margin_bottom_11">11dp</dimen>
+    <dimen name="common_margin_bottom_12">12dp</dimen>
 
     <dimen name="common_rl_height">48dp</dimen>
     <dimen name="common_rl_margin_left">24dp</dimen>
@@ -25,18 +26,22 @@
 
     <dimen name="common_line_height">1dp</dimen>
 
+    <dimen name="common_divider_height">16dp</dimen>
+
     <dimen name="common_cv_radius">28dp</dimen>
 
     <dimen name="common_et_padding_top">18dp</dimen>
     <dimen name="common_et_padding_bottom">7dp</dimen>
 
     <dimen name="common_rl_remove_width">30dp</dimen>
-    <dimen name="common_rl_remove_hide_width">44dp</dimen>
+    <dimen name="common_rl_remove_hide_width">36dp</dimen>
     <dimen name="common_rl_hide_width">30dp</dimen>
-    <dimen name="common_et_remove_hide_margin_right">75dp</dimen>
+    <dimen name="common_et_remove_hide_margin_right">67dp</dimen>
 
     <dimen name="common_rl_ok_margin_top">40dp</dimen>
     <dimen name="common_rl_ok_width_height">56dp</dimen>
+
+    <dimen name="common_tv_margin_top">6dp</dimen>
 
     <!--具体业务标注-->
 

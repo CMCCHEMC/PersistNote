@@ -16,16 +16,17 @@
 
     <!-- Register Strings -->
     <string name="register_et_hint_code">输入验证码</string>
-    <string name="register_tv_wrong_phone_number">该帐号已被注册</string>
     <string name="register_bt_code">获取</string>
-
-    <string name="register_p_tv_wrong_password_long">超过字数</string>
-    <string name="register_p_tv_wrong_password_short">字数不足</string>
 
     <string name="register_u_et_hint_user_name">起个炫酷的名字吧</string>
 
-    <string name="register_u_tv_wrong_user_name_long">用户名过长</string>
-
     <string name="register_ok_tv">注册成功</string>
+
+    <string name="register_tv_wrong_phone_number_1">该帐号已被注册</string>
+    <string name="register_tv_wrong_phone_number_2">手机格式不对哦</string>
+    <string name="register_tv_wrong_code">验证码错误</string>
+    <string name="register_p_tv_wrong_password_long">超过字数</string>
+    <string name="register_p_tv_wrong_password_short">字数不足</string>
+    <string name="register_u_tv_wrong_user_name_long">用户名过长</string>
 
 </resources>

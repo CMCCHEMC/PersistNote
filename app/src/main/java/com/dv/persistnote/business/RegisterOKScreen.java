@@ -1,25 +1,19 @@
 package com.dv.persistnote.business;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.util.TypedValue;
-import android.view.Gravity;
-import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.dv.persistnote.R;
 import com.dv.persistnote.base.ResTools;
-import com.dv.persistnote.framework.ActionId;
-import com.dv.persistnote.framework.FontManager;
 import com.dv.persistnote.framework.ui.AbstractScreen;
 import com.dv.persistnote.framework.ui.UICallBacks;
 
 
 /**
- * Created by Hang on 2016/3/14.
+ * Created by QinZheng on 2016/4/06.
  */
 public class RegisterOKScreen extends AbstractScreen{
 
