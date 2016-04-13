@@ -213,7 +213,6 @@ public class LoginScreen extends DefaultScreen implements View.OnClickListener {
         mEtPassword.setBackgroundColor(ResTools.getColor(R.color.c4));
         mEtPassword.setHint(R.string.common_et_hint_password);
         mEtPassword.setSingleLine(true);
-        mEtPassword.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
         mEtPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
         mEtPassword.setOnFocusChangeListener(new OnFocusChangeListener() {
             @Override
@@ -287,7 +286,6 @@ public class LoginScreen extends DefaultScreen implements View.OnClickListener {
         mContainerPassword.addView(mLinePassword, lpC2V2);
 
         /** EZ Touch start **/
-
 
         mContainerPasswordHideEZTouch = new RelativeLayout(getContext());
         mContainerPasswordHideEZTouch.setId(R.id.login_rl_password_hide);

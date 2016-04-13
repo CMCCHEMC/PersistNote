@@ -43,15 +43,31 @@
     <item name="register_rl_code_remove" type="id" />
 
     <!-- RegisterPasswordScreen -->
-    <item name="register_p_et_password" type="id" />
-    <item name="register_p_line_password" type="id" />
-    <item name="register_p_tv_password_wrong" type="id" />
-    <item name="register_p_iv_password" type="id" />
+    <item name="register_p_et_password_1" type="id" />
+    <item name="register_p_line_password_1" type="id" />
+    <item name="register_p_iv_password_hide_1" type="id" />
+    <item name="register_p_iv_password_remove_1" type="id" />
+    <item name="register_p_divider_password_1" type="id" />
+
+    <item name="register_p_et_password_2" type="id" />
+    <item name="register_p_line_password_2" type="id" />
+    <item name="register_p_iv_password_hide_2" type="id" />
+    <item name="register_p_iv_password_remove_2" type="id" />
+    <item name="register_p_divider_password_2" type="id" />
+
     <item name="register_p_iv_ok" type="id" />
     <item name="register_p_v_ok" type="id" />
 
-    <item name="register_p_rl_password" type="id" />
+    <item name="register_p_rl_password_1" type="id" />
+    <item name="register_p_rl_password_2" type="id" />
+    <item name="register_p_rl_password_hide_1" type="id" />
+    <item name="register_p_rl_password_hide_2" type="id" />
+    <item name="register_p_rl_password_remove_1" type="id" />
+    <item name="register_p_rl_password_remove_2" type="id" />
     <item name="register_p_rl_ok" type="id" />
+
+    <item name="register_p_tv_password_wrong_1" type="id" />
+    <item name="register_p_tv_password_wrong_2" type="id" />
 
     <!-- RegisterUserInfoScreen -->
     <item name="register_u_et_user_name" type="id" />

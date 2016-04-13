@@ -7,33 +7,33 @@ import android.graphics.Paint;
 import android.view.View;
 
 /**
- * Created by Admin2 on 2016/4/1.
+ * Created by QinZheng on 2016/4/1.
  */
 public class CircleView extends View {
-    private float m_cx;
-    private float m_cy;
-    private float m_radius;
-    private Paint paint;
+    private float mCx;
+    private float mCy;
+    private float mRadius;
+    private Paint mPaint;
 
     public CircleView(Context context, float cx, float cy, float radius) {
         super(context);
-        m_cx = cx;
-        m_cy = cy;
-        m_radius = radius;
+        mCx = cx;
+        mCy = cy;
+        mRadius = radius;
 
         // 首先定义一个paint
-        paint = new Paint();
+        mPaint = new Paint();
 
         // 绘制矩形区域-实心矩形
         // 设置颜色
-        paint.setColor(Color.BLUE);
+        mPaint.setColor(Color.BLUE);
         // 设置样式-填充
-        paint.setStyle(Paint.Style.FILL);
+        mPaint.setStyle(Paint.Style.FILL);
     }
 
     public void setColor(int color) {
         // 设置颜色
-        paint.setColor(color);
+        mPaint.setColor(color);
     }
 
     @Override
@@ -41,7 +41,7 @@ public class CircleView extends View {
         super.onDraw(canvas);
 
         // draw circle
-        canvas.drawCircle(m_cx, m_cy, m_radius, paint);
+        canvas.drawCircle(mCx, mCy, mRadius, mPaint);
     }
 
 
