@@ -19,9 +19,9 @@ public class RegisterOKScreen extends AbstractScreen{
 
     private RelativeLayout mContainer;
 
-    private ImageView ivRegisterOK;
+    private ImageView mIvRegisterOK;
 
-    private TextView tvRegisterOK;
+    private TextView mTvRegisterOK;
 
     public RegisterOKScreen(Context context, UICallBacks callBacks) {
         super(context, callBacks);
@@ -34,29 +34,29 @@ public class RegisterOKScreen extends AbstractScreen{
         LayoutParams contentLp = new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT);
         addView(mContainer, contentLp);
 
-        ivRegisterOK = new ImageView(getContext());
-        ivRegisterOK.setId(R.id.register_ok_iv);
-        ivRegisterOK.setImageDrawable(ResTools.getDrawable(R.drawable.rignt));
+        mIvRegisterOK = new ImageView(getContext());
+        mIvRegisterOK.setId(R.id.register_ok_iv);
+        mIvRegisterOK.setImageDrawable(ResTools.getDrawable(R.drawable.rignt));
 
         LayoutParams lp1 = new LayoutParams(ResTools.getDimenInt(R.dimen.register_ok_iv_width),
                 ResTools.getDimenInt(R.dimen.register_ok_iv_height));
         lp1.addRule(CENTER_HORIZONTAL);
         lp1.topMargin = ResTools.getDimenInt(R.dimen.register_ok_iv_margin_top);
 
-        mContainer.addView(ivRegisterOK, lp1);
+        mContainer.addView(mIvRegisterOK, lp1);
 
-        tvRegisterOK = new TextView(getContext());
-        tvRegisterOK.setId(R.id.register_ok_tv);
-        tvRegisterOK.setTextColor(ResTools.getColor(R.color.c4));
-        tvRegisterOK.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.register_ok_tv_text_size));
-        tvRegisterOK.setText(ResTools.getString(R.string.register_ok_tv));
+        mTvRegisterOK = new TextView(getContext());
+        mTvRegisterOK.setId(R.id.register_ok_tv);
+        mTvRegisterOK.setTextColor(ResTools.getColor(R.color.c4));
+        mTvRegisterOK.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.register_ok_tv_text_size));
+        mTvRegisterOK.setText(ResTools.getString(R.string.register_ok_tv));
 
         LayoutParams lp2 = new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
         lp2.addRule(CENTER_HORIZONTAL);
         lp2.addRule(RelativeLayout.BELOW, R.id.register_ok_iv);
         lp2.topMargin = ResTools.getDimenInt(R.dimen.register_ok_tv_margin_top);
 
-        mContainer.addView(tvRegisterOK, lp2);
+        mContainer.addView(mTvRegisterOK, lp2);
 
     }
 

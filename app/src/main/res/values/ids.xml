@@ -72,7 +72,7 @@
     <!-- RegisterUserInfoScreen -->
     <item name="register_u_et_user_name" type="id" />
     <item name="register_u_line_user_name" type="id" />
-    <item name="register_u_tv_user_name_wrong" type="id" />
+    <item name="register_u_iv_password_remove" type="id" />
     <item name="register_u_v_user_sex_male" type="id" />
     <item name="register_u_v_user_sex_female" type="id" />
     <item name="register_u_iv_user_sex_male" type="id" />
@@ -83,6 +83,9 @@
     <item name="register_u_rl_user_name" type="id" />
     <item name="register_u_rl_user_sex" type="id" />
     <item name="register_u_rl_ok" type="id" />
+    <item name="register_u_rl_user_name_remove" type="id" />
+
+    <item name="register_u_tv_user_name_wrong" type="id" />
 
     <!-- RegisterOKScreen -->
     <item name="register_ok_iv" type="id" />

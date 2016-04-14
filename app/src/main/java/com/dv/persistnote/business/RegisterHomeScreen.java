@@ -45,6 +45,10 @@ public class RegisterHomeScreen extends DefaultScreen implements View.OnClickLis
 
     private Boolean mIsOkButtonAvailable = false;
 
+    private Boolean mIsRemovePhoneNumber = false;
+
+    private Boolean mIsRemoveCode = false;
+
     private Button mGetCode;
 
     private View mLinePhoneNumber;
@@ -100,10 +104,12 @@ public class RegisterHomeScreen extends DefaultScreen implements View.OnClickLis
                 if (!hasFocus) {
                     mEtPhoneNumber.setHint(R.string.common_et_hint_phone_number);
                     mRemovePhoneNumber.setVisibility(View.GONE);
+                    mIsRemovePhoneNumber = false;
                 } else {
                     mEtPhoneNumber.setHint(null);
                     if (mEtPhoneNumber.getText().toString().length() > 0)
                         mRemovePhoneNumber.setVisibility(View.VISIBLE);
+                        mIsRemovePhoneNumber = true;
                 }
             }
         });
@@ -138,8 +144,10 @@ public class RegisterHomeScreen extends DefaultScreen implements View.OnClickLis
                 }
                 if (s.toString().length() > 0) {
                     mRemovePhoneNumber.setVisibility(View.VISIBLE);
+                    mIsRemovePhoneNumber = true;
                 } else {
                     mRemovePhoneNumber.setVisibility(View.GONE);
+                    mIsRemovePhoneNumber = false;
                 }
             }
         });
@@ -228,10 +236,12 @@ public class RegisterHomeScreen extends DefaultScreen implements View.OnClickLis
                 if (!hasFocus) {
                     mEtCode.setHint(R.string.register_et_hint_code);
                     mRemoveCode.setVisibility(View.GONE);
+                    mIsRemoveCode = false;
                 } else {
                     mEtCode.setHint(null);
                     if (mEtCode.getText().toString().length() > 0)
                         mRemoveCode.setVisibility(View.VISIBLE);
+                        mIsRemoveCode = true;
                 }
             }
         });
@@ -266,8 +276,10 @@ public class RegisterHomeScreen extends DefaultScreen implements View.OnClickLis
                 }
                 if (s.toString().length() > 0) {
                     mRemoveCode.setVisibility(View.VISIBLE);
+                    mIsRemoveCode = true;
                 } else {
                     mRemoveCode.setVisibility(View.GONE);
+                    mIsRemoveCode = false;
                 }
             }
         });
@@ -393,10 +405,12 @@ public class RegisterHomeScreen extends DefaultScreen implements View.OnClickLis
                 mCallBacks.handleAction(ActionId.CommitRegisterHomeClick, null, null);
         }
         if (v == mContainerCodeRemoveEZTouch) {
-            mEtCode.setText(null);
+            if (mIsRemoveCode)
+                mEtCode.setText(null);
         }
         if (v == mContainerPhoneNumberRemoveEZTouch) {
-            mEtPhoneNumber.setText(null);
+            if (mIsRemovePhoneNumber)
+                mEtPhoneNumber.setText(null);
         }
     }
 }

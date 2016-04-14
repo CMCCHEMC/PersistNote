@@ -76,6 +76,10 @@ public class RegisterPasswordScreen extends DefaultScreen implements View.OnClic
 
     private Boolean mIsOkButtonAvailable = false;
 
+    private Boolean mIsRemovePassword1 = false;
+
+    private Boolean mIsRemovePassword2 = false;
+
     private TextView mWrongPassword1;
 
     private TextView mWrongPassword2;
@@ -118,11 +122,13 @@ public class RegisterPasswordScreen extends DefaultScreen implements View.OnClic
                     mEtPassword1.setHint(R.string.common_et_hint_password);
                     mDividerPassword1.setVisibility(View.INVISIBLE);
                     mRemovePassword1.setVisibility(View.GONE);
+                    mIsRemovePassword1 = false;
                 } else {
                     mEtPassword1.setHint(null);
                     if (mEtPassword1.getText().toString().length() > 0) {
                         mDividerPassword1.setVisibility(View.VISIBLE);
                         mRemovePassword1.setVisibility(View.VISIBLE);
+                        mIsRemovePassword1 = true;
                     }
                 }
             }
@@ -153,19 +159,25 @@ public class RegisterPasswordScreen extends DefaultScreen implements View.OnClic
                     mLinePassword1.setBackgroundColor(ResTools.getColor(R.color.c1));
                     mWrongPassword1.setText(null);
                 } else {
-                    if (s.toString().length() < 6) {
+                    if (s.toString().length() == 0) {
+                        mLinePassword1.setBackgroundColor(ResTools.getColor(R.color.c1));
+                        mWrongPassword1.setText(null);
+                    } else if (s.toString().length() < 6) {
                         mWrongPassword1.setText(ResTools.getString(R.string.register_p_tv_wrong_password_short));
+                        mLinePassword1.setBackgroundColor(ResTools.getColor(R.color.c10));
                     } else {
                         mWrongPassword1.setText(ResTools.getString(R.string.register_p_tv_wrong_password_long));
+                        mLinePassword1.setBackgroundColor(ResTools.getColor(R.color.c10));
                     }
-                    mLinePassword1.setBackgroundColor(ResTools.getColor(R.color.c10));
                 }
                 if (s.toString().length() > 0) {
                     mDividerPassword1.setVisibility(View.VISIBLE);
                     mRemovePassword1.setVisibility(View.VISIBLE);
+                    mIsRemovePassword1 = true;
                 } else {
                     mDividerPassword1.setVisibility(View.INVISIBLE);
                     mRemovePassword1.setVisibility(View.GONE);
+                    mIsRemovePassword1 = false;
                 }
                 if (s.toString().length() > 0 && mEtPassword2.getText().toString().length() > 0) {
                     mIsOkButtonAvailable = true;
@@ -284,11 +296,13 @@ public class RegisterPasswordScreen extends DefaultScreen implements View.OnClic
                     mEtPassword2.setHint(R.string.register_p_et_hint_password_2);
                     mDividerPassword2.setVisibility(View.INVISIBLE);
                     mRemovePassword2.setVisibility(View.GONE);
+                    mIsRemovePassword2 = false;
                 } else {
                     mEtPassword2.setHint(null);
                     if (mEtPassword2.getText().toString().length() > 0) {
                         mDividerPassword2.setVisibility(View.VISIBLE);
                         mRemovePassword2.setVisibility(View.VISIBLE);
+                        mIsRemovePassword2 = true;
                     }
                 }
             }
@@ -319,19 +333,25 @@ public class RegisterPasswordScreen extends DefaultScreen implements View.OnClic
                     mLinePassword2.setBackgroundColor(ResTools.getColor(R.color.c1));
                     mWrongPassword2.setText(null);
                 } else {
-                    if (s.toString().length() < 6) {
+                    if (s.toString().length() == 0) {
+                        mLinePassword2.setBackgroundColor(ResTools.getColor(R.color.c1));
+                        mWrongPassword2.setText(null);
+                    } else if (s.toString().length() < 6) {
                         mWrongPassword2.setText(ResTools.getString(R.string.register_p_tv_wrong_password_short));
+                        mLinePassword2.setBackgroundColor(ResTools.getColor(R.color.c10));
                     } else {
                         mWrongPassword2.setText(ResTools.getString(R.string.register_p_tv_wrong_password_long));
+                        mLinePassword2.setBackgroundColor(ResTools.getColor(R.color.c10));
                     }
-                    mLinePassword2.setBackgroundColor(ResTools.getColor(R.color.c10));
                 }
                 if (s.toString().length() > 0) {
                     mDividerPassword2.setVisibility(View.VISIBLE);
                     mRemovePassword2.setVisibility(View.VISIBLE);
+                    mIsRemovePassword2 = true;
                 } else {
                     mDividerPassword2.setVisibility(View.INVISIBLE);
                     mRemovePassword2.setVisibility(View.GONE);
+                    mIsRemovePassword2 = false;
                 }
                 if (s.toString().length() > 0 && mEtPassword1.getText().toString().length() > 0) {
                     mIsOkButtonAvailable = true;
@@ -523,10 +543,12 @@ public class RegisterPasswordScreen extends DefaultScreen implements View.OnClic
             }
         }
         if (v == mContainerPasswordRemoveEZTouch1) {
-            mEtPassword1.setText(null);
+            if (mIsRemovePassword1)
+                mEtPassword1.setText(null);
         }
         if (v == mContainerPasswordRemoveEZTouch2) {
-            mEtPassword2.setText(null);
+            if (mIsRemovePassword2)
+                mEtPassword2.setText(null);
         }
         if (v == mContainerOKButton) {
             if(mIsOkButtonAvailable)

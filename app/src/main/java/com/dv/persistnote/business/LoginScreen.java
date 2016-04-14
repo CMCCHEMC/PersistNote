@@ -68,6 +68,10 @@ public class LoginScreen extends DefaultScreen implements View.OnClickListener {
 
     private Boolean mIsOkButtonAvailable = false;
 
+    private Boolean mIsRemovePhoneNumber = false;
+
+    private Boolean mIsRemovePassword = false;
+
     public LoginScreen(Context context, UICallBacks callBacks) {
         super(context, callBacks);
         init();
@@ -106,10 +110,12 @@ public class LoginScreen extends DefaultScreen implements View.OnClickListener {
                 if (!hasFocus) {
                     mEtPhoneNumber.setHint(R.string.common_et_hint_phone_number);
                     mRemovePhoneNumber.setVisibility(View.GONE);
+                    mIsRemovePhoneNumber = false;
                 } else {
                     mEtPhoneNumber.setHint(null);
                     if (mEtPhoneNumber.getText().toString().length() > 0)
                         mRemovePhoneNumber.setVisibility(View.VISIBLE);
+                        mIsRemovePhoneNumber = true;
                 }
             }
         });
@@ -144,8 +150,10 @@ public class LoginScreen extends DefaultScreen implements View.OnClickListener {
                 }
                 if (s.toString().length() > 0) {
                     mRemovePhoneNumber.setVisibility(View.VISIBLE);
+                    mIsRemovePhoneNumber = true;
                 } else {
                     mRemovePhoneNumber.setVisibility(View.GONE);
+                    mIsRemovePhoneNumber = false;
                 }
             }
         });
@@ -221,11 +229,13 @@ public class LoginScreen extends DefaultScreen implements View.OnClickListener {
                     mEtPassword.setHint(R.string.common_et_hint_password);
                     mDividerPassword.setVisibility(View.INVISIBLE);
                     mRemovePassword.setVisibility(View.GONE);
+                    mIsRemovePassword = false;
                 } else {
                     mEtPassword.setHint(null);
                     if (mEtPassword.getText().toString().length() > 0) {
                         mDividerPassword.setVisibility(View.VISIBLE);
                         mRemovePassword.setVisibility(View.VISIBLE);
+                        mIsRemovePassword = true;
                     }
                 }
             }
@@ -262,9 +272,11 @@ public class LoginScreen extends DefaultScreen implements View.OnClickListener {
                 if (s.toString().length() > 0) {
                     mDividerPassword.setVisibility(View.VISIBLE);
                     mRemovePassword.setVisibility(View.VISIBLE);
+                    mIsRemovePassword = true;
                 } else {
                     mDividerPassword.setVisibility(View.INVISIBLE);
                     mRemovePassword.setVisibility(View.GONE);
+                    mIsRemovePassword = false;
                 }
             }
         });
@@ -403,9 +415,11 @@ public class LoginScreen extends DefaultScreen implements View.OnClickListener {
             }
         }
         if (v == mContainerPasswordRemoveEZTouch) {
+            if (mIsRemovePassword)
             mEtPassword.setText(null);
         }
         if (v == mContainerPhoneNumberRemoveEZTouch) {
+            if (mIsRemovePhoneNumber)
             mEtPhoneNumber.setText(null);
         }
         if (v == mContainerOKButton) {
