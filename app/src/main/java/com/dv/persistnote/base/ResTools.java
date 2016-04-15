@@ -1,6 +1,8 @@
 package com.dv.persistnote.base;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 
 /**
@@ -10,6 +12,10 @@ public class ResTools {
 
     public static Drawable getDrawable(int drawableId) {
         return ContextManager.getResources().getDrawable(drawableId);
+    }
+
+    public static Bitmap getBitmap(int drawableId) {
+        return BitmapFactory.decodeResource(ContextManager.getResources(), drawableId);
     }
 
     public static int getDimenInt(int id) {

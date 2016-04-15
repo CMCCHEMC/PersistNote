@@ -25,7 +25,6 @@ public class RootScreen extends DefaultScreen {
     public RootScreen(Context context, UICallBacks callBacks) {
         super(context, callBacks);
         init();
-        setBackgroundColor(ResTools.getColor(R.color.default_grey));
         setTitle(ResTools.getString(R.string.app_name));
     }
 

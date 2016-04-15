@@ -18,6 +18,7 @@ public class ControllerRegister{
 
         registerRootController();
         registerAccountController();
+        registerHabitDetailController();
     }
 
     public void registerRootController(){
@@ -38,22 +39,15 @@ public class ControllerRegister{
         mControllerCenter.addPolicy(MessagePolicy.create(controllerID, messageIDs));
     }
 
-//	 private void registerHomePgaeFlushController() {
-//         int controllerID = ControllerID.HOMEPAGE_FLUSH_CONTROLLER;
-//         int[] messageIDs = new int[] {
-//                 MsgDef.MSG_INFOFLOW_BARCODE_TEST_NEWS,
-//                 MsgDef.MSG_JS_OPEN_INFOFLOW_IMAGEGALLERY,
-//                 MsgDef.MSG_ON_GET_INFOFLOW_USER_INTERSET_TAG,
-//                 MsgDef.MSG_OPEN_IFLOW_SINGLE_CHANNEL_WINDOW,
-//         };
-//
-//         int[] notificationIDs = new int[] {
-//                 NotificationDef.N_STARTUP_FINISHED_AFTER_1_SECONDS
-//         };
-//
-//         mControllerCenter.addPolicy(MessagePolicy.create(controllerID, messageIDs));
-//         mControllerCenter.addPolicy(NotificationPolicy.create(controllerID, notificationIDs));
-//    }
+    public void registerHabitDetailController(){
+        int controllerID = ControllerID.HABITDETAIL_CONTROLLER;
+
+        int[] messageIDs = new int[]{
+                MsgDef.MSG_OPEN_HABIT_DETAIL,
+        };
+        mControllerCenter.addPolicy(MessagePolicy.create(controllerID, messageIDs));
+    }
+
 
 
 }

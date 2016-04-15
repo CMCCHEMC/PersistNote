@@ -21,10 +21,11 @@ public class DefaultScreen extends AbstractScreen {
     public DefaultScreen(Context context, UICallBacks callBacks) {
         super(context, callBacks);
         init();
+        setBackgroundColor(ResTools.getColor(R.color.default_grey));
     }
 
     protected void init() {
-        mTitleBar = new DefaultTitleBar(getContext());
+        mTitleBar = new DefaultTitleBar(getContext(), mCallBacks);
         mTitleBar.setId(ID_TITLE_BAR);
         LayoutParams titleLp = new LayoutParams(LayoutParams.MATCH_PARENT, ResTools.getDimenInt(R.dimen.title_bar_height));
         addView(mTitleBar, titleLp);

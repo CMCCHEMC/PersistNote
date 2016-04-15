@@ -67,28 +67,33 @@ public class RootController extends AbstractController{
     public boolean handleAction(int actionId, Object arg, Object result) {
         switch (actionId) {
             case ActionId.OnHabitItemClick:
-                AccountModel.getInstance().testJHRequest("NetworkTest",
-                        new Callback<ZHResult>() {
-                            @Override
-                            public void success(ZHResult result, Response response) {
-                                try {
-                                    //网络接口测试代码
-                                    int count = result.getOthers().size();
-                                    int index = (int) (System.currentTimeMillis() % count);
-                                    mRootScreen.setCheckInText(result.getOthers().get(index).getName());
-                                }catch (Exception e) {
-                                }
-
-                            }
-
-                            @Override
-                            public void failure(RetrofitError error) {
-
-                            }
-                        });
+//                handleHabitClick();
+                mDispatcher.sendMessage(MsgDef.MSG_OPEN_HABIT_DETAIL);
                 break;
         }
         return false;
+    }
+
+    private void handleHabitClick() {
+        AccountModel.getInstance().testJHRequest("NetworkTest",
+                new Callback<ZHResult>() {
+                    @Override
+                    public void success(ZHResult result, Response response) {
+                        try {
+                            //网络接口测试代码
+                            int count = result.getOthers().size();
+                            int index = (int) (System.currentTimeMillis() % count);
+                            mRootScreen.setCheckInText(result.getOthers().get(index).getName());
+                        }catch (Exception e) {
+                        }
+
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+
+                    }
+                });
     }
 
 
