@@ -23,6 +23,8 @@
     <item name="login_rl_password_remove" type="id" />
     <item name="login_rl_password_hide" type="id" />
 
+    <item name="login_tv_forget_password" type="id" />
+
     <!-- RegisterHomeScreen -->
     <item name="register_et_phone_number" type="id" />
     <item name="register_line_phone_number" type="id" />

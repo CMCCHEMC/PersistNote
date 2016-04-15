@@ -13,6 +13,7 @@
     <string name="common_et_hint_password">输入6~16位数的密码</string>
 
     <!-- Login Strings -->
+    <string name="login_tv_forget_password">忘记密码</string>
 
     <!-- Register Strings -->
     <string name="register_et_hint_code">输入验证码</string>

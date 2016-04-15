@@ -72,6 +72,8 @@ public class LoginScreen extends DefaultScreen implements View.OnClickListener {
 
     private Boolean mIsRemovePassword = false;
 
+    private TextView mForgetPassword;
+
     public LoginScreen(Context context, UICallBacks callBacks) {
         super(context, callBacks);
         init();
@@ -393,6 +395,23 @@ public class LoginScreen extends DefaultScreen implements View.OnClickListener {
         mContainer.addView(mContainerOKButton, lpC3);
 
 
+        /************** mForgetPassword ******************/
+
+        mForgetPassword = new TextView(getContext());
+        mForgetPassword.setId(R.id.login_tv_forget_password);
+        mForgetPassword.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.h1));
+        mForgetPassword.setText(ResTools.getString(R.string.login_tv_forget_password));
+        mForgetPassword.setTextColor(ResTools.getColor(R.color.c3));
+        mForgetPassword.setOnClickListener(this);
+
+        RelativeLayout.LayoutParams lpV1 = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        lpV1.addRule(RelativeLayout.BELOW, R.id.login_rl_password);
+        lpV1.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+        lpV1.topMargin = ResTools.getDimenInt(R.dimen.common_tv_margin_top);
+        lpV1.rightMargin = ResTools.getDimenInt(R.dimen.common_rl_margin_right);
+
+        mContainer.addView(mForgetPassword, lpV1);
+
     }
 
     @Override
@@ -425,6 +444,9 @@ public class LoginScreen extends DefaultScreen implements View.OnClickListener {
         if (v == mContainerOKButton) {
             if(mIsOkButtonAvailable)
                 mCallBacks.handleAction(ActionId.CommitLoginClick, null, null);
+        }
+        if (v == mForgetPassword) {
+            // TODO: Forget Password
         }
     }
 }
