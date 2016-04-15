@@ -22,6 +22,9 @@ public class CommunityDataProcesser {
                 record.setUserName(other.getName());
                 record.setContent(other.getDescription());
                 record.setAvatarUrl(other.getThumbnail());
+                record.setTimestamp(String.valueOf(other.getColor()));
+                record.setPersistCount(other.getId());
+                list.add(record);
             }
         } catch (Exception e) {
 

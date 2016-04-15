@@ -27,6 +27,11 @@ public class CommunityRecordDao extends AbstractDao<CommunityRecord, Long> {
         public final static Property CommunityId = new Property(1, String.class, "communityId", false, "COMMUNITY_ID");
         public final static Property UserName = new Property(2, String.class, "userName", false, "USER_NAME");
         public final static Property AvatarUrl = new Property(3, String.class, "avatarUrl", false, "AVATAR_URL");
+        public final static Property Timestamp = new Property(4, String.class, "timestamp", false, "TIMESTAMP");
+        public final static Property PersistCount = new Property(5, Integer.class, "persistCount", false, "PERSIST_COUNT");
+        public final static Property Content = new Property(6, String.class, "content", false, "CONTENT");
+        public final static Property SupportCount = new Property(7, Integer.class, "supportCount", false, "SUPPORT_COUNT");
+        public final static Property CommentCount = new Property(8, Integer.class, "commentCount", false, "COMMENT_COUNT");
     };
 
 
@@ -45,7 +50,12 @@ public class CommunityRecordDao extends AbstractDao<CommunityRecord, Long> {
                 "'_id' INTEGER PRIMARY KEY ," + // 0: id
                 "'COMMUNITY_ID' TEXT NOT NULL ," + // 1: communityId
                 "'USER_NAME' TEXT," + // 2: userName
-                "'AVATAR_URL' TEXT);"); // 3: avatarUrl
+                "'AVATAR_URL' TEXT," + // 3: avatarUrl
+                "'TIMESTAMP' TEXT," + // 4: timestamp
+                "'PERSIST_COUNT' INTEGER," + // 5: persistCount
+                "'CONTENT' TEXT," + // 6: content
+                "'SUPPORT_COUNT' INTEGER," + // 7: supportCount
+                "'COMMENT_COUNT' INTEGER);"); // 8: commentCount
     }
 
     /** Drops the underlying database table. */
@@ -74,6 +84,31 @@ public class CommunityRecordDao extends AbstractDao<CommunityRecord, Long> {
         if (avatarUrl != null) {
             stmt.bindString(4, avatarUrl);
         }
+ 
+        String timestamp = entity.getTimestamp();
+        if (timestamp != null) {
+            stmt.bindString(5, timestamp);
+        }
+ 
+        Integer persistCount = entity.getPersistCount();
+        if (persistCount != null) {
+            stmt.bindLong(6, persistCount);
+        }
+ 
+        String content = entity.getContent();
+        if (content != null) {
+            stmt.bindString(7, content);
+        }
+ 
+        Integer supportCount = entity.getSupportCount();
+        if (supportCount != null) {
+            stmt.bindLong(8, supportCount);
+        }
+ 
+        Integer commentCount = entity.getCommentCount();
+        if (commentCount != null) {
+            stmt.bindLong(9, commentCount);
+        }
     }
 
     /** @inheritdoc */
@@ -89,7 +124,12 @@ public class CommunityRecordDao extends AbstractDao<CommunityRecord, Long> {
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
             cursor.getString(offset + 1), // communityId
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // userName
-            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3) // avatarUrl
+            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // avatarUrl
+            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // timestamp
+            cursor.isNull(offset + 5) ? null : cursor.getInt(offset + 5), // persistCount
+            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // content
+            cursor.isNull(offset + 7) ? null : cursor.getInt(offset + 7), // supportCount
+            cursor.isNull(offset + 8) ? null : cursor.getInt(offset + 8) // commentCount
         );
         return entity;
     }
@@ -101,6 +141,11 @@ public class CommunityRecordDao extends AbstractDao<CommunityRecord, Long> {
         entity.setCommunityId(cursor.getString(offset + 1));
         entity.setUserName(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
         entity.setAvatarUrl(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
+        entity.setTimestamp(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
+        entity.setPersistCount(cursor.isNull(offset + 5) ? null : cursor.getInt(offset + 5));
+        entity.setContent(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
+        entity.setSupportCount(cursor.isNull(offset + 7) ? null : cursor.getInt(offset + 7));
+        entity.setCommentCount(cursor.isNull(offset + 8) ? null : cursor.getInt(offset + 8));
      }
     
     /** @inheritdoc */

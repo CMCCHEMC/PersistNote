@@ -5,4 +5,6 @@ package com.dv.persistnote.framework.model;
  */
 public class ModelId {
     public static final int OnHabitListLoaded = 1001;
+    public static final int OnCommunityLoaded = 1002;
+    public static final int OnCommunityNoMore = 1003;
 }

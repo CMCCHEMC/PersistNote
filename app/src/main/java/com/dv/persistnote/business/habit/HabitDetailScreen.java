@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.dv.persistnote.R;
 import com.dv.persistnote.base.ResTools;
+import com.dv.persistnote.framework.ActionId;
 import com.dv.persistnote.framework.DefaultScreen;
 import com.dv.persistnote.framework.ui.UICallBacks;
 
@@ -23,6 +24,7 @@ public class HabitDetailScreen extends DefaultScreen{
     private TextView mFakeCalendar;
     private TextView mPersistDuration;
     private CheckInWidget mCheckInWidget;
+    private TextView mFooter;
 
     private ListView mDetailListView;
 
@@ -66,8 +68,36 @@ public class HabitDetailScreen extends DefaultScreen{
         mDetailListView.addHeaderView(mCheckInWidget);
         mDetailListView.addHeaderView(mPersistDuration);
 
+        mFooter = new TextView(getContext());
+        mFooter.setText("正在加载..");
+        mFooter.setGravity(Gravity.CENTER);
+        mFooter.setTextColor(ResTools.getColor(R.color.C3));
+        lp = new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT,
+                ResTools.getDimenInt(R.dimen.common_text_size_30) * 2);
+        mFooter.setLayoutParams(lp);
+        mDetailListView.addFooterView(mFooter);
         mDetailListView.setAdapter(mAdapter);
+        configAutoLoadMore();
         setContent(mDetailListView);
+    }
+
+    private void configAutoLoadMore() {
+        mDetailListView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                int lastVisibleItem = mDetailListView.getLastVisiblePosition();
+                int totalItemCount = mAdapter.getCount();
+                boolean lastItemVisible = totalItemCount > 0 && (lastVisibleItem >= totalItemCount - 1);
+                if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE && lastItemVisible) {
+                    mCallBacks.handleAction(ActionId.OnCommunityLoadMore, null, null);
+                }
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+
+            }
+        });
     }
 
     public void setHabitDataById(long habitId) {
@@ -90,5 +120,13 @@ public class HabitDetailScreen extends DefaultScreen{
                 mDetailListView.setSelection(0);
                 break;
         }
+    }
+
+    public void notifyCommunityDataChange() {
+        mAdapter.notifyDataSetChanged();
+    }
+
+    public void onNoHistoryData() {
+        mFooter.setText("sb 别拉了");
     }
 }

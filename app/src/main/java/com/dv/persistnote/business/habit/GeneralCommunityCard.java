@@ -1,6 +1,7 @@
 package com.dv.persistnote.business.habit;
 
 import android.content.Context;
+import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -8,8 +9,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.dv.persistnote.R;
 import com.dv.persistnote.base.ContextManager;
+import com.dv.persistnote.base.ResTools;
+import com.dv.persistnote.framework.ui.common.GlideCircleTransform;
+
+import habit.dao.CommunityRecord;
 
 /**
  * Created by Hang on 2016/4/3.
@@ -20,7 +26,10 @@ public class GeneralCommunityCard extends FrameLayout {
     private TextView mUserName;
     private TextView mUpdateTime;
     private TextView mPersistDuration;
+    private TextView mContent;
+    private ImageView mContentImage;
 
+    private GlideCircleTransform mCircleTransform;
 
     public GeneralCommunityCard(Context context) {
         super(context);
@@ -30,9 +39,26 @@ public class GeneralCommunityCard extends FrameLayout {
         mUserName = (TextView) findViewById(R.id.user_name);
         mUpdateTime = (TextView) findViewById(R.id.update_time);
         mPersistDuration = (TextView) findViewById(R.id.persist_duration);
+        mContent = (TextView)findViewById(R.id.card_content);
+        mContentImage = (ImageView)findViewById(R.id.card_image);
+        mCircleTransform = new GlideCircleTransform(getContext());
     }
 
 
-    public void bindData(CommunityModel.CommunityData communityData) {
+    public void bindData(CommunityRecord communityData) {
+//        mUserAvatar.seti
+        Glide.with(getContext()).load(communityData.getAvatarUrl())
+                .placeholder(R.drawable.main_logo).crossFade()
+                .transform(mCircleTransform)
+                .into(mUserAvatar);
+        Glide.with(getContext()).load(communityData.getAvatarUrl())
+                .placeholder(new ColorDrawable(ResTools.getColor(R.color.C3)))
+                .into(mContentImage);
+
+        mUserName.setText(communityData.getUserName());
+        mUpdateTime.setText(communityData.getTimestamp());
+        mPersistDuration.setText(String.valueOf(communityData.getPersistCount()));
+        mContent.setText(communityData.getContent());
+        mPersistDuration.setText(communityData.getPersistCount() +" 天");
     }
 }
