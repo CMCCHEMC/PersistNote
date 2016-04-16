@@ -5,12 +5,11 @@ import android.graphics.drawable.Drawable;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.dv.persistnote.R;
+import com.dv.persistnote.base.ResTools;
 import com.dv.persistnote.framework.ActionId;
 import com.dv.persistnote.framework.ui.AbstractScreen;
 import com.dv.persistnote.framework.FontManager;
@@ -28,6 +27,8 @@ public class WelcomeScreen extends AbstractScreen implements View.OnClickListene
 
     private TextView mLoginButton;
 
+    private TextView mTestEntry;
+
     public WelcomeScreen(Context context, UICallBacks callBacks) {
         super(context, callBacks);
         init();
@@ -42,9 +43,9 @@ public class WelcomeScreen extends AbstractScreen implements View.OnClickListene
         mCenterText.setCompoundDrawables(null, drawable, null, null);
         mCenterText.setCompoundDrawablePadding(edge / 3);
         mCenterText.setText(getResources().getString(R.string.slogen));
-        mCenterText.setTextColor(getResources().getColor(R.color.default_black));
-        mCenterText.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.common_text_size_20));
-        mCenterText.setTypeface(FontManager.getInstance().getDefaultTypeface());
+        mCenterText.setTextColor(ResTools.getColor(R.color.c5));
+        mCenterText.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.title_bar_text));
+//        mCenterText.setTypeface(FontManager.getInstance().getDefaultTypeface());
 
         LayoutParams lp = new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
         lp.addRule(CENTER_HORIZONTAL);
@@ -67,6 +68,17 @@ public class WelcomeScreen extends AbstractScreen implements View.OnClickListene
         lp.bottomMargin = (int) getResources().getDimension(R.dimen.welcome_icon_top_margin);
         lp.leftMargin = lp.rightMargin = (int) getResources().getDimension(R.dimen.action_button_margin);
         addView(container, lp);
+
+        mTestEntry = new TextView(getContext());
+        mTestEntry.setText("随便看看");
+        mTestEntry.setTextColor(ResTools.getColor(R.color.c7));
+        mTestEntry.setOnClickListener(this);
+        lp = new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
+        lp.addRule(CENTER_HORIZONTAL);
+        lp.addRule(ALIGN_PARENT_BOTTOM);
+        lp.bottomMargin = (int) getResources().getDimension(R.dimen.welcome_icon_top_margin)/2;
+        addView(mTestEntry, lp);
+
     }
 
 
@@ -74,9 +86,8 @@ public class WelcomeScreen extends AbstractScreen implements View.OnClickListene
         TextView textView = new TextView(getContext());
         textView.setText(text);
         textView.setGravity(Gravity.CENTER);
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.common_text_size_22));
-        textView.setTextColor(getResources().getColor(R.color.light_main_color));
-        textView.setTypeface(FontManager.getInstance().getDefaultTypeface());
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.title_bar_text));
+        textView.setTextColor(ResTools.getColor(R.color.c5));
 
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
         lp.weight = 1;
@@ -87,11 +98,13 @@ public class WelcomeScreen extends AbstractScreen implements View.OnClickListene
     }
 
     @Override
-    public void onClick(View view) {
-        if(view == mRegisterButton) {
-            Toast.makeText(getContext(), "点击注册", Toast.LENGTH_SHORT).show();
-        } if (view == mLoginButton) {
+    public void onClick(View v) {
+        if(v == mRegisterButton) {
+            mCallBacks.handleAction(ActionId.OnRegisterClick, null, null);
+        } else if (v == mLoginButton) {
             mCallBacks.handleAction(ActionId.OnLoginClick, null, null);
+        } else if (v == mTestEntry) {
+            mCallBacks.handleAction(ActionId.OnDirectEntryClick, null, null);
         }
     }
 }

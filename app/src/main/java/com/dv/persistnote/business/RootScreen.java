@@ -27,10 +27,10 @@ public class RootScreen extends DefaultScreen {
         init();
         setTitle(ResTools.getString(R.string.app_name));
         enableTitleBack(false);
+        setBackgroundColor(ResTools.getColor(R.color.default_grey));
     }
 
     protected void init() {
-        super.init();
         mContainer = new LinearLayout(getContext());
         mContainer.setOrientation(LinearLayout.VERTICAL);
         setContent(mContainer);

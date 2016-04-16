@@ -3,10 +3,8 @@ package com.dv.persistnote.business.habit;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -52,7 +50,7 @@ public class GeneralCommunityCard extends FrameLayout {
                 .transform(mCircleTransform)
                 .into(mUserAvatar);
         Glide.with(getContext()).load(communityData.getAvatarUrl())
-                .placeholder(new ColorDrawable(ResTools.getColor(R.color.C3)))
+                .placeholder(new ColorDrawable(ResTools.getColor(R.color.c3)))
                 .into(mContentImage);
 
         mUserName.setText(communityData.getUserName());

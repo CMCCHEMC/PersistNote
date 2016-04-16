@@ -3,6 +3,11 @@ package com.dv.persistnote.business.account;
 import android.os.Message;
 import android.view.KeyEvent;
 
+import com.dv.persistnote.business.LoginScreen;
+import com.dv.persistnote.business.RegisterHomeScreen;
+import com.dv.persistnote.business.RegisterOKScreen;
+import com.dv.persistnote.business.RegisterPasswordScreen;
+import com.dv.persistnote.business.RegisterUserInfoScreen;
 import com.dv.persistnote.framework.ActionId;
 import com.dv.persistnote.business.WelcomeScreen;
 import com.dv.persistnote.framework.ui.AbstractScreen;
@@ -16,6 +21,16 @@ import com.dv.persistnote.framework.core.MsgDef;
 public class AccountController extends AbstractController{
 
     private WelcomeScreen mWelcomeScreen;
+
+    private LoginScreen mLoginScreen;
+
+    private RegisterHomeScreen mRegisterHomeScreen;
+
+    private RegisterPasswordScreen mRegisterPasswordScreen;
+
+    private RegisterUserInfoScreen mRegisterUserInfoScreen;
+
+    private RegisterOKScreen mRegisterOKScreen;
 
     public AccountController(BaseEnv baseEnv) {
         super(baseEnv);
@@ -42,7 +57,30 @@ public class AccountController extends AbstractController{
     public boolean handleAction(int actionId, Object arg, Object result) {
         switch (actionId) {
             case ActionId.OnLoginClick:
+                mLoginScreen = new LoginScreen(mContext, this);
+                mWindowMgr.pushScreen(mLoginScreen, true);
+                break;
+            case ActionId.OnRegisterClick:
+                mRegisterHomeScreen = new RegisterHomeScreen(mContext, this);
+                mWindowMgr.pushScreen(mRegisterHomeScreen, true);
+                break;
+            case ActionId.OnDirectEntryClick:
                 mWindowMgr.popScreen(true);
+                break;
+            case ActionId.CommitLoginClick:
+                // TODO: Login function.
+                break;
+            case ActionId.CommitRegisterHomeClick:
+                mRegisterPasswordScreen = new RegisterPasswordScreen(mContext, this);
+                mWindowMgr.pushScreen(mRegisterPasswordScreen, true);
+                break;
+            case ActionId.CommitRegisterPasswordClick:
+                mRegisterUserInfoScreen = new RegisterUserInfoScreen(mContext, this);
+                mWindowMgr.pushScreen(mRegisterUserInfoScreen, true);
+                break;
+            case ActionId.CommitRegisterUserInfoClick:
+                mRegisterOKScreen = new RegisterOKScreen(mContext, this);
+                mWindowMgr.pushScreen(mRegisterOKScreen, true);
                 break;
         }
         return false;
