@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="8dp"
-    android:background="@color/default_white"
+    android:background="@color/c4"
     android:orientation="vertical"
     android:paddingLeft="@dimen/common_margin_16"
     android:paddingRight="@dimen/common_margin_16">
@@ -29,7 +29,7 @@
             android:layout_marginTop="12dp"
             android:layout_toRightOf="@+id/user_avatar"
             android:text="晓玲sharlene"
-            android:textColor="@color/C9" />
+            android:textColor="@color/c9" />
 
         <TextView
             android:id="@+id/update_time"
@@ -39,7 +39,7 @@
             android:layout_marginBottom="12dp"
             android:layout_toRightOf="@+id/user_avatar"
             android:text="昨天 10:20"
-            android:textColor="@color/C3" />
+            android:textColor="@color/c3" />
 
         <TextView
             android:id="@+id/persist_duration"
@@ -48,7 +48,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:text="27天"
-            android:textColor="@color/C9" />
+            android:textColor="@color/c9" />
     </RelativeLayout>
 
 
@@ -60,7 +60,7 @@
         android:adjustViewBounds="true"
         android:maxHeight="300dp"
         android:scaleType="centerCrop"
-        android:background="@color/C3" />
+        android:background="@color/c3" />
 
     <TextView
         android:id="@+id/card_content"
@@ -69,7 +69,7 @@
         android:paddingBottom="8dp"
         android:paddingTop="8dp"
         android:text="上海楼市调控初步见效 新房成交面积锐减60%"
-        android:textColor="@color/default_black" />
+        android:textColor="@color/c2" />
 
     <!-- 底部区域-->
     <LinearLayout

@@ -43,7 +43,7 @@ public class CheckInWidget extends FrameLayout implements View.OnClickListener {
         mCheckInView.setImageDrawable(mCheckInDrawable);
         mCheckInView.setOnClickListener(this);
 
-        setBackgroundColor(ResTools.getColor(R.color.default_white));
+        setBackgroundColor(ResTools.getColor(R.color.c4));
     }
 
     public void setChecked(boolean checked, boolean anim) {

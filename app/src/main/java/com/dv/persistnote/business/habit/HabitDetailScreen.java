@@ -32,11 +32,11 @@ public class HabitDetailScreen extends DefaultScreen{
 
     public HabitDetailScreen(Context context, UICallBacks callBacks) {
         super(context, callBacks);
+        init();
+        setBackgroundColor(ResTools.getColor(R.color.default_grey));
     }
 
-    @Override
     protected void init() {
-        super.init();
         mDetailListView = new ListView(getContext());
         mDetailListView.setDivider(null);
         mDetailListView.setCacheColorHint(Color.TRANSPARENT);
@@ -46,10 +46,10 @@ public class HabitDetailScreen extends DefaultScreen{
         mFakeCalendar = new TextView(getContext());
         mFakeCalendar.setText("假装是日历");
         AbsListView.LayoutParams lp = new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT,
-                ResTools.getDimenInt(R.dimen.common_text_size_30) *2);
+                ResTools.getDimenInt(R.dimen.calendar_height) *2);
         mFakeCalendar.setLayoutParams(lp);
         mFakeCalendar.setGravity(Gravity.CENTER);
-        mFakeCalendar.setBackgroundColor(ResTools.getColor(R.color.default_white));
+        mFakeCalendar.setBackgroundColor(ResTools.getColor(R.color.c4));
 
         mCheckInWidget = new CheckInWidget(getContext());
         lp = new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT,
@@ -59,10 +59,10 @@ public class HabitDetailScreen extends DefaultScreen{
         mPersistDuration = new TextView(getContext());
         mPersistDuration.setText("第28天");
         lp = new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT,
-                ResTools.getDimenInt(R.dimen.common_text_size_30) * 2);
+                ResTools.getDimenInt(R.dimen.calendar_height) * 2);
         mPersistDuration.setLayoutParams(lp);
         mPersistDuration.setGravity(Gravity.CENTER);
-        mPersistDuration.setBackgroundColor(ResTools.getColor(R.color.default_white));
+        mPersistDuration.setBackgroundColor(ResTools.getColor(R.color.c4));
 
         mDetailListView.addHeaderView(mFakeCalendar);
         mDetailListView.addHeaderView(mCheckInWidget);
@@ -71,9 +71,9 @@ public class HabitDetailScreen extends DefaultScreen{
         mFooter = new TextView(getContext());
         mFooter.setText("正在加载..");
         mFooter.setGravity(Gravity.CENTER);
-        mFooter.setTextColor(ResTools.getColor(R.color.C3));
+        mFooter.setTextColor(ResTools.getColor(R.color.c3));
         lp = new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT,
-                ResTools.getDimenInt(R.dimen.common_text_size_30) * 2);
+                ResTools.getDimenInt(R.dimen.calendar_height) * 2);
         mFooter.setLayoutParams(lp);
         mDetailListView.addFooterView(mFooter);
         mDetailListView.setAdapter(mAdapter);
