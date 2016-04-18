@@ -2,6 +2,7 @@ package com.dv.persistnote.business;
 
 import android.content.Context;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.InputType;
 import android.text.Selection;
 import android.text.Spannable;
@@ -143,7 +144,7 @@ public class LoginScreen extends DefaultScreen implements View.OnClickListener {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (s.toString().length() > 0 && mEtPassword.getText().toString().length() > 0) {
+                if (s.toString().length() > 11 && mEtPassword.getText().toString().length() > 0) {
                     mIsOkButtonAvailable = true;
                     mOkButton.setAlpha(1.0f);
                 } else {
@@ -159,6 +160,8 @@ public class LoginScreen extends DefaultScreen implements View.OnClickListener {
                 }
             }
         });
+
+        mEtPhoneNumber.setFilters(new InputFilter[]{new InputFilter.LengthFilter(11)});
 
         RelativeLayout.LayoutParams lpC1V1 =
                 new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
@@ -264,7 +267,7 @@ public class LoginScreen extends DefaultScreen implements View.OnClickListener {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (s.toString().length() > 0 && mEtPhoneNumber.getText().toString().length() > 0) {
+                if (s.toString().length() > 0 && mEtPhoneNumber.getText().toString().length() == 11) {
                     mIsOkButtonAvailable = true;
                     mOkButton.setAlpha(1.0f);
                 } else {
@@ -313,7 +316,7 @@ public class LoginScreen extends DefaultScreen implements View.OnClickListener {
 
         mHidePassword = new ImageView(getContext());
         mHidePassword.setId(R.id.login_iv_password_hide);
-        mHidePassword.setImageDrawable(ResTools.getDrawable(R.drawable.eyes_open));
+        mHidePassword.setImageDrawable(ResTools.getDrawable(R.drawable.eyes_close));
 
         RelativeLayout.LayoutParams lpC2C1V1 =
                 new RelativeLayout.LayoutParams(ResTools.getDimenInt(R.dimen.h1), ResTools.getDimenInt(R.dimen.h1));
@@ -419,11 +422,11 @@ public class LoginScreen extends DefaultScreen implements View.OnClickListener {
         if(v == mContainerPasswordHideEZTouch) {
             if (mIsHidden) {
                 mEtPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                mHidePassword.setImageDrawable(ResTools.getDrawable(R.drawable.eyes_close));
+                mHidePassword.setImageDrawable(ResTools.getDrawable(R.drawable.eyes_open));
                 mIsHidden = false;
             } else {
                 mEtPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                mHidePassword.setImageDrawable(ResTools.getDrawable(R.drawable.eyes_open));
+                mHidePassword.setImageDrawable(ResTools.getDrawable(R.drawable.eyes_close));
                 mIsHidden = true;
             }
             mEtPassword.postInvalidate();
