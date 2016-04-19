@@ -29,6 +29,8 @@ public class CircleView extends View {
         mPaint.setColor(Color.BLUE);
         // 设置样式-填充
         mPaint.setStyle(Paint.Style.FILL);
+        // 设置抗锯齿
+        mPaint.setAntiAlias(true);
     }
 
     public void setColor(int color) {

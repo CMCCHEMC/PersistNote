@@ -67,8 +67,7 @@
     <dimen name="register_line_code_margin_right">8dp</dimen>
 
     <!-- RegisterPasswordScreen -->
-    <dimen name="register_p_rl_password_margin_top_1">24dp</dimen>
-    <dimen name="register_p_rl_password_margin_top_2">34dp</dimen>
+    <dimen name="register_p_rl_password_margin_top">24dp</dimen>
 
     <!-- RegisterUserInfoScreen -->
     <dimen name="register_u_rl_user_name_margin_top">24dp</dimen>

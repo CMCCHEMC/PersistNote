@@ -8,6 +8,7 @@ import android.text.Selection;
 import android.text.Spannable;
 import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.NumberKeyListener;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.util.TypedValue;
@@ -224,6 +225,28 @@ public class LoginScreen extends DefaultScreen implements View.OnClickListener {
                 0, ResTools.getDimenInt(R.dimen.common_et_padding_bottom));
         mEtPassword.setId(R.id.login_et_password);
         mEtPassword.setBackgroundColor(ResTools.getColor(R.color.c4));
+        mEtPassword.setKeyListener(new NumberKeyListener() {
+            @Override
+            protected char[] getAcceptedChars() {
+                char[] chars = new char[62];
+                int j = 0;
+                for(char i = 'a'; i <= 'z';j++,i++) {
+                    chars[j] = i;
+                }
+                for(char i = 'A'; i <= 'Z'; j++,i++) {
+                    chars[j] = i;
+                }
+                for(char i = '0'; i <= '9'; j++,i++) {
+                    chars[j] = i;
+                }
+                return chars;
+            }
+
+            @Override
+            public int getInputType() {
+                return InputType.TYPE_TEXT_VARIATION_PASSWORD;
+            }
+        });
         mEtPassword.setHint(R.string.common_et_hint_password);
         mEtPassword.setSingleLine(true);
         mEtPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());

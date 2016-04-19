@@ -2,6 +2,7 @@ package com.dv.persistnote.business;
 
 import android.content.Context;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -135,7 +136,7 @@ public class RegisterHomeScreen extends DefaultScreen implements View.OnClickLis
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (s.toString().length() > 0 && mEtCode.getText().toString().length() > 0) {
+                if (s.toString().length() == 11 && mEtCode.getText().toString().length() == 6) {
                     mIsOkButtonAvailable = true;
                     mOkButton.setAlpha(1.0f);
                 } else {
@@ -151,6 +152,8 @@ public class RegisterHomeScreen extends DefaultScreen implements View.OnClickLis
                 }
             }
         });
+
+        mEtPhoneNumber.setFilters(new InputFilter[]{new InputFilter.LengthFilter(11)});
 
         RelativeLayout.LayoutParams lpC1V1 =
                 new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
@@ -267,7 +270,7 @@ public class RegisterHomeScreen extends DefaultScreen implements View.OnClickLis
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (s.toString().length() > 0 && mEtPhoneNumber.getText().toString().length() > 0) {
+                if (s.toString().length() == 6 && mEtPhoneNumber.getText().toString().length() == 11) {
                     mIsOkButtonAvailable = true;
                     mOkButton.setAlpha(1.0f);
                 } else {
@@ -283,6 +286,8 @@ public class RegisterHomeScreen extends DefaultScreen implements View.OnClickLis
                 }
             }
         });
+
+        mEtCode.setFilters(new InputFilter[]{new InputFilter.LengthFilter(6)});
 
         RelativeLayout.LayoutParams lpC2V2 = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT,
                 LayoutParams.WRAP_CONTENT);

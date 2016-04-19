@@ -30,8 +30,6 @@
     <string name="register_p_tv_wrong_password_short">字数不足</string>
     <string name="register_u_tv_wrong_user_name_long">用户名过长</string>
 
-    <string name="register_p_et_hint_password_2">再次输入密码</string>
-    
      <string name="more_click_back">再按一次退出哦</string>
 
 

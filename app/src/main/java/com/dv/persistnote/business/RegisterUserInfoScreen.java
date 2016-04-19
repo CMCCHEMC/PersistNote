@@ -3,6 +3,7 @@ package com.dv.persistnote.business;
 import android.content.Context;
 import android.graphics.Color;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.util.TypedValue;
@@ -135,13 +136,6 @@ public class RegisterUserInfoScreen extends DefaultScreen implements View.OnClic
                        mOkButton.setAlpha(1.0f);
                        mIsOkButtonAvailable = true;
                    }
-                   if(s.toString().length() > 20) {
-                       mLineUserName.setBackgroundColor(ResTools.getColor(R.color.c10));
-                       mWrongUserName.setText(ResTools.getString(R.string.register_u_tv_wrong_user_name_long));
-                   } else {
-                       mLineUserName.setBackgroundColor(ResTools.getColor(R.color.c1));
-                       mWrongUserName.setText(null);
-                   }
                } else {
                    mRemoveUserName.setVisibility(View.GONE);
                    mIsRemoveUserName = false;
@@ -150,6 +144,8 @@ public class RegisterUserInfoScreen extends DefaultScreen implements View.OnClic
                }
             }
         });
+
+        mEtUserName.setFilters(new InputFilter[]{new InputFilter.LengthFilter(20)});
 
         RelativeLayout.LayoutParams lpC1V1 =
                 new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);

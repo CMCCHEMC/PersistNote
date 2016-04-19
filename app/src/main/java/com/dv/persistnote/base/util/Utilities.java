@@ -6,7 +6,5 @@ public final class Utilities {
 	public static int densityDpi;
 
 	public static boolean isHaveKeyDownEvent = false;
-	
 
 }
-
