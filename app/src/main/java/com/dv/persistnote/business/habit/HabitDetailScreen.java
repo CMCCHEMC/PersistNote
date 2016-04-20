@@ -3,6 +3,7 @@ package com.dv.persistnote.business.habit;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.Gravity;
 import android.widget.AbsListView;
 import android.widget.ListView;
@@ -27,6 +28,7 @@ public class HabitDetailScreen extends DefaultScreen{
     private TextView mFooter;
 
     private ListView mDetailListView;
+    private SwipeRefreshLayout mRefreshLayout;
 
     private CommunityDetailAdapter mAdapter;
 
@@ -43,6 +45,32 @@ public class HabitDetailScreen extends DefaultScreen{
         mDetailListView.setSelector(new ColorDrawable(Color.TRANSPARENT));
         mAdapter = new CommunityDetailAdapter();
 
+        mRefreshLayout = new SwipeRefreshLayout(getContext());
+        mRefreshLayout.addView(mDetailListView, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+        mRefreshLayout.setColorSchemeColors(ResTools.getColor(R.color.c1));
+        mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mCallBacks.handleAction(ActionId.OnCommunityRefresh, null, null);
+            }
+        });
+
+        configHeader();
+
+        mFooter = new TextView(getContext());
+        mFooter.setText("正在加载..");
+        mFooter.setGravity(Gravity.CENTER);
+        mFooter.setTextColor(ResTools.getColor(R.color.c3));
+        AbsListView.LayoutParams lp = new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT,
+                ResTools.getDimenInt(R.dimen.calendar_height) * 2);
+        mFooter.setLayoutParams(lp);
+        mDetailListView.addFooterView(mFooter);
+        mDetailListView.setAdapter(mAdapter);
+        configAutoLoadMore();
+        setContent(mRefreshLayout);
+    }
+
+    private void configHeader() {
         mFakeCalendar = new TextView(getContext());
         mFakeCalendar.setText("假装是日历");
         AbsListView.LayoutParams lp = new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT,
@@ -67,18 +95,6 @@ public class HabitDetailScreen extends DefaultScreen{
         mDetailListView.addHeaderView(mFakeCalendar);
         mDetailListView.addHeaderView(mCheckInWidget);
         mDetailListView.addHeaderView(mPersistDuration);
-
-        mFooter = new TextView(getContext());
-        mFooter.setText("正在加载..");
-        mFooter.setGravity(Gravity.CENTER);
-        mFooter.setTextColor(ResTools.getColor(R.color.c3));
-        lp = new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT,
-                ResTools.getDimenInt(R.dimen.calendar_height) * 2);
-        mFooter.setLayoutParams(lp);
-        mDetailListView.addFooterView(mFooter);
-        mDetailListView.setAdapter(mAdapter);
-        configAutoLoadMore();
-        setContent(mDetailListView);
     }
 
     private void configAutoLoadMore() {
@@ -109,7 +125,7 @@ public class HabitDetailScreen extends DefaultScreen{
     }
 
     private void setPersistCounts(int counts) {
-        mPersistDuration.setText("第"+counts+"天");
+        mPersistDuration.setText("第" + counts + "天");
     }
 
     @Override
@@ -122,8 +138,11 @@ public class HabitDetailScreen extends DefaultScreen{
         }
     }
 
-    public void notifyCommunityDataChange() {
+    public void notifyCommunityDataChange(int type) {
         mAdapter.notifyDataSetChanged();
+        if(type == CommunityModel.TYPE_NEW) {
+            mRefreshLayout.setRefreshing(false);
+        }
     }
 
     public void onNoHistoryData() {

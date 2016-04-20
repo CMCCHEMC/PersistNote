@@ -41,8 +41,13 @@ public class HabitDetailController extends AbstractController{
 
     @Override
     public boolean handleAction(int actionId, Object arg, Object result) {
-        if(actionId == ActionId.OnCommunityLoadMore) {
-            CommunityModel.getInstance().startLoadData(this, false, 5);
+        switch (actionId) {
+            case ActionId.OnCommunityLoadMore:
+                CommunityModel.getInstance().startLoadData(this, false, 5);
+                break;
+            case ActionId.OnCommunityRefresh:
+                CommunityModel.getInstance().startRefresh(this);
+                break;
         }
         return false;
     }
@@ -50,7 +55,7 @@ public class HabitDetailController extends AbstractController{
     @Override
     public boolean handleData(int dataId, Object arg, Object result) {
         if(dataId == ModelId.OnCommunityLoaded) {
-            mDetailScreen.notifyCommunityDataChange();
+            mDetailScreen.notifyCommunityDataChange((int)arg);
         } else if (dataId == ModelId.OnCommunityNoMore) {
             mDetailScreen.onNoHistoryData();
         }

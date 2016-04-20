@@ -30,6 +30,9 @@ import retrofit.client.Response;
  */
 public class CommunityModel {
 
+    public static int TYPE_NEW = 0;
+    public static int TYPE_HISTORY = 1;
+
     private static CommunityModel mInstance;
 
     List<CommunityRecord> mDataList = new ArrayList<>();
@@ -96,7 +99,7 @@ public class CommunityModel {
         }, new Runnable() {
             @Override
             public void run() {
-                if(mDataList == null || mDataList.size() <=0) {
+                if (mDataList == null || mDataList.size() <= 0) {
                     loadNetWork(observer);
                 }
             }
@@ -109,7 +112,7 @@ public class CommunityModel {
             public void success(ZHResult zhResult, Response response) {
                 mDataList = CommunityDataProcesser.convertNetDataToBean(zhResult);
                 postSaveLocal();
-                observer.handleData(ModelId.OnCommunityLoaded, null, null);
+                observer.handleData(ModelId.OnCommunityLoaded, TYPE_HISTORY, null);
             }
 
             @Override
@@ -134,5 +137,22 @@ public class CommunityModel {
         params.put("info", srcStr);
         serviceInterface.getZHResult(params, callback);
 
+    }
+
+    public void startRefresh(final IModelObserver observer) {
+        testJHRequest("", new Callback<ZHResult>() {
+            @Override
+            public void success(ZHResult zhResult, Response response) {
+                List<CommunityRecord> list = CommunityDataProcesser.convertNetDataToBean(zhResult);
+                int i = (int) (System.currentTimeMillis() % list.size());
+                mDataList.add(0, list.get(i));
+                observer.handleData(ModelId.OnCommunityLoaded, TYPE_NEW, null);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+
+            }
+        });
     }
 }
