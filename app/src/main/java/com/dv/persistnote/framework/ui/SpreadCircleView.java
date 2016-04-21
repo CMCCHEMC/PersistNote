@@ -27,7 +27,7 @@ public class SpreadCircleView extends View implements Runnable{
         super(context);
         mCx = cx;
         mCy = cy;
-        mRadius = 1.0f;
+        mRadius = 3.0f;
         mAcc = 0.2f;
         // 首先定义一个paint
         mPaint = new Paint();
@@ -68,7 +68,7 @@ public class SpreadCircleView extends View implements Runnable{
         while(true) {
             mRadius = mAcc + mRadius;
 
-            mAcc = mAcc + 0.35f;
+            mAcc = mAcc + 0.40f;
 
             WindowManager wm = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
 
@@ -81,7 +81,7 @@ public class SpreadCircleView extends View implements Runnable{
             postInvalidate();
 
             try {
-                Thread.sleep(5L);
+                Thread.sleep(6L);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
