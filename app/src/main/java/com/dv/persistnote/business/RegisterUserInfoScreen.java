@@ -8,6 +8,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -15,9 +16,12 @@ import android.widget.TextView;
 
 import com.dv.persistnote.R;
 import com.dv.persistnote.base.ResTools;
+import com.dv.persistnote.base.util.SystemUtil;
+import com.dv.persistnote.base.util.Utilities;
 import com.dv.persistnote.framework.ActionId;
 import com.dv.persistnote.framework.DefaultScreen;
 import com.dv.persistnote.framework.ui.CircleView;
+import com.dv.persistnote.framework.ui.SpreadCircleView;
 import com.dv.persistnote.framework.ui.UICallBacks;
 
 import java.lang.reflect.Field;
@@ -56,6 +60,8 @@ public class RegisterUserInfoScreen extends DefaultScreen implements View.OnClic
     private CircleView mOkButton;
 
     private ImageView mOkButtonArrow;
+
+    private SpreadCircleView mAnimation;
 
     private boolean mIsOkButtonAvailable = false;
 
@@ -303,8 +309,17 @@ public class RegisterUserInfoScreen extends DefaultScreen implements View.OnClic
     @Override
     public void onClick(View v) {
         if (v == mContainerOKButton) {
-            if(mIsOkButtonAvailable)
-                mCallBacks.handleAction(ActionId.CommitRegisterUserInfoClick, null, null);
+            if(mIsOkButtonAvailable) {
+                WindowManager wm = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
+
+                float width = wm.getDefaultDisplay().getWidth()/2;
+
+                float height = Utilities.dip2px(getContext(), 390f);
+
+                mAnimation = new SpreadCircleView(getContext(), width, height, mCallBacks);
+
+                addView(mAnimation);
+            }
         }
         if (v == mContainerUserNameRemoveEZTouch) {
             if (mIsRemoveUserName)
