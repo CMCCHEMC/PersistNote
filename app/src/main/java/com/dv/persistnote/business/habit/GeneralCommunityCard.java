@@ -59,4 +59,9 @@ public class GeneralCommunityCard extends FrameLayout {
         mContent.setText(communityData.getContent());
         mPersistDuration.setText(communityData.getPersistCount() +" 天");
     }
+
+    public void enableSpacing(boolean b) {
+        int spacing = b ? ResTools.getDimenInt(R.dimen.common_margin_8) : 0;
+        setPadding(0, spacing, 0, 0);
+    }
 }

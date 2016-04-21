@@ -8,6 +8,7 @@ import android.view.Gravity;
 import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dv.persistnote.R;
 import com.dv.persistnote.base.ResTools;
@@ -56,17 +57,8 @@ public class HabitDetailScreen extends DefaultScreen{
         });
 
         configHeader();
-
-        mFooter = new TextView(getContext());
-        mFooter.setText("正在加载..");
-        mFooter.setGravity(Gravity.CENTER);
-        mFooter.setTextColor(ResTools.getColor(R.color.c3));
-        AbsListView.LayoutParams lp = new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT,
-                ResTools.getDimenInt(R.dimen.calendar_height) * 2);
-        mFooter.setLayoutParams(lp);
-        mDetailListView.addFooterView(mFooter);
-        mDetailListView.setAdapter(mAdapter);
         configAutoLoadMore();
+        mDetailListView.setAdapter(mAdapter);
         setContent(mRefreshLayout);
     }
 
@@ -92,12 +84,31 @@ public class HabitDetailScreen extends DefaultScreen{
         mPersistDuration.setGravity(Gravity.CENTER);
         mPersistDuration.setBackgroundColor(ResTools.getColor(R.color.c4));
 
+        TextView communityTitle = new TextView(getContext());
+        communityTitle.setText(ResTools.getString(R.string.community_title));
+        communityTitle.setGravity(Gravity.LEFT | Gravity.CENTER_VERTICAL);
+        int margin = ResTools.getDimenInt(R.dimen.common_margin_16);
+        communityTitle.setPadding(ResTools.getDimenInt(R.dimen.common_margin_16), margin, 0, margin);
+        communityTitle.setTextColor(ResTools.getColor(R.color.c2));
+
+
         mDetailListView.addHeaderView(mFakeCalendar);
         mDetailListView.addHeaderView(mCheckInWidget);
         mDetailListView.addHeaderView(mPersistDuration);
+        mDetailListView.addHeaderView(communityTitle);
     }
 
     private void configAutoLoadMore() {
+
+        mFooter = new TextView(getContext());
+        mFooter.setText("正在加载..");
+        mFooter.setGravity(Gravity.CENTER);
+        mFooter.setTextColor(ResTools.getColor(R.color.c3));
+        AbsListView.LayoutParams lp = new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT,
+                ResTools.getDimenInt(R.dimen.calendar_height) * 2);
+        mFooter.setLayoutParams(lp);
+        mDetailListView.addFooterView(mFooter);
+
         mDetailListView.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
@@ -142,6 +153,9 @@ public class HabitDetailScreen extends DefaultScreen{
         mAdapter.notifyDataSetChanged();
         if(type == CommunityModel.TYPE_NEW) {
             mRefreshLayout.setRefreshing(false);
+        } else if (type == CommunityModel.TYPE_ERROR) {
+            mRefreshLayout.setRefreshing(false);
+            Toast.makeText(getContext(),"网络不给力", Toast.LENGTH_SHORT).show();
         }
     }
 

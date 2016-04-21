@@ -32,6 +32,7 @@ public class CommunityModel {
 
     public static int TYPE_NEW = 0;
     public static int TYPE_HISTORY = 1;
+    public static int TYPE_ERROR = 2;
 
     private static CommunityModel mInstance;
 
@@ -75,9 +76,9 @@ public class CommunityModel {
                         list = list.subList(0, maxcount - 1);
                     }
                     mDataList.addAll(list);
-                    observer.handleData(ModelId.OnCommunityLoaded, null, null);
+                    observer.handleData(ModelId.OnCommunityLoaded, TYPE_HISTORY, null);
                 } else {
-                    observer.handleData(ModelId.OnCommunityNoMore, null, null);
+                    observer.handleData(ModelId.OnCommunityNoMore, TYPE_HISTORY, null);
                 }
             }
 
@@ -151,7 +152,7 @@ public class CommunityModel {
 
             @Override
             public void failure(RetrofitError error) {
-
+                observer.handleData(ModelId.OnCommunityLoaded, TYPE_ERROR, null);
             }
         });
     }
