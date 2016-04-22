@@ -29,9 +29,9 @@ import com.dv.persistnote.framework.ui.UICallBacks;
 import java.lang.reflect.Field;
 
 /**
- * Created by QinZheng on 2016/4/5.
+ * Created by QinZheng on 2016/4/23.
  */
-public class RegisterPasswordScreen extends DefaultScreen implements View.OnClickListener {
+public class ResetPasswordPasswordScreen extends DefaultScreen implements View.OnClickListener {
 
     private RelativeLayout mContainer;
 
@@ -71,10 +71,10 @@ public class RegisterPasswordScreen extends DefaultScreen implements View.OnClic
 
     private float mStartY, mNowY;
 
-    public RegisterPasswordScreen(Context context, UICallBacks callBacks) {
+    public ResetPasswordPasswordScreen(Context context, UICallBacks callBacks) {
         super(context, callBacks);
         init();
-        setTitle(ResTools.getString(R.string.register));
+        setTitle(ResTools.getString(R.string.reset_password));
     }
 
     private void init() {
@@ -86,10 +86,10 @@ public class RegisterPasswordScreen extends DefaultScreen implements View.OnClic
         /************** mContainerPassword ******************/
 
         mContainerPassword = new RelativeLayout(getContext());
-        mContainerPassword.setId(R.id.register_p_rl_password);
-        RelativeLayout.LayoutParams lpC1 = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT,
+        mContainerPassword.setId(R.id.reset_password_p_rl_password);
+        LayoutParams lpC1 = new LayoutParams(LayoutParams.MATCH_PARENT,
                 ResTools.getDimenInt(R.dimen.common_rl_height));
-        lpC1.topMargin = ResTools.getDimenInt(R.dimen.register_p_rl_password_margin_top);
+        lpC1.topMargin = ResTools.getDimenInt(R.dimen.reset_password_p_rl_password_margin_top);
         lpC1.leftMargin = ResTools.getDimenInt(R.dimen.common_rl_margin_left);
         lpC1.rightMargin = ResTools.getDimenInt(R.dimen.common_rl_margin_right);
 
@@ -97,7 +97,7 @@ public class RegisterPasswordScreen extends DefaultScreen implements View.OnClic
         mEtPassword.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.h1));
         mEtPassword.setPadding(0, ResTools.getDimenInt(R.dimen.common_et_padding_top),
                 0, ResTools.getDimenInt(R.dimen.common_et_padding_bottom));
-        mEtPassword.setId(R.id.register_p_et_password);
+        mEtPassword.setId(R.id.reset_password_p_et_password);
         mEtPassword.setBackgroundColor(ResTools.getColor(R.color.c4));
         mEtPassword.setKeyListener(new NumberKeyListener() {
             @Override
@@ -148,7 +148,7 @@ public class RegisterPasswordScreen extends DefaultScreen implements View.OnClic
             f.setAccessible(true);
             f.set(mEtPassword, R.drawable.color_cursor);
         } catch (Exception ignored) {
-            Log.e(TAG, "Register Init : color_cursor Error");
+            Log.e(TAG, "Reset Password Init : color_cursor Error");
         }
 
         mEtPassword.addTextChangedListener(new PasswordWatcher());
@@ -157,40 +157,40 @@ public class RegisterPasswordScreen extends DefaultScreen implements View.OnClic
                 new InputFilter.LengthFilter(16)
         });
 
-        RelativeLayout.LayoutParams lpC1V1 =
-                new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+        LayoutParams lpC1V1 =
+                new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
         lpC1V1.rightMargin = ResTools.getDimenInt(R.dimen.common_et_remove_hide_margin_right);
 
         mContainerPassword.addView(mEtPassword, lpC1V1);
 
         mLinePassword = new View(getContext());
-        mLinePassword.setId(R.id.register_p_line_password);
+        mLinePassword.setId(R.id.reset_password_p_line_password);
         mLinePassword.setBackgroundColor(ResTools.getColor(R.color.c1));
 
-        RelativeLayout.LayoutParams lpC1V2 =
-                new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, ResTools.getDimenInt(R.dimen.common_line_height));
-        lpC1V2.addRule(RelativeLayout.BELOW, R.id.register_p_et_password);
+        LayoutParams lpC1V2 =
+                new LayoutParams(LayoutParams.MATCH_PARENT, ResTools.getDimenInt(R.dimen.common_line_height));
+        lpC1V2.addRule(RelativeLayout.BELOW, R.id.reset_password_p_et_password);
 
         mContainerPassword.addView(mLinePassword, lpC1V2);
 
         /** EZ Touch start **/
 
         mContainerPasswordHideEZTouch = new RelativeLayout(getContext());
-        mContainerPasswordHideEZTouch.setId(R.id.register_p_rl_password_hide);
+        mContainerPasswordHideEZTouch.setId(R.id.reset_password_p_rl_password_hide);
         mContainerPasswordHideEZTouch.setOnClickListener(this);
 
-        RelativeLayout.LayoutParams lpC1C1 = new RelativeLayout.LayoutParams(ResTools.getDimenInt(R.dimen.common_rl_remove_width),
+        LayoutParams lpC1C1 = new LayoutParams(ResTools.getDimenInt(R.dimen.common_rl_remove_width),
                 LayoutParams.MATCH_PARENT);
         lpC1C1.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
 
         mContainerPassword.addView(mContainerPasswordHideEZTouch, lpC1C1);
 
         mHidePassword = new ImageView(getContext());
-        mHidePassword.setId(R.id.register_p_iv_password_hide);
+        mHidePassword.setId(R.id.reset_password_p_iv_password_hide);
         mHidePassword.setImageDrawable(ResTools.getDrawable(R.drawable.eyes_close));
 
-        RelativeLayout.LayoutParams lpC1C1V1 =
-                new RelativeLayout.LayoutParams(ResTools.getDimenInt(R.dimen.h1), ResTools.getDimenInt(R.dimen.h1));
+        LayoutParams lpC1C1V1 =
+                new LayoutParams(ResTools.getDimenInt(R.dimen.h1), ResTools.getDimenInt(R.dimen.h1));
         lpC1C1V1.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
         lpC1C1V1.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
         lpC1C1V1.bottomMargin = ResTools.getDimenInt(R.dimen.common_margin_bottom_11);
@@ -198,34 +198,34 @@ public class RegisterPasswordScreen extends DefaultScreen implements View.OnClic
         mContainerPasswordHideEZTouch.addView(mHidePassword, lpC1C1V1);
 
         mDividerPassword = new View(getContext());
-        mDividerPassword.setId(R.id.register_p_divider_password);
+        mDividerPassword.setId(R.id.reset_password_p_divider_password);
         mDividerPassword.setBackgroundColor(ResTools.getColor(R.color.c7));
         mDividerPassword.setVisibility(View.INVISIBLE);
 
-        RelativeLayout.LayoutParams lpC1V3 = new RelativeLayout.LayoutParams(ResTools.getDimenInt(R.dimen.common_line_height),
+        LayoutParams lpC1V3 = new LayoutParams(ResTools.getDimenInt(R.dimen.common_line_height),
                 ResTools.getDimenInt(R.dimen.common_divider_height));
-        lpC1V3.addRule(RelativeLayout.LEFT_OF, R.id.register_p_rl_password_hide);
+        lpC1V3.addRule(RelativeLayout.LEFT_OF, R.id.reset_password_p_rl_password_hide);
         lpC1V3.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
         lpC1V3.bottomMargin = ResTools.getDimenInt(R.dimen.common_margin_bottom_11);
 
         mContainerPassword.addView(mDividerPassword, lpC1V3);
 
         mContainerPasswordRemoveEZTouch = new RelativeLayout(getContext());
-        mContainerPasswordRemoveEZTouch.setId(R.id.register_p_rl_password_remove);
+        mContainerPasswordRemoveEZTouch.setId(R.id.reset_password_p_rl_password_remove);
         mContainerPasswordRemoveEZTouch.setOnClickListener(this);
 
-        RelativeLayout.LayoutParams lpC1C2 = new RelativeLayout.LayoutParams(ResTools.getDimenInt(R.dimen.common_rl_remove_hide_width),
+        LayoutParams lpC1C2 = new LayoutParams(ResTools.getDimenInt(R.dimen.common_rl_remove_hide_width),
                 LayoutParams.MATCH_PARENT);
-        lpC1C2.addRule(RelativeLayout.LEFT_OF, R.id.register_p_divider_password);
+        lpC1C2.addRule(RelativeLayout.LEFT_OF, R.id.reset_password_p_divider_password);
 
         mContainerPassword.addView(mContainerPasswordRemoveEZTouch, lpC1C2);
 
         mRemovePassword = new ImageView(getContext());
-        mRemovePassword.setId(R.id.register_p_iv_password_remove);
+        mRemovePassword.setId(R.id.reset_password_p_iv_password_remove);
         mRemovePassword.setImageDrawable(ResTools.getDrawable(R.drawable.delete));
         mRemovePassword.setVisibility(View.GONE);
 
-        RelativeLayout.LayoutParams lpC1C2V1 = new RelativeLayout.LayoutParams(ResTools.getDimenInt(R.dimen.h2), ResTools.getDimenInt(R.dimen.h2));
+        LayoutParams lpC1C2V1 = new LayoutParams(ResTools.getDimenInt(R.dimen.h2), ResTools.getDimenInt(R.dimen.h2));
         lpC1C2V1.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
         lpC1C2V1.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
         lpC1C2V1.bottomMargin = ResTools.getDimenInt(R.dimen.common_margin_bottom_12);
@@ -245,7 +245,7 @@ public class RegisterPasswordScreen extends DefaultScreen implements View.OnClic
         mOkButtonClick.setVisibility(View.GONE);
 
         mContainerOKButton = new RelativeLayout(getContext());
-        mContainerOKButton.setId(R.id.register_p_rl_ok);
+        mContainerOKButton.setId(R.id.reset_password_p_rl_ok);
         mContainerOKButton.setOnClickListener(this);
         mContainerOKButton.setOnTouchListener(new OnTouchListener() {
             @Override
@@ -264,7 +264,7 @@ public class RegisterPasswordScreen extends DefaultScreen implements View.OnClic
                         case MotionEvent.ACTION_UP:
                             mOkButtonClick.setVisibility(View.GONE);
                             if (Math.abs(mNowX - mStartX) < 3.0 && Math.abs(mNowY - mStartY) < 3.0) {
-                                mCallBacks.handleAction(ActionId.CommitRegisterPasswordClick, null, null);
+                                mCallBacks.handleAction(ActionId.CommitResetPasswordPasswordClick, null, null);
                             }
                             break;
                     }
@@ -273,15 +273,15 @@ public class RegisterPasswordScreen extends DefaultScreen implements View.OnClic
             }
         });
 
-        RelativeLayout.LayoutParams lpC3 = new RelativeLayout.LayoutParams(ResTools.getDimenInt(R.dimen.common_rl_ok_width_height),
+        LayoutParams lpC3 = new LayoutParams(ResTools.getDimenInt(R.dimen.common_rl_ok_width_height),
                 ResTools.getDimenInt(R.dimen.common_rl_ok_width_height));
         lpC3.topMargin = ResTools.getDimenInt(R.dimen.common_rl_ok_margin_top);
-        lpC3.addRule(RelativeLayout.BELOW, R.id.register_p_rl_password);
+        lpC3.addRule(RelativeLayout.BELOW, R.id.reset_password_p_rl_password);
         lpC3.addRule(RelativeLayout.CENTER_HORIZONTAL);
 
         mOkButton = new CircleView(getContext(), ResTools.getDimenInt(R.dimen.common_cv_radius),
                 ResTools.getDimenInt(R.dimen.common_cv_radius), ResTools.getDimenInt(R.dimen.common_cv_radius));
-        mOkButton.setId(R.id.register_p_v_ok);
+        mOkButton.setId(R.id.reset_password_p_v_ok);
         mOkButton.setColor(ResTools.getColor(R.color.c1));
         mOkButton.setAlpha(0.3f);
 
@@ -289,10 +289,10 @@ public class RegisterPasswordScreen extends DefaultScreen implements View.OnClic
         mContainerOKButton.addView(mOkButtonClick);
 
         mOkButtonArrow = new ImageView(getContext());
-        mOkButtonArrow.setId(R.id.register_p_iv_ok);
+        mOkButtonArrow.setId(R.id.reset_password_p_iv_ok);
         mOkButtonArrow.setImageDrawable(ResTools.getDrawable(R.drawable.arrow_right));
 
-        RelativeLayout.LayoutParams lpC3V1 = new RelativeLayout.LayoutParams(ResTools.getDimenInt(R.dimen.h1), ResTools.getDimenInt(R.dimen.h1));
+        LayoutParams lpC3V1 = new LayoutParams(ResTools.getDimenInt(R.dimen.h1), ResTools.getDimenInt(R.dimen.h1));
         lpC3V1.addRule(RelativeLayout.CENTER_IN_PARENT);
 
         mContainerOKButton.addView(mOkButtonArrow, lpC3V1);
@@ -302,13 +302,13 @@ public class RegisterPasswordScreen extends DefaultScreen implements View.OnClic
         /************** mWrongPassword ******************/
 
         mWrongPassword = new TextView(getContext());
-        mWrongPassword.setId(R.id.register_p_tv_password_wrong);
+        mWrongPassword.setId(R.id.reset_password_p_tv_password_wrong);
         mWrongPassword.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.h3));
         mWrongPassword.setTextColor(ResTools.getColor(R.color.c10));
         mWrongPassword.setText(null);
 
-        RelativeLayout.LayoutParams lpV1 = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-        lpV1.addRule(RelativeLayout.BELOW, R.id.register_p_rl_password);
+        LayoutParams lpV1 = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        lpV1.addRule(RelativeLayout.BELOW, R.id.reset_password_p_rl_password);
         lpV1.topMargin = ResTools.getDimenInt(R.dimen.common_tv_margin_top);
         lpV1.leftMargin = ResTools.getDimenInt(R.dimen.common_rl_margin_left);
 

@@ -12,6 +12,7 @@ import android.text.method.NumberKeyListener;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -58,6 +59,8 @@ public class LoginScreen extends DefaultScreen implements View.OnClickListener {
 
     private CircleView mOkButton;
 
+    private CircleView mOkButtonClick;
+
     private ImageView mOkButtonArrow;
 
     private ImageView mRemovePhoneNumber;
@@ -75,6 +78,10 @@ public class LoginScreen extends DefaultScreen implements View.OnClickListener {
     private Boolean mIsRemovePassword = false;
 
     private TextView mForgetPassword;
+
+    private float mStartX, mNowX;
+
+    private float mStartY, mNowY;
 
     public LoginScreen(Context context, UICallBacks callBacks) {
         super(context, callBacks);
@@ -391,9 +398,39 @@ public class LoginScreen extends DefaultScreen implements View.OnClickListener {
 
         /************** mContainerOKButton ******************/
 
+        mOkButtonClick = new CircleView(getContext(), ResTools.getDimenInt(R.dimen.common_cv_radius),
+                ResTools.getDimenInt(R.dimen.common_cv_radius), ResTools.getDimenInt(R.dimen.common_cv_radius));
+        mOkButtonClick.setColor(ResTools.getColor(R.color.c9));
+        mOkButtonClick.setVisibility(View.GONE);
+
         mContainerOKButton = new RelativeLayout(getContext());
         mContainerOKButton.setId(R.id.login_rl_ok);
         mContainerOKButton.setOnClickListener(this);
+        mContainerOKButton.setOnTouchListener(new OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if(mIsOkButtonAvailable) {
+                    mNowX = motionEvent.getX();
+                    mNowY = motionEvent.getY();
+                    switch (motionEvent.getAction()) {
+                        case MotionEvent.ACTION_DOWN:
+                            mOkButtonClick.setVisibility(View.VISIBLE);
+                            mStartX = motionEvent.getX();
+                            mStartY = motionEvent.getY();
+                            break;
+                        case MotionEvent.ACTION_MOVE:
+                            break;
+                        case MotionEvent.ACTION_UP:
+                            mOkButtonClick.setVisibility(View.GONE);
+                            if (Math.abs(mNowX - mStartX) < 3.0 && Math.abs(mNowY - mStartY) < 3.0) {
+                                mCallBacks.handleAction(ActionId.CommitLoginClick, null, null);
+                            }
+                            break;
+                    }
+                }
+                return false;
+            }
+        });
 
         RelativeLayout.LayoutParams lpC3 = new RelativeLayout.LayoutParams(ResTools.getDimenInt(R.dimen.common_rl_ok_width_height),
                 ResTools.getDimenInt(R.dimen.common_rl_ok_width_height));
@@ -408,6 +445,7 @@ public class LoginScreen extends DefaultScreen implements View.OnClickListener {
         mOkButton.setAlpha(0.3f);
 
         mContainerOKButton.addView(mOkButton);
+        mContainerOKButton.addView(mOkButtonClick);
 
         mOkButtonArrow = new ImageView(getContext());
         mOkButtonArrow.setId(R.id.login_iv_ok);
@@ -467,12 +505,8 @@ public class LoginScreen extends DefaultScreen implements View.OnClickListener {
             if (mIsRemovePhoneNumber)
             mEtPhoneNumber.setText(null);
         }
-        if (v == mContainerOKButton) {
-            if(mIsOkButtonAvailable)
-                mCallBacks.handleAction(ActionId.CommitLoginClick, null, null);
-        }
         if (v == mForgetPassword) {
-            // TODO: Forget Password
+            mCallBacks.handleAction(ActionId.OnForgetPasswordClick, null, null);
         }
     }
 }

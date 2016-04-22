@@ -83,6 +83,42 @@
     <item name="register_ok_iv" type="id" />
     <item name="register_ok_tv" type="id" />
 
+    <!-- ResetPasswordHomeScreen -->
+    <item name="reset_password_et_phone_number" type="id" />
+    <item name="reset_password_line_phone_number" type="id" />
+    <item name="reset_password_tv_phone_number_wrong" type="id" />
+    <item name="reset_password_tv_code_wrong" type="id" />
+    <item name="reset_password_et_code" type="id" />
+    <item name="reset_password_line_code" type="id" />
+    <item name="reset_password_iv_phone_number_remove" type="id" />
+    <item name="reset_password_iv_code_remove" type="id" />
+    <item name="reset_password_bt_code" type="id" />
+    <item name="reset_password_iv_ok" type="id" />
+    <item name="reset_password_v_ok" type="id" />
+
+    <item name="reset_password_rl_phone_number" type="id" />
+    <item name="reset_password_rl_code" type="id" />
+    <item name="reset_password_rl_ok" type="id" />
+    <item name="reset_password_rl_phone_number_remove" type="id" />
+    <item name="reset_password_rl_code_remove" type="id" />
+
+    <!-- ResetPasswordPasswordScreen -->
+    <item name="reset_password_p_et_password" type="id" />
+    <item name="reset_password_p_line_password" type="id" />
+    <item name="reset_password_p_iv_password_hide" type="id" />
+    <item name="reset_password_p_iv_password_remove" type="id" />
+    <item name="reset_password_p_divider_password" type="id" />
+
+    <item name="reset_password_p_iv_ok" type="id" />
+    <item name="reset_password_p_v_ok" type="id" />
+
+    <item name="reset_password_p_rl_password" type="id" />
+    <item name="reset_password_p_rl_password_hide" type="id" />
+    <item name="reset_password_p_rl_password_remove" type="id" />
+    <item name="reset_password_p_rl_ok" type="id" />
+
+    <item name="reset_password_p_tv_password_wrong" type="id" />
+
     <!-- HabitItemView -->
     <item name="id_icon" type="id" />
     <item name="id_title" type="id" />
