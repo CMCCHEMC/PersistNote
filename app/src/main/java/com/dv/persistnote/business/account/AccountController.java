@@ -8,6 +8,8 @@ import com.dv.persistnote.business.RegisterHomeScreen;
 import com.dv.persistnote.business.RegisterOKScreen;
 import com.dv.persistnote.business.RegisterPasswordScreen;
 import com.dv.persistnote.business.RegisterUserInfoScreen;
+import com.dv.persistnote.business.ResetPasswordHomeScreen;
+import com.dv.persistnote.business.ResetPasswordPasswordScreen;
 import com.dv.persistnote.framework.ActionId;
 import com.dv.persistnote.business.WelcomeScreen;
 import com.dv.persistnote.framework.ui.AbstractScreen;
@@ -31,6 +33,10 @@ public class AccountController extends AbstractController{
     private RegisterUserInfoScreen mRegisterUserInfoScreen;
 
     private RegisterOKScreen mRegisterOKScreen;
+
+    private ResetPasswordHomeScreen mResetPasswordHomeScreen;
+
+    private ResetPasswordPasswordScreen mResetPasswordPasswordScreen;
 
     public AccountController(BaseEnv baseEnv) {
         super(baseEnv);
@@ -81,6 +87,17 @@ public class AccountController extends AbstractController{
             case ActionId.CommitRegisterUserInfoClick:
                 mRegisterOKScreen = new RegisterOKScreen(mContext, this);
                 mWindowMgr.pushScreen(mRegisterOKScreen, true);
+                break;
+            case ActionId.CommitResetPasswordHomeClick:
+                mResetPasswordPasswordScreen = new ResetPasswordPasswordScreen(mContext, this);
+                mWindowMgr.pushScreen(mResetPasswordPasswordScreen, true);
+                break;
+            case ActionId.CommitResetPasswordPasswordClick:
+                // TODO: Reset Password Function.
+                break;
+            case ActionId.OnForgetPasswordClick:
+                mResetPasswordHomeScreen = new ResetPasswordHomeScreen(mContext, this);
+                mWindowMgr.pushScreen(mResetPasswordHomeScreen, true);
                 break;
         }
         return false;

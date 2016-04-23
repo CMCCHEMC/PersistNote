@@ -69,8 +69,7 @@
     <dimen name="register_line_code_margin_right">8dp</dimen>
 
     <!-- RegisterPasswordScreen -->
-    <dimen name="register_p_rl_password_margin_top_1">24dp</dimen>
-    <dimen name="register_p_rl_password_margin_top_2">34dp</dimen>
+    <dimen name="register_p_rl_password_margin_top">24dp</dimen>
 
     <!-- RegisterUserInfoScreen -->
     <dimen name="register_u_rl_user_name_margin_top">24dp</dimen>
@@ -91,5 +90,21 @@
 
     <dimen name="check_in_widget_width">150dp</dimen>
     <dimen name="calendar_height">30dp</dimen>
+
+    <!-- ResetPasswordHomeScreen -->
+    <dimen name="reset_password_rl_phone_number_margin_top">24dp</dimen>
+    <dimen name="reset_password_rl_code_margin_top">34dp</dimen>
+
+    <dimen name="reset_password_bt_code_width">76dp</dimen>
+    <dimen name="reset_password_bt_code_height">48dp</dimen>
+    <dimen name="reset_password_rl_code_remove_margin_right">15dp</dimen>
+
+    <dimen name="reset_password_et_code_margin_right">45dp</dimen>
+
+    <dimen name="reset_password_line_code_margin_right">8dp</dimen>
+
+    <!-- ResetPasswordPasswordScreen -->
+    <dimen name="reset_password_p_rl_password_margin_top">24dp</dimen>
+
 </resources>
 

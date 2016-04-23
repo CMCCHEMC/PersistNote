@@ -28,9 +28,9 @@ import java.lang.reflect.Field;
 import static com.dv.persistnote.base.ContextManager.getSystemService;
 
 /**
- * Created by QinZheng on 2016/3/29.
+ * Created by QinZheng on 2016/4/23.
  */
-public class RegisterHomeScreen extends DefaultScreen implements View.OnClickListener {
+public class ResetPasswordHomeScreen extends DefaultScreen implements View.OnClickListener {
 
     private RelativeLayout mContainer;
 
@@ -82,10 +82,10 @@ public class RegisterHomeScreen extends DefaultScreen implements View.OnClickLis
 
     private InputMethodManager mImm;
 
-    public RegisterHomeScreen(Context context, UICallBacks callBacks) {
+    public ResetPasswordHomeScreen(Context context, UICallBacks callBacks) {
         super(context, callBacks);
         init();
-        setTitle(ResTools.getString(R.string.register));
+        setTitle(ResTools.getString(R.string.reset_password));
     }
 
     protected void init() {
@@ -115,12 +115,12 @@ public class RegisterHomeScreen extends DefaultScreen implements View.OnClickLis
         /************** mContainerPhoneNumber ******************/
 
         mContainerPhoneNumber = new RelativeLayout(getContext());
-        mContainerPhoneNumber.setId(R.id.register_rl_phone_number);
+        mContainerPhoneNumber.setId(R.id.reset_password_rl_phone_number);
         mContainerPhoneNumber.setFocusable(true);
         mContainerPhoneNumber.setFocusableInTouchMode(true);
 
-        RelativeLayout.LayoutParams lpC1 = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, ResTools.getDimenInt(R.dimen.common_rl_height));
-        lpC1.topMargin = ResTools.getDimenInt(R.dimen.register_rl_phone_number_margin_top);
+        LayoutParams lpC1 = new LayoutParams(LayoutParams.MATCH_PARENT, ResTools.getDimenInt(R.dimen.common_rl_height));
+        lpC1.topMargin = ResTools.getDimenInt(R.dimen.reset_password_rl_phone_number_margin_top);
         lpC1.leftMargin = ResTools.getDimenInt(R.dimen.common_rl_margin_left);
         lpC1.rightMargin = ResTools.getDimenInt(R.dimen.common_rl_margin_right);
 
@@ -128,7 +128,7 @@ public class RegisterHomeScreen extends DefaultScreen implements View.OnClickLis
         mEtPhoneNumber.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.h1));
         mEtPhoneNumber.setPadding(0, ResTools.getDimenInt(R.dimen.common_et_padding_top),
                 0, ResTools.getDimenInt(R.dimen.common_et_padding_bottom));
-        mEtPhoneNumber.setId(R.id.register_et_phone_number);
+        mEtPhoneNumber.setId(R.id.reset_password_et_phone_number);
         mEtPhoneNumber.setBackgroundColor(ResTools.getColor(R.color.c4));
         mEtPhoneNumber.setHint(R.string.common_et_hint_phone_number);
         mEtPhoneNumber.setSingleLine(true);
@@ -154,7 +154,7 @@ public class RegisterHomeScreen extends DefaultScreen implements View.OnClickLis
             f.setAccessible(true);
             f.set(mEtPhoneNumber, R.drawable.color_cursor);
         } catch (Exception ignored) {
-            Log.e(TAG, "Register Init : color_cursor Error");
+            Log.e(TAG, "Reset Password Init : color_cursor Error");
         }
 
         mEtPhoneNumber.addTextChangedListener(new TextWatcher() {
@@ -196,38 +196,38 @@ public class RegisterHomeScreen extends DefaultScreen implements View.OnClickLis
 
         mEtPhoneNumber.setFilters(new InputFilter[]{new InputFilter.LengthFilter(11)});
 
-        RelativeLayout.LayoutParams lpC1V1 =
-                new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+        LayoutParams lpC1V1 =
+                new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
         lpC1V1.rightMargin = ResTools.getDimenInt(R.dimen.common_rl_remove_width);
 
         mContainerPhoneNumber.addView(mEtPhoneNumber, lpC1V1);
 
         mLinePhoneNumber = new View(getContext());
-        mLinePhoneNumber.setId(R.id.register_line_phone_number);
+        mLinePhoneNumber.setId(R.id.reset_password_line_phone_number);
         mLinePhoneNumber.setBackgroundColor(ResTools.getColor(R.color.c1));
 
-        RelativeLayout.LayoutParams lpC1V2 =
-                new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, ResTools.getDimenInt(R.dimen.common_line_height));
-        lpC1V2.addRule(RelativeLayout.BELOW, R.id.register_et_phone_number);
+        LayoutParams lpC1V2 =
+                new LayoutParams(LayoutParams.MATCH_PARENT, ResTools.getDimenInt(R.dimen.common_line_height));
+        lpC1V2.addRule(RelativeLayout.BELOW, R.id.reset_password_et_phone_number);
 
         mContainerPhoneNumber.addView(mLinePhoneNumber, lpC1V2);
 
         /** EZ Touch start **/
 
         mContainerPhoneNumberRemoveEZTouch = new RelativeLayout(getContext());
-        mContainerPhoneNumberRemoveEZTouch.setId(R.id.register_rl_phone_number_remove);
+        mContainerPhoneNumberRemoveEZTouch.setId(R.id.reset_password_rl_phone_number_remove);
         mContainerPhoneNumberRemoveEZTouch.setOnClickListener(this);
 
-        RelativeLayout.LayoutParams lpC1C1 = new RelativeLayout.LayoutParams(ResTools.getDimenInt(R.dimen.common_rl_remove_width),
+        LayoutParams lpC1C1 = new LayoutParams(ResTools.getDimenInt(R.dimen.common_rl_remove_width),
                 LayoutParams.MATCH_PARENT);
         lpC1C1.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
 
         mRemovePhoneNumber = new ImageView(getContext());
-        mRemovePhoneNumber.setId(R.id.register_iv_phone_number_remove);
+        mRemovePhoneNumber.setId(R.id.reset_password_iv_phone_number_remove);
         mRemovePhoneNumber.setImageDrawable(ResTools.getDrawable(R.drawable.delete));
         mRemovePhoneNumber.setVisibility(View.GONE);
 
-        RelativeLayout.LayoutParams lpC1C1V1 = new RelativeLayout.LayoutParams(ResTools.getDimenInt(R.dimen.h2), ResTools.getDimenInt(R.dimen.h2));
+        LayoutParams lpC1C1V1 = new LayoutParams(ResTools.getDimenInt(R.dimen.h2), ResTools.getDimenInt(R.dimen.h2));
         lpC1C1V1.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
         lpC1C1V1.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
         lpC1C1V1.bottomMargin = ResTools.getDimenInt(R.dimen.common_margin_bottom_12);
@@ -243,19 +243,19 @@ public class RegisterHomeScreen extends DefaultScreen implements View.OnClickLis
         /************** mContainerCode ******************/
 
         mContainerCode = new RelativeLayout(getContext());
-        mContainerCode.setId(R.id.register_rl_code);
+        mContainerCode.setId(R.id.reset_password_rl_code);
         mContainerCode.setFocusable(true);
         mContainerCode.setFocusableInTouchMode(true);
 
-        RelativeLayout.LayoutParams lpC2 = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT,
+        LayoutParams lpC2 = new LayoutParams(LayoutParams.MATCH_PARENT,
                 ResTools.getDimenInt(R.dimen.common_rl_height));
-        lpC2.topMargin = ResTools.getDimenInt(R.dimen.register_rl_code_margin_top);
+        lpC2.topMargin = ResTools.getDimenInt(R.dimen.reset_password_rl_code_margin_top);
         lpC2.leftMargin = ResTools.getDimenInt(R.dimen.common_rl_margin_left);
         lpC2.rightMargin = ResTools.getDimenInt(R.dimen.common_rl_margin_right);
-        lpC2.addRule(RelativeLayout.BELOW, R.id.register_rl_phone_number);
+        lpC2.addRule(RelativeLayout.BELOW, R.id.reset_password_rl_phone_number);
 
         mGetCode = new Button(getContext());
-        mGetCode.setId(R.id.register_bt_code);
+        mGetCode.setId(R.id.reset_password_bt_code);
         mGetCode.setAlpha(0.2f);
         mGetCode.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.h4));
         mGetCode.setTextColor(ResTools.getColor(R.color.c4));
@@ -264,16 +264,15 @@ public class RegisterHomeScreen extends DefaultScreen implements View.OnClickLis
         // Deprecated. 可以更改Target Api，则可以使用setBackground()
         mGetCode.setBackgroundDrawable(ResTools.getDrawable(R.drawable.bt_code_background_color));
 
-
-        RelativeLayout.LayoutParams lpC2V1 = new RelativeLayout.LayoutParams(ResTools.getDimenInt(R.dimen.register_bt_code_width),
-                ResTools.getDimenInt(R.dimen.register_bt_code_height));
+        LayoutParams lpC2V1 = new LayoutParams(ResTools.getDimenInt(R.dimen.reset_password_bt_code_width),
+                ResTools.getDimenInt(R.dimen.reset_password_bt_code_height));
         lpC2V1.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
 
         mContainerCode.addView(mGetCode, lpC2V1);
 
         mEtCode = new EditText(getContext());
         mEtCode.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.h1));
-        mEtCode.setId(R.id.register_et_code);
+        mEtCode.setId(R.id.reset_password_et_code);
         mEtCode.setPadding(0, ResTools.getDimenInt(R.dimen.common_et_padding_top),
                 0, ResTools.getDimenInt(R.dimen.common_et_padding_bottom));
         mEtCode.setBackgroundColor(ResTools.getColor(R.color.c4));
@@ -301,7 +300,7 @@ public class RegisterHomeScreen extends DefaultScreen implements View.OnClickLis
             f.setAccessible(true);
             f.set(mEtCode, R.drawable.color_cursor);
         } catch (Exception ignored) {
-            Log.e(TAG, "Register Init : color_cursor Error");
+            Log.e(TAG, "Reset Password Init : color_cursor Error");
         }
 
         mEtCode.addTextChangedListener(new TextWatcher() {
@@ -336,43 +335,43 @@ public class RegisterHomeScreen extends DefaultScreen implements View.OnClickLis
 
         mEtCode.setFilters(new InputFilter[]{new InputFilter.LengthFilter(6)});
 
-        RelativeLayout.LayoutParams lpC2V2 = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT,
+        LayoutParams lpC2V2 = new LayoutParams(LayoutParams.MATCH_PARENT,
                 LayoutParams.WRAP_CONTENT);
-        lpC2V2.addRule(RelativeLayout.LEFT_OF, R.id.register_bt_code);
+        lpC2V2.addRule(RelativeLayout.LEFT_OF, R.id.reset_password_bt_code);
         lpC2V2.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
-        lpC2V2.rightMargin = ResTools.getDimenInt(R.dimen.register_et_code_margin_right);
+        lpC2V2.rightMargin = ResTools.getDimenInt(R.dimen.reset_password_et_code_margin_right);
 
         mContainerCode.addView(mEtCode, lpC2V2);
 
         mLineCode = new View(getContext());
-        mLineCode.setId(R.id.register_line_code);
+        mLineCode.setId(R.id.reset_password_line_code);
         mLineCode.setBackgroundColor(ResTools.getColor(R.color.c1));
-        RelativeLayout.LayoutParams lpC2V3 = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT,
+        LayoutParams lpC2V3 = new LayoutParams(LayoutParams.MATCH_PARENT,
                 ResTools.getDimenInt(R.dimen.common_line_height));
-        lpC2V3.addRule(RelativeLayout.BELOW, R.id.register_et_code);
-        lpC2V3.addRule(RelativeLayout.LEFT_OF, R.id.register_bt_code);
+        lpC2V3.addRule(RelativeLayout.BELOW, R.id.reset_password_et_code);
+        lpC2V3.addRule(RelativeLayout.LEFT_OF, R.id.reset_password_bt_code);
         lpC2V3.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
-        lpC2V3.rightMargin = ResTools.getDimenInt(R.dimen.register_line_code_margin_right);
+        lpC2V3.rightMargin = ResTools.getDimenInt(R.dimen.reset_password_line_code_margin_right);
 
         mContainerCode.addView(mLineCode, lpC2V3);
 
         /** EZ Touch start **/
 
         mContainerCodeRemoveEZTouch = new RelativeLayout(getContext());
-        mContainerCodeRemoveEZTouch.setId(R.id.register_rl_code_remove);
+        mContainerCodeRemoveEZTouch.setId(R.id.reset_password_rl_code_remove);
         mContainerCodeRemoveEZTouch.setOnClickListener(this);
 
-        RelativeLayout.LayoutParams lpC2C1 = new RelativeLayout.LayoutParams(ResTools.getDimenInt(R.dimen.common_rl_remove_width),
+        LayoutParams lpC2C1 = new LayoutParams(ResTools.getDimenInt(R.dimen.common_rl_remove_width),
                 LayoutParams.MATCH_PARENT);
-        lpC2C1.addRule(RelativeLayout.LEFT_OF, R.id.register_bt_code);
-        lpC2C1.rightMargin = ResTools.getDimenInt(R.dimen.register_rl_code_remove_margin_right);
+        lpC2C1.addRule(RelativeLayout.LEFT_OF, R.id.reset_password_bt_code);
+        lpC2C1.rightMargin = ResTools.getDimenInt(R.dimen.reset_password_rl_code_remove_margin_right);
 
         mRemoveCode = new ImageView(getContext());
-        mRemoveCode.setId(R.id.register_iv_code_remove);
+        mRemoveCode.setId(R.id.reset_password_iv_code_remove);
         mRemoveCode.setImageDrawable(ResTools.getDrawable(R.drawable.delete));
         mRemoveCode.setVisibility(View.GONE);
 
-        RelativeLayout.LayoutParams lpC2C1V1 = new RelativeLayout.LayoutParams(ResTools.getDimenInt(R.dimen.h2), ResTools.getDimenInt(R.dimen.h2));
+        LayoutParams lpC2C1V1 = new LayoutParams(ResTools.getDimenInt(R.dimen.h2), ResTools.getDimenInt(R.dimen.h2));
         lpC2C1V1.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
         lpC2C1V1.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
         lpC2C1V1.bottomMargin = ResTools.getDimenInt(R.dimen.common_margin_bottom_12);
@@ -393,7 +392,7 @@ public class RegisterHomeScreen extends DefaultScreen implements View.OnClickLis
         mOkButtonClick.setVisibility(View.GONE);
 
         mContainerOKButton = new RelativeLayout(getContext());
-        mContainerOKButton.setId(R.id.register_rl_ok);
+        mContainerOKButton.setId(R.id.reset_password_rl_ok);
         mContainerOKButton.setOnClickListener(this);
         mContainerOKButton.setOnTouchListener(new OnTouchListener() {
             @Override
@@ -421,7 +420,7 @@ public class RegisterHomeScreen extends DefaultScreen implements View.OnClickLis
                         case MotionEvent.ACTION_UP:
                             mOkButtonClick.setVisibility(View.GONE);
                             if (Math.abs(mNowX - mStartX) < 3.0 && Math.abs(mNowY - mStartY) < 3.0) {
-                                mCallBacks.handleAction(ActionId.CommitRegisterHomeClick, null, null);
+                                mCallBacks.handleAction(ActionId.CommitResetPasswordHomeClick, null, null);
                             }
                             break;
                     }
@@ -430,15 +429,15 @@ public class RegisterHomeScreen extends DefaultScreen implements View.OnClickLis
             }
         });
 
-        RelativeLayout.LayoutParams lpC3 = new RelativeLayout.LayoutParams(ResTools.getDimenInt(R.dimen.common_rl_ok_width_height),
+        LayoutParams lpC3 = new LayoutParams(ResTools.getDimenInt(R.dimen.common_rl_ok_width_height),
                 ResTools.getDimenInt(R.dimen.common_rl_ok_width_height));
         lpC3.topMargin = ResTools.getDimenInt(R.dimen.common_rl_ok_margin_top);
-        lpC3.addRule(RelativeLayout.BELOW, R.id.register_rl_code);
+        lpC3.addRule(RelativeLayout.BELOW, R.id.reset_password_rl_code);
         lpC3.addRule(RelativeLayout.CENTER_HORIZONTAL);
 
         mOkButton = new CircleView(getContext(), ResTools.getDimenInt(R.dimen.common_cv_radius),
                 ResTools.getDimenInt(R.dimen.common_cv_radius), ResTools.getDimenInt(R.dimen.common_cv_radius));
-        mOkButton.setId(R.id.register_v_ok);
+        mOkButton.setId(R.id.reset_password_v_ok);
         mOkButton.setColor(ResTools.getColor(R.color.c1));
         mOkButton.setAlpha(0.3f);
 
@@ -446,10 +445,10 @@ public class RegisterHomeScreen extends DefaultScreen implements View.OnClickLis
         mContainerOKButton.addView(mOkButtonClick);
 
         mOkButtonArrow = new ImageView(getContext());
-        mOkButtonArrow.setId(R.id.register_iv_ok);
+        mOkButtonArrow.setId(R.id.reset_password_iv_ok);
         mOkButtonArrow.setImageDrawable(ResTools.getDrawable(R.drawable.arrow_right));
 
-        RelativeLayout.LayoutParams lpC3V1 = new RelativeLayout.LayoutParams(ResTools.getDimenInt(R.dimen.h1), ResTools.getDimenInt(R.dimen.h1));
+        LayoutParams lpC3V1 = new LayoutParams(ResTools.getDimenInt(R.dimen.h1), ResTools.getDimenInt(R.dimen.h1));
         lpC3V1.addRule(RelativeLayout.CENTER_IN_PARENT);
 
         mContainerOKButton.addView(mOkButtonArrow, lpC3V1);
@@ -459,14 +458,14 @@ public class RegisterHomeScreen extends DefaultScreen implements View.OnClickLis
         /************** mWrongPhoneNumber ******************/
 
         mWrongPhoneNumber = new TextView(getContext());
-        mWrongPhoneNumber.setId(R.id.register_tv_phone_number_wrong);
+        mWrongPhoneNumber.setId(R.id.reset_password_tv_phone_number_wrong);
         mWrongPhoneNumber.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.h3));
         mWrongPhoneNumber.setTextColor(ResTools.getColor(R.color.c10));
         mWrongPhoneNumber.setText(null);
         mWrongPhoneNumber.setVisibility(View.GONE);
 
-        RelativeLayout.LayoutParams lpV1 = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-        lpV1.addRule(RelativeLayout.BELOW, R.id.register_rl_phone_number);
+        LayoutParams lpV1 = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        lpV1.addRule(RelativeLayout.BELOW, R.id.reset_password_rl_phone_number);
         lpV1.topMargin = ResTools.getDimenInt(R.dimen.common_tv_margin_top);
         lpV1.leftMargin = ResTools.getDimenInt(R.dimen.common_rl_margin_left);
 
@@ -475,14 +474,14 @@ public class RegisterHomeScreen extends DefaultScreen implements View.OnClickLis
         /************** mWrongCode ******************/
 
         mWrongCode = new TextView(getContext());
-        mWrongCode.setId(R.id.register_tv_code_wrong);
+        mWrongCode.setId(R.id.reset_password_tv_code_wrong);
         mWrongCode.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.h3));
         mWrongCode.setTextColor(ResTools.getColor(R.color.c10));
         mWrongCode.setText(ResTools.getString(R.string.common_tv_wrong_code));
         mWrongCode.setVisibility(View.GONE);
 
-        RelativeLayout.LayoutParams lpV2 = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-        lpV2.addRule(RelativeLayout.BELOW, R.id.register_rl_code);
+        LayoutParams lpV2 = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        lpV2.addRule(RelativeLayout.BELOW, R.id.reset_password_rl_code);
         lpV2.topMargin = ResTools.getDimenInt(R.dimen.common_tv_margin_top);
         lpV2.leftMargin = ResTools.getDimenInt(R.dimen.common_rl_margin_left);
 
