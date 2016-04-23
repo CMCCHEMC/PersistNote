@@ -23,7 +23,7 @@ import habit.dao.HabitRecord;
  */
 public class HabitDetailScreen extends DefaultScreen{
 
-    private TextView mFakeCalendar;
+    private CheckinCalendar mFakeCalendar;
     private TextView mPersistDuration;
     private CheckInWidget mCheckInWidget;
     private TextView mFooter;
@@ -49,6 +49,7 @@ public class HabitDetailScreen extends DefaultScreen{
         mRefreshLayout = new SwipeRefreshLayout(getContext());
         mRefreshLayout.addView(mDetailListView, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         mRefreshLayout.setColorSchemeColors(ResTools.getColor(R.color.c1));
+//        mRefreshLayout.setEnabled(false);
         mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -63,12 +64,10 @@ public class HabitDetailScreen extends DefaultScreen{
     }
 
     private void configHeader() {
-        mFakeCalendar = new TextView(getContext());
-        mFakeCalendar.setText("假装是日历");
+        mFakeCalendar = new CheckinCalendar(getContext());
         AbsListView.LayoutParams lp = new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT,
-                ResTools.getDimenInt(R.dimen.calendar_height) *2);
+                AbsListView.LayoutParams.WRAP_CONTENT);
         mFakeCalendar.setLayoutParams(lp);
-        mFakeCalendar.setGravity(Gravity.CENTER);
         mFakeCalendar.setBackgroundColor(ResTools.getColor(R.color.c4));
 
         mCheckInWidget = new CheckInWidget(getContext());
