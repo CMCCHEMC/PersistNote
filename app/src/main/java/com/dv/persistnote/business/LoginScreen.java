@@ -14,6 +14,7 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -27,6 +28,8 @@ import com.dv.persistnote.framework.ui.CircleView;
 import com.dv.persistnote.framework.ui.UICallBacks;
 
 import java.lang.reflect.Field;
+
+import static com.dv.persistnote.base.ContextManager.getSystemService;
 
 /**
  * Created by QinZheng on 2016/3/29.
@@ -83,6 +86,8 @@ public class LoginScreen extends DefaultScreen implements View.OnClickListener {
 
     private float mStartY, mNowY;
 
+    private InputMethodManager mImm;
+
     public LoginScreen(Context context, UICallBacks callBacks) {
         super(context, callBacks);
         init();
@@ -95,11 +100,31 @@ public class LoginScreen extends DefaultScreen implements View.OnClickListener {
         setContent(mContainer);
 
         mContainer.removeAllViews();
+        mContainer.setOnTouchListener(new OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                // 失去焦点，隐藏键盘
+                if(mEtPhoneNumber.hasFocus()) {
+                    mEtPhoneNumber.clearFocus();
+                    mImm.hideSoftInputFromWindow(mEtPhoneNumber.getWindowToken(), 0);
+                }
+                if(mEtPassword.hasFocus()) {
+                    mEtPassword.clearFocus();
+                    mImm.hideSoftInputFromWindow(mEtPassword.getWindowToken(), 0);
+                }
+                return false;
+            }
+        });
+
+        // 获取InputMethodManager
+        mImm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
         /************** mContainerPhoneNumber ******************/
 
         mContainerPhoneNumber = new RelativeLayout(getContext());
         mContainerPhoneNumber.setId(R.id.login_rl_phone_number);
+        mContainerPhoneNumber.setFocusable(true);
+        mContainerPhoneNumber.setFocusableInTouchMode(true);
 
         RelativeLayout.LayoutParams lpC1 = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, ResTools.getDimenInt(R.dimen.common_rl_height));
         lpC1.topMargin = ResTools.getDimenInt(R.dimen.login_rl_phone_number_margin_top);
@@ -152,7 +177,7 @@ public class LoginScreen extends DefaultScreen implements View.OnClickListener {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (s.toString().length() > 11 && mEtPassword.getText().toString().length() > 0) {
+                if (s.toString().length() == 11 && mEtPassword.getText().toString().length() > 0) {
                     mIsOkButtonAvailable = true;
                     mOkButton.setAlpha(1.0f);
                 } else {
@@ -219,6 +244,9 @@ public class LoginScreen extends DefaultScreen implements View.OnClickListener {
 
         mContainerPassword = new RelativeLayout(getContext());
         mContainerPassword.setId(R.id.login_rl_password);
+        mContainerPassword.setFocusable(true);
+        mContainerPassword.setFocusableInTouchMode(true);
+
         RelativeLayout.LayoutParams lpC2 = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT,
                 ResTools.getDimenInt(R.dimen.common_rl_height));
         lpC2.topMargin = ResTools.getDimenInt(R.dimen.login_rl_password_margin_top);
@@ -409,6 +437,15 @@ public class LoginScreen extends DefaultScreen implements View.OnClickListener {
         mContainerOKButton.setOnTouchListener(new OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
+                // 失去焦点，隐藏键盘
+                if(mEtPhoneNumber.hasFocus()) {
+                    mEtPhoneNumber.clearFocus();
+                    mImm.hideSoftInputFromWindow(mEtPhoneNumber.getWindowToken(), 0);
+                }
+                if(mEtPassword.hasFocus()) {
+                    mEtPassword.clearFocus();
+                    mImm.hideSoftInputFromWindow(mEtPassword.getWindowToken(), 0);
+                }
                 if(mIsOkButtonAvailable) {
                     mNowX = motionEvent.getX();
                     mNowY = motionEvent.getY();
@@ -506,6 +543,15 @@ public class LoginScreen extends DefaultScreen implements View.OnClickListener {
             mEtPhoneNumber.setText(null);
         }
         if (v == mForgetPassword) {
+            // 失去焦点，隐藏键盘
+            if(mEtPhoneNumber.hasFocus()) {
+                mEtPhoneNumber.clearFocus();
+                mImm.hideSoftInputFromWindow(mEtPhoneNumber.getWindowToken(), 0);
+            }
+            if(mEtPassword.hasFocus()) {
+                mEtPassword.clearFocus();
+                mImm.hideSoftInputFromWindow(mEtPassword.getWindowToken(), 0);
+            }
             mCallBacks.handleAction(ActionId.OnForgetPasswordClick, null, null);
         }
     }

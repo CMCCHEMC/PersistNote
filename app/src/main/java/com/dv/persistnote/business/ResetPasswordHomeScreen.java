@@ -9,6 +9,7 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -23,6 +24,8 @@ import com.dv.persistnote.framework.ui.CircleView;
 import com.dv.persistnote.framework.ui.UICallBacks;
 
 import java.lang.reflect.Field;
+
+import static com.dv.persistnote.base.ContextManager.getSystemService;
 
 /**
  * Created by QinZheng on 2016/4/23.
@@ -51,6 +54,8 @@ public class ResetPasswordHomeScreen extends DefaultScreen implements View.OnCli
 
     private Boolean mIsRemoveCode = false;
 
+    private Boolean mIsGetCode = false;
+
     private Button mGetCode;
 
     private View mLinePhoneNumber;
@@ -75,6 +80,8 @@ public class ResetPasswordHomeScreen extends DefaultScreen implements View.OnCli
 
     private float mStartY, mNowY;
 
+    private InputMethodManager mImm;
+
     public ResetPasswordHomeScreen(Context context, UICallBacks callBacks) {
         super(context, callBacks);
         init();
@@ -86,11 +93,31 @@ public class ResetPasswordHomeScreen extends DefaultScreen implements View.OnCli
         setContent(mContainer);
 
         mContainer.removeAllViews();
+        mContainer.setOnTouchListener(new OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                // 失去焦点，隐藏键盘
+                if(mEtPhoneNumber.hasFocus()) {
+                    mEtPhoneNumber.clearFocus();
+                    mImm.hideSoftInputFromWindow(mEtPhoneNumber.getWindowToken(), 0);
+                }
+                if(mEtCode.hasFocus()) {
+                    mEtCode.clearFocus();
+                    mImm.hideSoftInputFromWindow(mEtCode.getWindowToken(), 0);
+                }
+                return false;
+            }
+        });
+
+        // 获取InputMethodManager
+        mImm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
         /************** mContainerPhoneNumber ******************/
 
         mContainerPhoneNumber = new RelativeLayout(getContext());
         mContainerPhoneNumber.setId(R.id.reset_password_rl_phone_number);
+        mContainerPhoneNumber.setFocusable(true);
+        mContainerPhoneNumber.setFocusableInTouchMode(true);
 
         LayoutParams lpC1 = new LayoutParams(LayoutParams.MATCH_PARENT, ResTools.getDimenInt(R.dimen.common_rl_height));
         lpC1.topMargin = ResTools.getDimenInt(R.dimen.reset_password_rl_phone_number_margin_top);
@@ -157,6 +184,13 @@ public class ResetPasswordHomeScreen extends DefaultScreen implements View.OnCli
                     mRemovePhoneNumber.setVisibility(View.GONE);
                     mIsRemovePhoneNumber = false;
                 }
+                if (s.toString().length() == 11) {
+                    mIsGetCode = true;
+                    mGetCode.setAlpha(1.0f);
+                } else {
+                    mIsGetCode = false;
+                    mGetCode.setAlpha(0.2f);
+                }
             }
         });
 
@@ -210,6 +244,9 @@ public class ResetPasswordHomeScreen extends DefaultScreen implements View.OnCli
 
         mContainerCode = new RelativeLayout(getContext());
         mContainerCode.setId(R.id.reset_password_rl_code);
+        mContainerCode.setFocusable(true);
+        mContainerCode.setFocusableInTouchMode(true);
+
         LayoutParams lpC2 = new LayoutParams(LayoutParams.MATCH_PARENT,
                 ResTools.getDimenInt(R.dimen.common_rl_height));
         lpC2.topMargin = ResTools.getDimenInt(R.dimen.reset_password_rl_code_margin_top);
@@ -219,11 +256,13 @@ public class ResetPasswordHomeScreen extends DefaultScreen implements View.OnCli
 
         mGetCode = new Button(getContext());
         mGetCode.setId(R.id.reset_password_bt_code);
-        mGetCode.setBackgroundColor(ResTools.getColor(R.color.c2));
         mGetCode.setAlpha(0.2f);
         mGetCode.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.h4));
         mGetCode.setTextColor(ResTools.getColor(R.color.c4));
         mGetCode.setText(ResTools.getString(R.string.common_bt_code));
+        mGetCode.setOnClickListener(this);
+        // Deprecated. 可以更改Target Api，则可以使用setBackground()
+        mGetCode.setBackgroundDrawable(ResTools.getDrawable(R.drawable.bt_code_background_color));
 
         LayoutParams lpC2V1 = new LayoutParams(ResTools.getDimenInt(R.dimen.reset_password_bt_code_width),
                 ResTools.getDimenInt(R.dimen.reset_password_bt_code_height));
@@ -358,6 +397,15 @@ public class ResetPasswordHomeScreen extends DefaultScreen implements View.OnCli
         mContainerOKButton.setOnTouchListener(new OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
+                // 失去焦点，隐藏键盘
+                if(mEtPhoneNumber.hasFocus()) {
+                    mEtPhoneNumber.clearFocus();
+                    mImm.hideSoftInputFromWindow(mEtPhoneNumber.getWindowToken(), 0);
+                }
+                if(mEtCode.hasFocus()) {
+                    mEtCode.clearFocus();
+                    mImm.hideSoftInputFromWindow(mEtCode.getWindowToken(), 0);
+                }
                 if(mIsOkButtonAvailable) {
                     mNowX = motionEvent.getX();
                     mNowY = motionEvent.getY();
@@ -443,6 +491,20 @@ public class ResetPasswordHomeScreen extends DefaultScreen implements View.OnCli
 
     @Override
     public void onClick(View v) {
+        if (v == mGetCode) {
+            // 失去焦点，隐藏键盘
+            if(mEtPhoneNumber.hasFocus()) {
+                mEtPhoneNumber.clearFocus();
+                mImm.hideSoftInputFromWindow(mEtPhoneNumber.getWindowToken(), 0);
+            }
+            if(mEtCode.hasFocus()) {
+                mEtCode.clearFocus();
+                mImm.hideSoftInputFromWindow(mEtCode.getWindowToken(), 0);
+            }
+            if(mIsGetCode) {
+                // TODO: 获取验证码
+            }
+        }
         if (v == mContainerCodeRemoveEZTouch) {
             if (mIsRemoveCode)
                 mEtCode.setText(null);

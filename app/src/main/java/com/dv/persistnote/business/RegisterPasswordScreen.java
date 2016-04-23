@@ -14,6 +14,7 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -27,6 +28,8 @@ import com.dv.persistnote.framework.ui.CircleView;
 import com.dv.persistnote.framework.ui.UICallBacks;
 
 import java.lang.reflect.Field;
+
+import static com.dv.persistnote.base.ContextManager.getSystemService;
 
 /**
  * Created by QinZheng on 2016/4/5.
@@ -71,6 +74,8 @@ public class RegisterPasswordScreen extends DefaultScreen implements View.OnClic
 
     private float mStartY, mNowY;
 
+    private InputMethodManager mImm;
+
     public RegisterPasswordScreen(Context context, UICallBacks callBacks) {
         super(context, callBacks);
         init();
@@ -82,11 +87,28 @@ public class RegisterPasswordScreen extends DefaultScreen implements View.OnClic
         setContent(mContainer);
 
         mContainer.removeAllViews();
+        mContainer.setOnTouchListener(new OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                // 失去焦点，隐藏键盘
+                if(mEtPassword.hasFocus()) {
+                    mContainerPassword.requestFocus();
+                    mImm.hideSoftInputFromWindow(mEtPassword.getWindowToken(), 0);
+                }
+                return false;
+            }
+        });
+
+        // 获取InputMethodManager
+        mImm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
         /************** mContainerPassword ******************/
 
         mContainerPassword = new RelativeLayout(getContext());
         mContainerPassword.setId(R.id.register_p_rl_password);
+        mContainerPassword.setFocusable(true);
+        mContainerPassword.setFocusableInTouchMode(true);
+
         RelativeLayout.LayoutParams lpC1 = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT,
                 ResTools.getDimenInt(R.dimen.common_rl_height));
         lpC1.topMargin = ResTools.getDimenInt(R.dimen.register_p_rl_password_margin_top);
@@ -250,6 +272,11 @@ public class RegisterPasswordScreen extends DefaultScreen implements View.OnClic
         mContainerOKButton.setOnTouchListener(new OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
+                // 失去焦点，隐藏键盘
+                if(mEtPassword.hasFocus()) {
+                    mContainerPassword.requestFocus();
+                    mImm.hideSoftInputFromWindow(mEtPassword.getWindowToken(), 0);
+                }
                 if(mIsOkButtonAvailable) {
                     mNowX = motionEvent.getX();
                     mNowY = motionEvent.getY();

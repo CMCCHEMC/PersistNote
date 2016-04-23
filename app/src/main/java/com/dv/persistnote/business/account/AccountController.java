@@ -93,7 +93,7 @@ public class AccountController extends AbstractController{
                 mWindowMgr.pushScreen(mResetPasswordPasswordScreen, true);
                 break;
             case ActionId.CommitResetPasswordPasswordClick:
-                // TODO: Reset Password Complete.
+                // TODO: Reset Password Function.
                 break;
             case ActionId.OnForgetPasswordClick:
                 mResetPasswordHomeScreen = new ResetPasswordHomeScreen(mContext, this);

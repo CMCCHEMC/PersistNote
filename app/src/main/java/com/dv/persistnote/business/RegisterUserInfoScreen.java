@@ -10,6 +10,7 @@ import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -24,6 +25,8 @@ import com.dv.persistnote.framework.ui.SpreadCircleView;
 import com.dv.persistnote.framework.ui.UICallBacks;
 
 import java.lang.reflect.Field;
+
+import static com.dv.persistnote.base.ContextManager.getSystemService;
 
 /**
  * Created by QinZheng on 2016/4/5.
@@ -74,6 +77,8 @@ public class RegisterUserInfoScreen extends DefaultScreen implements View.OnClic
 
     private float mStartY, mNowY;
 
+    private InputMethodManager mImm;
+
     public RegisterUserInfoScreen(Context context, UICallBacks callBacks) {
         super(context, callBacks);
         init();
@@ -85,11 +90,26 @@ public class RegisterUserInfoScreen extends DefaultScreen implements View.OnClic
         setContent(mContainer);
 
         mContainer.removeAllViews();
+        mContainer.setOnTouchListener(new OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                // 失去焦点，隐藏键盘
+                if(mEtUserName.hasFocus()) {
+                    mContainerUserName.requestFocus();
+                    mImm.hideSoftInputFromWindow(mEtUserName.getWindowToken(), 0);
+                }
+                return false;
+            }
+        });
 
+        // 获取InputMethodManager
+        mImm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         /************** mContainerUserName ******************/
 
         mContainerUserName = new RelativeLayout(getContext());
         mContainerUserName.setId(R.id.register_u_rl_user_name);
+        mContainerUserName.setFocusable(true);
+        mContainerUserName.setFocusableInTouchMode(true);
 
         RelativeLayout.LayoutParams lpC1 = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, ResTools.getDimenInt(R.dimen.common_rl_height));
         lpC1.topMargin = ResTools.getDimenInt(R.dimen.register_u_rl_user_name_margin_top);
@@ -276,6 +296,11 @@ public class RegisterUserInfoScreen extends DefaultScreen implements View.OnClic
         mContainerOKButton.setOnTouchListener(new OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
+                // 失去焦点，隐藏键盘
+                if(mEtUserName.hasFocus()) {
+                    mContainerUserName.requestFocus();
+                    mImm.hideSoftInputFromWindow(mEtUserName.getWindowToken(), 0);
+                }
                 if(mIsOkButtonAvailable) {
                     mNowX = motionEvent.getX();
                     mNowY = motionEvent.getY();
@@ -355,6 +380,11 @@ public class RegisterUserInfoScreen extends DefaultScreen implements View.OnClic
                 mEtUserName.setText(null);
         }
         if (v == mBackgroundMale) {
+            // 失去焦点，隐藏键盘
+            if(mEtUserName.hasFocus()) {
+                mContainerUserName.requestFocus();
+                mImm.hideSoftInputFromWindow(mEtUserName.getWindowToken(), 0);
+            }
             if (mUserSex == 2) {
                 mBackgroundFemale.setAlpha(0.3f);
             }
@@ -366,6 +396,11 @@ public class RegisterUserInfoScreen extends DefaultScreen implements View.OnClic
             }
         }
         if (v == mBackgroundFemale) {
+            // 失去焦点，隐藏键盘
+            if(mEtUserName.hasFocus()) {
+                mContainerUserName.requestFocus();
+                mImm.hideSoftInputFromWindow(mEtUserName.getWindowToken(), 0);
+            }
             if (mUserSex == 1) {
                 mBackgroundMale.setAlpha(0.3f);
             }
