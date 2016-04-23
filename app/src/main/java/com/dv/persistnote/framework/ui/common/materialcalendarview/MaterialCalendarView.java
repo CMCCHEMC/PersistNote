@@ -14,6 +14,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.SparseArray;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -27,6 +28,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.dv.persistnote.R;
+import com.dv.persistnote.base.ResTools;
+import com.dv.persistnote.business.habit.HabitDetailScreen;
+import com.dv.persistnote.framework.ActionId;
+import com.dv.persistnote.framework.ui.IUIObserver;
 import com.dv.persistnote.framework.ui.common.materialcalendarview.format.ArrayWeekDayFormatter;
 import com.dv.persistnote.framework.ui.common.materialcalendarview.format.DateFormatTitleFormatter;
 import com.dv.persistnote.framework.ui.common.materialcalendarview.format.DayFormatter;
@@ -162,6 +167,7 @@ public class MaterialCalendarView extends ViewGroup {
     private CalendarDay currentMonth;
     private LinearLayout topbar;
     private CalendarMode calendarMode = CalendarMode.MONTHS;
+    private IUIObserver mObserver;
     /**
      * Used for the dynamic calendar height.
      */
@@ -192,6 +198,9 @@ public class MaterialCalendarView extends ViewGroup {
 
         @Override
         public void onPageScrollStateChanged(int state) {
+            if(mObserver != null) {
+                mObserver.handleAction(ActionId.OnPageScrollStateChanged, state, null);
+            }
         }
 
         @Override
@@ -286,7 +295,7 @@ public class MaterialCalendarView extends ViewGroup {
             setSelectionColor(
                     a.getColor(
                             R.styleable.MaterialCalendarView_mcv_selectionColor,
-                            getThemeAccentColor(context)
+                            ResTools.getColor(R.color.c1)
                     )
             );
 
@@ -617,7 +626,6 @@ public class MaterialCalendarView extends ViewGroup {
     public void setDateTextAppearance(int resourceId) {
         adapter.setDateTextAppearance(resourceId);
     }
-
     /**
      * @param resourceId The text appearance resource id.
      */
@@ -1336,7 +1344,7 @@ public class MaterialCalendarView extends ViewGroup {
         }
 
         //Calculate our size based off our measured tile size
-        int measuredWidth = measureTileSize * DEFAULT_DAYS_IN_WEEK;
+        int measuredWidth = measureTileSize * DEFAULT_DAYS_IN_WEEK + ResTools.getDimenInt(R.dimen.tile_margin) * (DEFAULT_DAYS_IN_WEEK - 1);
         int measuredHeight = measureTileSize * viewTileHeight;
 
         //Put padding back in from when we took it away
@@ -1358,7 +1366,7 @@ public class MaterialCalendarView extends ViewGroup {
             LayoutParams p = (LayoutParams) child.getLayoutParams();
 
             int childWidthMeasureSpec = MeasureSpec.makeMeasureSpec(
-                    DEFAULT_DAYS_IN_WEEK * measureTileSize,
+                    measuredWidth,
                     MeasureSpec.EXACTLY
             );
 
@@ -1431,7 +1439,6 @@ public class MaterialCalendarView extends ViewGroup {
 
             int delta = (parentWidth - width) / 2;
             int childLeft = parentLeft + delta;
-
             child.layout(childLeft, childTop, childLeft + width, childTop + height);
 
             childTop += height;
@@ -1508,5 +1515,15 @@ public class MaterialCalendarView extends ViewGroup {
      */
     public boolean isPagingEnabled() {
         return pager.isPagingEnabled();
+    }
+
+    public void setDirectionEnable(boolean enable) {
+        buttonPast.setVisibility(enable ? VISIBLE : GONE);
+        buttonFuture.setVisibility(enable ? VISIBLE : GONE);
+    }
+
+
+    public void setOnUIObserver(IUIObserver observer) {
+        mObserver = observer;
     }
 }

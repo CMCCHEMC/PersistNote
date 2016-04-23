@@ -1,7 +1,6 @@
 package com.dv.persistnote.business.habit;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.text.style.RelativeSizeSpan;
@@ -41,18 +40,16 @@ public class CheckinCalendar extends MaterialCalendarView implements OnDateSelec
         addDecorators(
 //                new MySelectorDecorator(this),
 //                new HighlightWeekendsDecorator(),
-                new OneDayDecorator()
+                new TodayDecorator()
         );
-        setTileSize(100);
+        setTileSizeDp(35);
         String[] weeks = new String[] {"Sun","Mon","Tue","Wed","Thu","Fri","Sat"};
         setWeekDayFormatter(new ArrayWeekDayFormatter(weeks));
 
         String[] months = new String[] {"01","02","03","04","05","06","07","08","09","10","11","12"};
         setTitleFormatter(new MonthArrayTitleFormatter(months));
 
-        setLeftArrowMask( getResources().getDrawable(R.drawable.mcv_action_previous));
-        setRightArrowMask( getResources().getDrawable(R.drawable.mcv_action_next));
-
+        setDirectionEnable(false);
     }
 
     @Override
@@ -61,11 +58,11 @@ public class CheckinCalendar extends MaterialCalendarView implements OnDateSelec
     }
 
 
-    public class OneDayDecorator implements DayViewDecorator {
+    public class TodayDecorator implements DayViewDecorator {
 
         private CalendarDay date;
 
-        public OneDayDecorator() {
+        public TodayDecorator() {
             date = CalendarDay.today();
         }
 
@@ -77,7 +74,8 @@ public class CheckinCalendar extends MaterialCalendarView implements OnDateSelec
         @Override
         public void decorate(DayViewFacade view) {
             view.addSpan(new StyleSpan(Typeface.BOLD));
-            view.addSpan(new RelativeSizeSpan(1.4f));
+//            view.addSpan(new RelativeSizeSpan(1.4f));
+            view.setTextString("今");
         }
 
         /**

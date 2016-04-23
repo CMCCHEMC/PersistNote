@@ -22,6 +22,8 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.CheckedTextView;
 
+import com.dv.persistnote.R;
+import com.dv.persistnote.base.ResTools;
 import com.dv.persistnote.framework.ui.common.materialcalendarview.MaterialCalendarView.ShowOtherDates;
 import com.dv.persistnote.framework.ui.common.materialcalendarview.format.DayFormatter;
 
@@ -56,7 +58,7 @@ class DayView extends CheckedTextView {
 
         fadeTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
-        setSelectionColor(this.selectionColor);
+        setSelectionColor(ResTools.getColor(R.color.c1));
 
         setGravity(Gravity.CENTER);
 
@@ -241,6 +243,10 @@ class DayView extends CheckedTextView {
         // Reset in case it was customized previously
         else {
             setText(getLabel());
+        }
+
+        if(facade.getTextString() != null) {
+            setText(facade.getTextString());
         }
     }
 }

@@ -19,4 +19,5 @@ public class ActionId {
 
     public static final int OnCommunityLoadMore = 201;
     public static final int OnCommunityRefresh = 202;
+    public static final int OnPageScrollStateChanged = 203;
 }

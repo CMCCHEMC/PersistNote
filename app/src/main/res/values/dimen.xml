@@ -44,6 +44,7 @@
 
     <dimen name="common_tv_margin_top">6dp</dimen>
 
+    <dimen name="tile_margin">15dp</dimen>
     <!--具体业务标注-->
 
     <!-- HabitItemView -->

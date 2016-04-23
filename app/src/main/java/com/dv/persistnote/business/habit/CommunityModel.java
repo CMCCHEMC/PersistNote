@@ -94,7 +94,7 @@ public class CommunityModel {
         ThreadManager.post(ThreadManager.THREAD_WORK, new Runnable() {
             @Override
             public void run() {
-                mDataList = mCommunityDao.loadAll();
+//                mDataList = mCommunityDao.loadAll();
 
             }
         }, new Runnable() {

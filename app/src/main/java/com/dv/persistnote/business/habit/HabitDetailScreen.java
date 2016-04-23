@@ -3,7 +3,9 @@ package com.dv.persistnote.business.habit;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.Gravity;
 import android.widget.AbsListView;
 import android.widget.ListView;
@@ -14,6 +16,7 @@ import com.dv.persistnote.R;
 import com.dv.persistnote.base.ResTools;
 import com.dv.persistnote.framework.ActionId;
 import com.dv.persistnote.framework.DefaultScreen;
+import com.dv.persistnote.framework.ui.IUIObserver;
 import com.dv.persistnote.framework.ui.UICallBacks;
 
 import habit.dao.HabitRecord;
@@ -21,9 +24,9 @@ import habit.dao.HabitRecord;
 /**
  * Created by Hang on 2016/4/3.
  */
-public class HabitDetailScreen extends DefaultScreen{
+public class HabitDetailScreen extends DefaultScreen implements IUIObserver {
 
-    private CheckinCalendar mFakeCalendar;
+    private CheckinCalendar mCalendar;
     private TextView mPersistDuration;
     private CheckInWidget mCheckInWidget;
     private TextView mFooter;
@@ -64,11 +67,12 @@ public class HabitDetailScreen extends DefaultScreen{
     }
 
     private void configHeader() {
-        mFakeCalendar = new CheckinCalendar(getContext());
+        mCalendar = new CheckinCalendar(getContext());
         AbsListView.LayoutParams lp = new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT,
                 AbsListView.LayoutParams.WRAP_CONTENT);
-        mFakeCalendar.setLayoutParams(lp);
-        mFakeCalendar.setBackgroundColor(ResTools.getColor(R.color.c4));
+        mCalendar.setLayoutParams(lp);
+        mCalendar.setBackgroundColor(ResTools.getColor(R.color.c4));
+        mCalendar.setOnUIObserver(this);
 
         mCheckInWidget = new CheckInWidget(getContext());
         lp = new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT,
@@ -91,7 +95,7 @@ public class HabitDetailScreen extends DefaultScreen{
         communityTitle.setTextColor(ResTools.getColor(R.color.c2));
 
 
-        mDetailListView.addHeaderView(mFakeCalendar);
+        mDetailListView.addHeaderView(mCalendar);
         mDetailListView.addHeaderView(mCheckInWidget);
         mDetailListView.addHeaderView(mPersistDuration);
         mDetailListView.addHeaderView(communityTitle);
@@ -160,5 +164,20 @@ public class HabitDetailScreen extends DefaultScreen{
 
     public void onNoHistoryData() {
         mFooter.setText("sb 别拉了");
+    }
+
+    @Override
+    public boolean handleAction(int actionId, Object arg, Object result) {
+        switch (actionId) {
+            case ActionId.OnPageScrollStateChanged:
+                int state = (Integer)arg;
+                if(state == ViewPager.SCROLL_STATE_IDLE) {
+                    mRefreshLayout.setEnabled(true);
+                } else {
+                    mRefreshLayout.setEnabled(false);
+                }
+                return true;
+        }
+        return false;
     }
 }

@@ -16,6 +16,7 @@ public class DayViewFacade {
 
     private Drawable backgroundDrawable = null;
     private Drawable selectionDrawable = null;
+    private String textString = null;
     private final LinkedList<Span> spans = new LinkedList<>();
     private boolean daysDisabled = false;
 
@@ -77,6 +78,7 @@ public class DayViewFacade {
     void reset() {
         backgroundDrawable = null;
         selectionDrawable = null;
+        textString = null;
         spans.clear();
         isDecorated = false;
         daysDisabled = false;
@@ -93,6 +95,9 @@ public class DayViewFacade {
         }
         if (backgroundDrawable != null) {
             other.setBackgroundDrawable(backgroundDrawable);
+        }
+        if(textString != null) {
+            other.setTextString(textString);
         }
         other.spans.addAll(spans);
         other.isDecorated |= this.isDecorated;
@@ -122,6 +127,15 @@ public class DayViewFacade {
      */
     public boolean areDaysDisabled() {
         return daysDisabled;
+    }
+
+    public String getTextString() {
+        return textString;
+    }
+
+    public void setTextString(String str) {
+        this.textString = str;
+        this.isDecorated = true;
     }
 
     static class Span {

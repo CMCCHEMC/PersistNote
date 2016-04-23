@@ -2,11 +2,14 @@ package com.dv.persistnote.framework.ui.common.materialcalendarview;
 
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
 
+import com.dv.persistnote.R;
+import com.dv.persistnote.base.ResTools;
 import com.dv.persistnote.framework.ui.common.materialcalendarview.MaterialCalendarView.ShowOtherDates;
 import com.dv.persistnote.framework.ui.common.materialcalendarview.format.DayFormatter;
 import com.dv.persistnote.framework.ui.common.materialcalendarview.format.WeekDayFormatter;
@@ -240,7 +243,7 @@ abstract class CalendarPagerView extends ViewGroup implements View.OnClickListen
         }
 
         //The spec width should be a correct multiple
-        final int measureTileSize = specWidthSize / DEFAULT_DAYS_IN_WEEK;
+        final int measureTileSize = (specWidthSize - ResTools.getDimenInt(R.dimen.tile_margin) * (DEFAULT_DAYS_IN_WEEK - 1)) / DEFAULT_DAYS_IN_WEEK;
 
         //Just use the spec sizes
         setMeasuredDimension(specWidthSize, specHeightSize);
@@ -284,6 +287,7 @@ abstract class CalendarPagerView extends ViewGroup implements View.OnClickListen
             child.layout(childLeft, childTop, childLeft + width, childTop + height);
 
             childLeft += width;
+            childLeft += ResTools.getDimenInt(R.dimen.tile_margin);
 
             //We should warp every so many children
             if (i % DEFAULT_DAYS_IN_WEEK == (DEFAULT_DAYS_IN_WEEK - 1)) {
