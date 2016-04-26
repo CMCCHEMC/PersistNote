@@ -377,7 +377,7 @@ public class MaterialCalendarView extends ViewGroup {
         buttonFuture.setImageResource(R.drawable.mcv_action_next);
         topbar.addView(buttonFuture, new LinearLayout.LayoutParams(0, LayoutParams.MATCH_PARENT, 1));
 
-        pager.setId(0x10001);
+        pager.setId(R.id.mcv_pager);
         pager.setOffscreenPageLimit(1);
         addView(pager, new LayoutParams(calendarMode.visibleWeeksCount + DAY_NAMES_ROW));
     }

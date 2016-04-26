@@ -123,4 +123,5 @@
     <item name="id_icon" type="id" />
     <item name="id_title" type="id" />
 
+    <item name="mcv_pager" type="id" />
 </resources>
