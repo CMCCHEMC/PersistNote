@@ -37,7 +37,7 @@ import static com.dv.persistnote.framework.ui.common.materialcalendarview.Materi
  * Display one day of a {@linkplain MaterialCalendarView}
  */
 @SuppressLint("ViewConstructor")
-class DayView extends CheckedTextView {
+public class DayView extends CheckedTextView {
 
     private CalendarDay date;
     private int selectionColor = Color.GRAY;
@@ -172,6 +172,7 @@ class DayView extends CheckedTextView {
     protected void onDraw(@NonNull Canvas canvas) {
         if (customBackground != null) {
             canvas.getClipBounds(tempRect);
+            tempRect.inset(ResTools.getDimenInt(R.dimen.common_margin_4), ResTools.getDimenInt(R.dimen.common_margin_4));
             customBackground.setBounds(tempRect);
             customBackground.setState(getDrawableState());
             customBackground.draw(canvas);
@@ -187,7 +188,7 @@ class DayView extends CheckedTextView {
         }
     }
 
-    private static Drawable generateBackground(int color, int fadeTime) {
+    public static Drawable generateBackground(int color, int fadeTime) {
         StateListDrawable drawable = new StateListDrawable();
         drawable.setExitFadeDuration(fadeTime);
         drawable.addState(new int[]{android.R.attr.state_checked}, generateCircleDrawable(color));
@@ -202,7 +203,7 @@ class DayView extends CheckedTextView {
         return drawable;
     }
 
-    private static Drawable generateCircleDrawable(final int color) {
+    public static Drawable generateCircleDrawable(final int color) {
         ShapeDrawable drawable = new ShapeDrawable(new OvalShape());
         drawable.setShaderFactory(new ShapeDrawable.ShaderFactory() {
             @Override

@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.Gravity;
 import android.widget.AbsListView;
 import android.widget.ListView;
@@ -26,7 +25,7 @@ import habit.dao.HabitRecord;
  */
 public class HabitDetailScreen extends DefaultScreen implements IUIObserver {
 
-    private CheckinCalendar mCalendar;
+    private CheckInCalendar mCalendar;
     private TextView mPersistDuration;
     private CheckInWidget mCheckInWidget;
     private TextView mFooter;
@@ -67,7 +66,7 @@ public class HabitDetailScreen extends DefaultScreen implements IUIObserver {
     }
 
     private void configHeader() {
-        mCalendar = new CheckinCalendar(getContext());
+        mCalendar = new CheckInCalendar(getContext());
         AbsListView.LayoutParams lp = new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT,
                 AbsListView.LayoutParams.WRAP_CONTENT);
         mCalendar.setLayoutParams(lp);

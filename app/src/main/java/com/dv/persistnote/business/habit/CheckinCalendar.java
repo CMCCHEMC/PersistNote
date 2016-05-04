@@ -1,13 +1,18 @@
 package com.dv.persistnote.business.habit;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
+import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
 import android.text.style.StyleSpan;
 
 import com.dv.persistnote.R;
+import com.dv.persistnote.base.ResTools;
 import com.dv.persistnote.framework.ui.common.materialcalendarview.CalendarDay;
+import com.dv.persistnote.framework.ui.common.materialcalendarview.DayView;
 import com.dv.persistnote.framework.ui.common.materialcalendarview.DayViewDecorator;
 import com.dv.persistnote.framework.ui.common.materialcalendarview.DayViewFacade;
 import com.dv.persistnote.framework.ui.common.materialcalendarview.MaterialCalendarView;
@@ -21,8 +26,8 @@ import java.util.Date;
 /**
  * Created by Hang on 2016/4/23.
  */
-public class CheckinCalendar extends MaterialCalendarView implements OnDateSelectedListener {
-    public CheckinCalendar(Context context) {
+public class CheckInCalendar extends MaterialCalendarView implements OnDateSelectedListener {
+    public CheckInCalendar(Context context) {
         super(context);
 
         setOnDateChangedListener(this);
@@ -38,7 +43,7 @@ public class CheckinCalendar extends MaterialCalendarView implements OnDateSelec
         setMaximumDate(calendar.getTime());
 
         addDecorators(
-//                new MySelectorDecorator(this),
+                new CheckInedDecorator(),
 //                new HighlightWeekendsDecorator(),
                 new TodayDecorator()
         );
@@ -74,13 +79,38 @@ public class CheckinCalendar extends MaterialCalendarView implements OnDateSelec
         @Override
         public void decorate(DayViewFacade view) {
             view.addSpan(new StyleSpan(Typeface.BOLD));
-//            view.addSpan(new RelativeSizeSpan(1.4f));
             view.setTextString("今");
         }
 
         /**
          * We're changing the internals, so make sure to call {@linkplain MaterialCalendarView#invalidateDecorators()}
          */
+        public void setDate(Date date) {
+            this.date = CalendarDay.from(date);
+        }
+    }
+
+
+    public class CheckInedDecorator implements DayViewDecorator {
+
+        private CalendarDay date;
+
+        public CheckInedDecorator() {
+            date = CalendarDay.today();
+        }
+
+        @Override
+        public boolean shouldDecorate(CalendarDay day) {
+            return day != null && !day.isAfter(date);
+        }
+
+        @Override
+        public void decorate(DayViewFacade view) {
+            view.addSpan(new ForegroundColorSpan(ResTools.getColor(R.color.c4)));
+            view.setSelectionDrawable(new ColorDrawable(Color.TRANSPARENT));
+            view.setBackgroundDrawable(DayView.generateCircleDrawable(ResTools.getColor(R.color.c1)));
+        }
+
         public void setDate(Date date) {
             this.date = CalendarDay.from(date);
         }
