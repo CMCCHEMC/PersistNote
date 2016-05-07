@@ -6,6 +6,21 @@ package com.dv.persistnote.framework;
 public class ActionId {
 
     public static final int OnLoginClick = 101;
-    public static final int OnHabitItemClick = 102;
-    public static final int OnBackClick = 103;
+    public static final int OnForgetPasswordClick = 102;
+    public static final int OnHabitItemClick = 103;
+    public static final int OnBackClick = 104;
+
+    public static final int OnRegisterClick = 106;
+    public static final int CommitLoginClick = 107;
+    public static final int CommitRegisterHomeClick = 108;
+    public static final int CommitRegisterPasswordClick = 109;
+    public static final int CommitRegisterUserInfoClick = 110;
+    public static final int CommitResetPasswordHomeClick = 111;
+    public static final int CommitResetPasswordPasswordClick = 112;
+
+    public static final int OnDirectEntryClick = 113;
+	
+    public static final int OnCommunityLoadMore = 201;
+    public static final int OnCommunityRefresh = 202;
+    public static final int OnPageScrollStateChanged = 203;
 }

@@ -37,7 +37,8 @@ public class CommunityDetailAdapter extends BaseAdapter
             card = (GeneralCommunityCard)view;
         }
 
-//        card.bindData(CommunityModel.getInstance().getCommunityData(i));
+        card.enableSpacing(i != 0);
+        card.bindData(CommunityModel.getInstance().getCommunityData(i));
         return card;
     }
 }

@@ -18,6 +18,7 @@ import com.dv.persistnote.business.account.AccountModel;
 
 import java.util.List;
 
+import habit.dao.HabitRecord;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -26,9 +27,6 @@ import retrofit.client.Response;
  * Created by Hang on 2016/3/23.
  */
 public class HabitItemView extends RelativeLayout {
-
-    private final static int ID_ICON = 101;
-    private final static int ID_TITLE = 102;
 
     private ImageView mIcon;
     private TextView mTitle;
@@ -40,7 +38,7 @@ public class HabitItemView extends RelativeLayout {
 
         LayoutParams lp = new LayoutParams(ResTools.getDimenInt(R.dimen.habit_icon_width), ResTools.getDimenInt(R.dimen.habit_icon_width));
         mIcon = new ImageView(getContext());
-        mIcon.setId(ID_ICON);
+        mIcon.setId(R.id.id_icon);
         lp.addRule(ALIGN_PARENT_LEFT);
         lp.addRule(CENTER_VERTICAL);
         lp.rightMargin = 10;
@@ -48,17 +46,17 @@ public class HabitItemView extends RelativeLayout {
 
         lp = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         mTitle = new TextView(getContext());
-        mTitle.setId(ID_TITLE);
-        mTitle.setTextColor(ResTools.getColor(R.color.default_black));
-        mTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX, ResTools.getDimenInt(R.dimen.common_text_size_16));
-        lp.addRule(RIGHT_OF, ID_ICON);
-        lp.topMargin = ResTools.getDimenInt(R.dimen.common_text_size_22);
+        mTitle.setId(R.id.id_title);
+        mTitle.setTextColor(ResTools.getColor(R.color.c2));
+        mTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX, ResTools.getDimenInt(R.dimen.h1));
+        lp.addRule(RIGHT_OF, R.id.id_icon);
+        lp.topMargin = ResTools.getDimenInt(R.dimen.common_margin_top_22);
         addView(mTitle, lp);
 
         lp = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         mSubTitle = new TextView(getContext());
-        lp.addRule(RIGHT_OF, ID_ICON);
-        lp.addRule(BELOW, ID_TITLE);
+        lp.addRule(RIGHT_OF, R.id.id_icon);
+        lp.addRule(BELOW, R.id.id_title);
         addView(mSubTitle, lp);
 
         lp = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
@@ -67,7 +65,7 @@ public class HabitItemView extends RelativeLayout {
         lp.addRule(CENTER_VERTICAL);
         addView(mCheckIcon, lp);
 
-        setBackgroundColor(ResTools.getColor(R.color.default_white));
+        setBackgroundColor(ResTools.getColor(R.color.c4));
         int padding = ResTools.getDimenInt(R.dimen.common_margin_16);
         setPadding(padding, 0, padding, 0);
 
@@ -83,9 +81,9 @@ public class HabitItemView extends RelativeLayout {
         mSubTitle.setText(subTitle);
     }
 
-    public void bindData(FakeDataHelper.HabitInfo info) {
-        mIcon.setImageDrawable(HabitIconHelper.getHabitIcon(info.mHabitId));
-        mTitle.setText(info.mHabitName);
-        mSubTitle.setText("已经坚持"+info.mCount+"天");
+    public void bindData(HabitRecord info) {
+        mIcon.setImageDrawable(HabitIconHelper.getHabitIcon((int)info.getHabitId()));
+        mTitle.setText(info.getHabitName());
+        mSubTitle.setText("已经坚持"+info.getPersistCount()+"天");
     }
 }
