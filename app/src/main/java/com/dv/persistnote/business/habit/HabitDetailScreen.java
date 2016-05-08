@@ -3,8 +3,10 @@ package com.dv.persistnote.business.habit;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Message;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.Gravity;
 import android.widget.AbsListView;
 import android.widget.ListView;
@@ -17,6 +19,9 @@ import com.dv.persistnote.framework.ActionId;
 import com.dv.persistnote.framework.DefaultScreen;
 import com.dv.persistnote.framework.ui.IUIObserver;
 import com.dv.persistnote.framework.ui.UICallBacks;
+import com.dv.persistnote.framework.ui.common.materialcalendarview.CalendarDay;
+
+import java.util.Calendar;
 
 import habit.dao.HabitRecord;
 
@@ -29,14 +34,16 @@ public class HabitDetailScreen extends DefaultScreen implements IUIObserver {
     private TextView mPersistDuration;
     private CheckInWidget mCheckInWidget;
     private TextView mFooter;
+    private long mHabitId;
 
     private ListView mDetailListView;
     private SwipeRefreshLayout mRefreshLayout;
 
     private CommunityDetailAdapter mAdapter;
 
-    public HabitDetailScreen(Context context, UICallBacks callBacks) {
+    public HabitDetailScreen(Context context, UICallBacks callBacks, long habitId) {
         super(context, callBacks);
+        mHabitId = habitId;
         init();
         setBackgroundColor(ResTools.getColor(R.color.default_grey));
     }
@@ -77,6 +84,7 @@ public class HabitDetailScreen extends DefaultScreen implements IUIObserver {
         lp = new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT,
                 AbsListView.LayoutParams.WRAP_CONTENT);
         mCheckInWidget.setLayoutParams(lp);
+        mCheckInWidget.setOnUIObserver(this);
 
         mPersistDuration = new TextView(getContext());
         mPersistDuration.setText("第28天");
@@ -92,7 +100,6 @@ public class HabitDetailScreen extends DefaultScreen implements IUIObserver {
         int margin = ResTools.getDimenInt(R.dimen.common_margin_16);
         communityTitle.setPadding(ResTools.getDimenInt(R.dimen.common_margin_16), margin, 0, margin);
         communityTitle.setTextColor(ResTools.getColor(R.color.c2));
-
 
         mDetailListView.addHeaderView(mCalendar);
         mDetailListView.addHeaderView(mCheckInWidget);
@@ -130,11 +137,19 @@ public class HabitDetailScreen extends DefaultScreen implements IUIObserver {
     }
 
     public void setHabitDataById(long habitId) {
+        Log.d("xyao","show HabitId "+habitId);
         HabitRecord habit = HabitModel.getInstance().getHabitById(habitId);
         if(habit != null) {
             setTitle(habit.getHabitName());
             setPersistCounts(habit.getPersistCount());
         }
+        mHabitId = habitId;
+        updateCheckInWidget();
+    }
+
+    private void updateCheckInWidget() {
+        boolean checkedToday = CheckInModel.getInstance().isDayCheckedIn(mHabitId, CalendarDay.today().getDate());
+        mCheckInWidget.setChecked(checkedToday ,false);
     }
 
     private void setPersistCounts(int counts) {
@@ -167,6 +182,7 @@ public class HabitDetailScreen extends DefaultScreen implements IUIObserver {
 
     @Override
     public boolean handleAction(int actionId, Object arg, Object result) {
+        boolean handle = true;
         switch (actionId) {
             case ActionId.OnPageScrollStateChanged:
                 int state = (Integer)arg;
@@ -175,8 +191,20 @@ public class HabitDetailScreen extends DefaultScreen implements IUIObserver {
                 } else {
                     mRefreshLayout.setEnabled(false);
                 }
-                return true;
+                break;
+            case ActionId.OnCheckIn:
+                mCallBacks.handleAction(actionId, mHabitId,result);
+                break;
+            case ActionId.GetHabitId:
+                ((Message)result).obj = mHabitId;
+                break;
+            default:
+                handle = false;
         }
-        return false;
+        return handle;
+    }
+
+    public void notifyCheckInDataChange() {
+        mCalendar.invalidateDecorators();
     }
 }

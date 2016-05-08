@@ -23,9 +23,7 @@ public class HabitDetailController extends AbstractController{
     @Override
     public void handleMessage(Message msg) {
         if(msg.what == MsgDef.MSG_OPEN_HABIT_DETAIL) {
-            if(mDetailScreen == null) {
-                mDetailScreen = new HabitDetailScreen(mContext, this);
-            }
+            mDetailScreen = new HabitDetailScreen(mContext, this, (long) msg.obj);
             if(msg.obj instanceof Long) {
                 mDetailScreen.setHabitDataById((long) msg.obj);
             }
@@ -48,6 +46,11 @@ public class HabitDetailController extends AbstractController{
             case ActionId.OnCommunityRefresh:
                 CommunityModel.getInstance().startRefresh(this);
                 break;
+            case ActionId.OnCheckIn:
+                if(arg instanceof Long) {
+                    CheckInModel.getInstance().checkInRightNow((Long)arg, this);
+                }
+                break;
         }
         return false;
     }
@@ -58,6 +61,8 @@ public class HabitDetailController extends AbstractController{
             mDetailScreen.notifyCommunityDataChange((int)arg);
         } else if (dataId == ModelId.OnCommunityNoMore) {
             mDetailScreen.onNoHistoryData();
+        } else if (dataId == ModelId.OnCheckInLoaded) {
+            mDetailScreen.notifyCheckInDataChange();
         }
         return super.handleData(dataId, arg, result);
     }

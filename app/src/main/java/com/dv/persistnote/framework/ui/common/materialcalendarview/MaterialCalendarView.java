@@ -167,7 +167,7 @@ public class MaterialCalendarView extends ViewGroup {
     private CalendarDay currentMonth;
     private LinearLayout topbar;
     private CalendarMode calendarMode = CalendarMode.MONTHS;
-    private IUIObserver mObserver;
+    protected IUIObserver mObserver;
     /**
      * Used for the dynamic calendar height.
      */
