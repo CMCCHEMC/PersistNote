@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * Pager adapter backing the calendar view
  */
-public abstract class CalendarPagerAdapter<V extends CalendarPagerView> extends PagerAdapter {
+abstract class CalendarPagerAdapter<V extends CalendarPagerView> extends PagerAdapter {
 
     private final ArrayDeque<V> currentViews;
 

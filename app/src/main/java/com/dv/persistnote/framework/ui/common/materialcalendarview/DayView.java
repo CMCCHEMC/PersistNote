@@ -75,11 +75,6 @@ public class DayView extends CheckedTextView {
         setText(getLabel());
     }
 
- 
-    @Override
-    public void setTextColor(ColorStateList colors) {
-        super.setTextColor(Color.BLACK);
-    }
 
     /**
      * Set the new label formatter and reformat the current label. This preserves current spans.

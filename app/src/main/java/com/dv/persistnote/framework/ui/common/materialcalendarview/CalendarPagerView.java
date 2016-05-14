@@ -2,6 +2,7 @@ package com.dv.persistnote.framework.ui.common.materialcalendarview;
 
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.accessibility.AccessibilityEvent;
@@ -9,7 +10,6 @@ import android.view.accessibility.AccessibilityNodeInfo;
 
 import com.dv.persistnote.R;
 import com.dv.persistnote.base.ResTools;
-import com.dv.persistnote.base.util.L;
 import com.dv.persistnote.framework.ui.common.materialcalendarview.MaterialCalendarView.ShowOtherDates;
 import com.dv.persistnote.framework.ui.common.materialcalendarview.format.DayFormatter;
 import com.dv.persistnote.framework.ui.common.materialcalendarview.format.WeekDayFormatter;
@@ -50,17 +50,9 @@ abstract class CalendarPagerView extends ViewGroup implements View.OnClickListen
 
         setClipChildren(false);
         setClipToPadding(false);
-        long start = System.currentTimeMillis();
+
         buildWeekDays(resetAndGetWorkingCalendar());
-        L.d("xyao build week"+ (System.currentTimeMillis() - start));
         buildDayViews(dayViews, resetAndGetWorkingCalendar());
-        L.d("xyao build Day "+ (System.currentTimeMillis() - start));
-        setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mcv.onPagerClick(CalendarPagerView.this);
-            }
-        });
     }
 
     private void buildWeekDays(Calendar calendar) {
