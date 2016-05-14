@@ -223,10 +223,15 @@ public class MaterialCalendarView extends ViewGroup {
     private int selectionMode = SELECTION_MODE_SINGLE;
 
     public MaterialCalendarView(Context context) {
-        this(context, null);
+        this(context, null, false);
     }
 
-    public MaterialCalendarView(Context context, AttributeSet attrs) {
+    public MaterialCalendarView(Context context, IUIObserver observer) {
+        this(context);
+        mObserver = observer;
+    }
+
+    public MaterialCalendarView(Context context, AttributeSet attrs, boolean inflate) {
         super(context, attrs);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -1523,7 +1528,11 @@ public class MaterialCalendarView extends ViewGroup {
     }
 
 
-    public void setOnUIObserver(IUIObserver observer) {
-        mObserver = observer;
+    public CalendarPagerAdapter<?> getAdapter() {
+        return adapter;
+    }
+
+    public void onPagerClick(CalendarPagerView pager) {
+        mObserver.handleAction(ActionId.OnPagerClick, null, null);
     }
 }

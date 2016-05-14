@@ -64,7 +64,7 @@ public class CheckInModel {
     public boolean isDayCheckedIn(long habitId, Date date) {
         if(mCheckInList != null) {
             for(CheckInRecord item : mCheckInList) {
-                Log.d("xyao","compareHabit "+item.getHabitId()+" "+habitId);
+//                Log.d("xyao","compareHabit "+item.getHabitId()+" "+habitId);
                 if(item.getHabitId() == habitId &&
                         isSameDay(item.getCheckInDate(), date)) {
                     return true;
@@ -79,7 +79,7 @@ public class CheckInModel {
         if (null == date || null == sameDate) {
             return false;
         }
-        Log.d("xyao","compareTime "+date+" "+sameDate);
+//        Log.d("xyao","compareTime "+date+" "+sameDate);
         Calendar nowCalendar = Calendar.getInstance();
         nowCalendar.setTime(sameDate);
         Calendar dateCalendar = Calendar.getInstance();
