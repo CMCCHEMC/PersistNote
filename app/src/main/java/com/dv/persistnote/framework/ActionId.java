@@ -23,6 +23,7 @@ public class ActionId {
     public static final int OnCommunityLoadMore = 201;
     public static final int OnCommunityRefresh = 202;
     public static final int OnPageScrollStateChanged = 203;
-    public static final int OnCheckIn = 204;
-    public static final int GetHabitId = 205;
+    public static final int OnPagerClick = 204;
+    public static final int OnCheckIn = 205;
+    public static final int GetHabitId = 206;
 }
