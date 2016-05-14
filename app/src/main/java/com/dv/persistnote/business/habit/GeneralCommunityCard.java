@@ -3,6 +3,7 @@ package com.dv.persistnote.business.habit;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -11,6 +12,8 @@ import com.bumptech.glide.Glide;
 import com.dv.persistnote.R;
 import com.dv.persistnote.base.ContextManager;
 import com.dv.persistnote.base.ResTools;
+import com.dv.persistnote.framework.ActionId;
+import com.dv.persistnote.framework.ui.IUIObserver;
 import com.dv.persistnote.framework.ui.common.GlideCircleTransform;
 
 import habit.dao.CommunityRecord;
@@ -18,7 +21,7 @@ import habit.dao.CommunityRecord;
 /**
  * Created by Hang on 2016/4/3.
  */
-public class GeneralCommunityCard extends FrameLayout {
+public class GeneralCommunityCard extends FrameLayout implements View.OnClickListener{
 
     private ImageView mUserAvatar;
     private TextView mUserName;
@@ -27,10 +30,17 @@ public class GeneralCommunityCard extends FrameLayout {
     private TextView mContent;
     private ImageView mContentImage;
 
+    private ImageView mShareButton;
+
     private GlideCircleTransform mCircleTransform;
 
-    public GeneralCommunityCard(Context context) {
+    private IUIObserver mObserver;
+
+    private CommunityRecord mData;
+
+    public GeneralCommunityCard(Context context, IUIObserver observer) {
         super(context);
+        mObserver = observer;
         LayoutInflater inflater = LayoutInflater.from(ContextManager.getContext());
         inflater.inflate(R.layout.community_card, this, true);
         mUserAvatar = (ImageView) findViewById(R.id.user_avatar);
@@ -40,10 +50,13 @@ public class GeneralCommunityCard extends FrameLayout {
         mContent = (TextView)findViewById(R.id.card_content);
         mContentImage = (ImageView)findViewById(R.id.card_image);
         mCircleTransform = new GlideCircleTransform(getContext());
+
+        mShareButton = (ImageView)findViewById(R.id.card_share);
+        mShareButton.setOnClickListener(this);
     }
 
-
     public void bindData(CommunityRecord communityData) {
+        mData = communityData;
 //        mUserAvatar.seti
         Glide.with(getContext()).load(communityData.getAvatarUrl())
                 .placeholder(R.drawable.main_logo).crossFade()
@@ -63,5 +76,12 @@ public class GeneralCommunityCard extends FrameLayout {
     public void enableSpacing(boolean b) {
         int spacing = b ? ResTools.getDimenInt(R.dimen.common_margin_8) : 0;
         setPadding(0, spacing, 0, 0);
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(v == mShareButton) {
+            mObserver.handleAction(ActionId.OnCommunityCardShare, mData, null);
+        }
     }
 }

@@ -26,4 +26,5 @@ public class ActionId {
     public static final int OnPagerClick = 204;
     public static final int OnCheckIn = 205;
     public static final int GetHabitId = 206;
+	public static final int OnCommunityCardShare = 207;
 }

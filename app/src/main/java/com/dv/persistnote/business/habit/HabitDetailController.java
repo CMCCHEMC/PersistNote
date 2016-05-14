@@ -1,6 +1,7 @@
 package com.dv.persistnote.business.habit;
 
 import android.os.Message;
+import android.widget.Toast;
 
 import com.dv.persistnote.framework.ActionId;
 import com.dv.persistnote.framework.core.AbstractController;
@@ -50,6 +51,9 @@ public class HabitDetailController extends AbstractController{
                 if(arg instanceof Long) {
                     CheckInModel.getInstance().checkInRightNow((Long)arg, this);
                 }
+                break;
+            case ActionId.OnCommunityCardShare:
+                Toast.makeText(mContext, "菊花分享接这里", Toast.LENGTH_SHORT).show();
                 break;
         }
         return false;

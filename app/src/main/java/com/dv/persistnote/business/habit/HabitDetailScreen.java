@@ -52,7 +52,7 @@ public class HabitDetailScreen extends DefaultScreen implements IUIObserver{
         mDetailListView.setCacheColorHint(Color.TRANSPARENT);
         mDetailListView.setSelector(new ColorDrawable(Color.TRANSPARENT));
         mDetailListView.setOnScrollListener(createScrollListener());
-        mAdapter = new CommunityDetailAdapter();
+        mAdapter = new CommunityDetailAdapter(this);
 
         mRefreshLayout = new SwipeRefreshLayout(getContext());
         mRefreshLayout.addView(mDetailListView, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
@@ -180,6 +180,9 @@ public class HabitDetailScreen extends DefaultScreen implements IUIObserver{
                 break;
             default:
                 handle = false;
+        }
+        if(!handle) {
+            mCallBacks.handleAction(actionId, arg, result);
         }
         return handle;
     }
