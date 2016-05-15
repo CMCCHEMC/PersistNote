@@ -7,6 +7,7 @@ import android.os.Message;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -57,7 +58,6 @@ public class HabitDetailScreen extends DefaultScreen implements IUIObserver{
         mRefreshLayout = new SwipeRefreshLayout(getContext());
         mRefreshLayout.addView(mDetailListView, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         mRefreshLayout.setColorSchemeColors(ResTools.getColor(R.color.c1));
-//        mRefreshLayout.setEnabled(false);
         mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -165,9 +165,11 @@ public class HabitDetailScreen extends DefaultScreen implements IUIObserver{
     public boolean handleAction(int actionId, Object arg, Object result) {
         boolean handle = true;
         switch (actionId) {
-            case ActionId.OnPageScrollStateChanged:
+            case ActionId.OnCalendarTouchState:
                 int state = (Integer)arg;
-                mRefreshLayout.setEnabled(state == ViewPager.SCROLL_STATE_IDLE);
+                boolean enable = state == MotionEvent.ACTION_UP || state == MotionEvent.ACTION_CANCEL;
+                mRefreshLayout.setEnabled(enable);
+                mDetailListView.setEnabled(enable);
                 break;
             case ActionId.OnCheckIn:
                 mCallBacks.handleAction(actionId, mHabitId,result);
@@ -204,14 +206,16 @@ public class HabitDetailScreen extends DefaultScreen implements IUIObserver{
                     mCallBacks.handleAction(ActionId.OnCommunityLoadMore, null, null);
                 }
 
-                //向下收起月面板
-                if (scrollState == SCROLL_STATE_TOUCH_SCROLL && mDetailListView.getFirstVisiblePosition() == 0) {
-                    mCalendar.ensureCollapse();
-                }
             }
 
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                //向下收起月面板
+                if (mDetailListView.getFirstVisiblePosition() == 0
+                        && mDetailListView.getChildCount() > 0
+                        && mDetailListView.getChildAt(0).getTop() < -50) {
+                    mCalendar.ensureCollapse();
+                }
 
             }
         };

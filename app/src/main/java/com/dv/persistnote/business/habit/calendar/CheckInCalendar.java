@@ -9,6 +9,7 @@ import android.os.Message;
 import android.support.annotation.NonNull;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.StyleSpan;
+import android.view.MotionEvent;
 
 import com.dv.persistnote.R;
 import com.dv.persistnote.base.ResTools;
@@ -42,22 +43,15 @@ public class CheckInCalendar extends MaterialCalendarView implements OnDateSelec
 
     private enum State { MONTH, WEEK , ANIMATING}
     private State mCurrentState = State.WEEK;
+    private IUIObserver mObserver;
 
     public CheckInCalendar(Context context, IUIObserver observer) {
         super(context, observer);
+        mObserver = observer;
 
         setOnDateChangedListener(this);
         setShowOtherDates(MaterialCalendarView.SHOW_DEFAULTS);
-
-        Calendar calendar = Calendar.getInstance();
-        setSelectedDate(calendar.getTime());
-
-        calendar.set(calendar.get(Calendar.YEAR), Calendar.JANUARY, 1);
-        setMinimumDate(calendar.getTime());
-
-        calendar.set(calendar.get(Calendar.YEAR), Calendar.JULY, 31);
-        setMaximumDate(calendar.getTime());
-
+        setUpMinMaxRange();
         addDecorators( new CheckInDecorator(observer), new TodayDecorator() );
         setTileSizeDp(35);
         setCalendarDisplayMode(CalendarMode.WEEKS);
@@ -66,6 +60,17 @@ public class CheckInCalendar extends MaterialCalendarView implements OnDateSelec
 
         setDirectionEnable(false);
         getAdapter().setSelectionEnabled(false);
+    }
+
+    private void setUpMinMaxRange() {
+        Calendar calendar = Calendar.getInstance();
+        setSelectedDate(calendar.getTime());
+
+        calendar.set(calendar.get(Calendar.YEAR), Calendar.JANUARY, 1);
+        setMinimumDate(calendar.getTime());
+
+        calendar.set(calendar.get(Calendar.YEAR), Calendar.JULY, 31);
+        setMaximumDate(calendar.getTime());
     }
 
     @Override
@@ -79,7 +84,6 @@ public class CheckInCalendar extends MaterialCalendarView implements OnDateSelec
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         setMeasuredDimension(MeasureSpec.getSize(widthMeasureSpec), mCurrentHeight);
         L.d(" measure cost "+(System.currentTimeMillis()- start));
-
         L.d(" measure heigh "+getMeasuredHeight());
     }
 
@@ -94,11 +98,13 @@ public class CheckInCalendar extends MaterialCalendarView implements OnDateSelec
                 if(expand) {
                     mCurrentState = State.MONTH;
                     setCalendarDisplayMode(CalendarMode.MONTHS);
+                    setUpMinMaxRange();
                 } else {
                     mCurrentState = State.WEEK;
                     setCalendarDisplayMode(CalendarMode.WEEKS);
                 }
                 setWeekDayFormatter(new ArrayWeekDayFormatter(weeks));
+
             }
         });
     }
@@ -126,5 +132,14 @@ public class CheckInCalendar extends MaterialCalendarView implements OnDateSelec
         if(mCurrentState == State.MONTH) {
             toggleState();
         }
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if(ev.getAction() == MotionEvent.ACTION_DOWN || ev.getAction() == MotionEvent.ACTION_UP) {
+            mObserver.handleAction(ActionId.OnCalendarTouchState, ev.getAction(), null);
+        }
+        L.d("evAc "+ev.getAction());
+        return super.dispatchTouchEvent(ev);
     }
 }
