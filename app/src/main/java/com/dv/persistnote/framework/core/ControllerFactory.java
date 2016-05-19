@@ -3,6 +3,7 @@ package com.dv.persistnote.framework.core;
 import com.dv.persistnote.business.RootController;
 import com.dv.persistnote.business.account.AccountController;
 import com.dv.persistnote.business.habit.HabitDetailController;
+import com.dv.persistnote.business.share.ShareController;
 
 public class ControllerFactory {
 
@@ -18,6 +19,8 @@ public class ControllerFactory {
                 return new AccountController(environment);
             case ControllerID.HABITDETAIL_CONTROLLER:
                 return new HabitDetailController(environment);
+            case ControllerID.SHARE_CONTROLLER:
+                return new ShareController(environment);
             default:
                 break;
         }

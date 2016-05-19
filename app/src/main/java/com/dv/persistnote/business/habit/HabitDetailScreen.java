@@ -221,4 +221,8 @@ public class HabitDetailScreen extends DefaultScreen implements IUIObserver{
         };
         return scrollListener;
     }
+
+    public long getHabitId() {
+        return mHabitId;
+    }
 }

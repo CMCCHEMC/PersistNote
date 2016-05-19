@@ -14,4 +14,6 @@ public class MsgDef {
     public static final int MSG_SHOW_WELCOME_SCREEN = generateID();
 
     public static final int MSG_OPEN_HABIT_DETAIL = generateID();
+
+    public static final int MSG_OPEN_SHARE_PLATFORM = generateID();
 }

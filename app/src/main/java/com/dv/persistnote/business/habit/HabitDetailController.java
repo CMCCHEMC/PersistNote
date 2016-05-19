@@ -3,6 +3,7 @@ package com.dv.persistnote.business.habit;
 import android.os.Message;
 import android.widget.Toast;
 
+import com.dv.persistnote.business.share.ShareData;
 import com.dv.persistnote.framework.ActionId;
 import com.dv.persistnote.framework.core.AbstractController;
 import com.dv.persistnote.framework.core.BaseEnv;
@@ -10,8 +11,12 @@ import com.dv.persistnote.framework.core.MsgDef;
 import com.dv.persistnote.framework.model.ModelId;
 import com.dv.persistnote.framework.ui.AbstractScreen;
 
+import habit.dao.CommunityRecord;
+import habit.dao.HabitRecord;
+
 /**
  * Created by Hang on 2016/4/4.
+ * 处理所有分享业务的入口控制器
  */
 public class HabitDetailController extends AbstractController{
 
@@ -53,10 +58,21 @@ public class HabitDetailController extends AbstractController{
                 }
                 break;
             case ActionId.OnCommunityCardShare:
-                Toast.makeText(mContext, "菊花分享接这里", Toast.LENGTH_SHORT).show();
+                if(arg instanceof CommunityRecord) {
+                    handleShareClick((CommunityRecord)arg);
+                }
                 break;
         }
         return false;
+    }
+
+    private void handleShareClick(CommunityRecord record) {
+        ShareData shareData = new ShareData();
+        HabitRecord habit = HabitModel.getInstance().getHabitById(mDetailScreen.getHabitId());
+        shareData.mTitle = "今天是坚持<"+habit.getHabitName()+">的第"+habit.getPersistCount()+"天 ";
+        shareData.mContent = record.getContent();
+        shareData.mImageUrl = record.getAvatarUrl();
+        sendMessage(MsgDef.MSG_OPEN_SHARE_PLATFORM, 0,0, shareData);
     }
 
     @Override
