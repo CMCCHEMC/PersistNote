@@ -20,7 +20,8 @@ import habit.dao.HabitRecord;
  */
 public class HabitDetailController extends AbstractController{
 
-    HabitDetailScreen mDetailScreen;
+    private HabitDetailScreen mDetailScreen;
+    private NoteScreen mNoteScreen;
 
     public HabitDetailController(BaseEnv baseEnv) {
         super(baseEnv);
@@ -62,8 +63,16 @@ public class HabitDetailController extends AbstractController{
                     handleShareClick((CommunityRecord)arg);
                 }
                 break;
+            case ActionId.OnNoteButtonClick:
+                pushNoteWindow();
+                break;
         }
         return false;
+    }
+
+    private void pushNoteWindow() {
+        mNoteScreen = new NoteScreen(mContext, this);
+        mWindowMgr.pushScreen(mNoteScreen, true);
     }
 
     private void handleShareClick(CommunityRecord record) {

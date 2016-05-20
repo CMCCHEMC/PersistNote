@@ -29,4 +29,14 @@ public class ResTools {
     public static String getString(int id) {
         return ContextManager.getResources().getString(id);
     }
+
+    /**
+     * 只用于一些一次性的不规则边距，而基本控件，标注间距等不应该通过这个方法去拿, 切勿滥用
+     * @param dips
+     * @return
+     */
+    public static float dpToPx(float dips) {
+        Context context = ContextManager.getContext();
+        return dips * context.getResources().getDisplayMetrics().density + 0.5f;
+    }
 }
