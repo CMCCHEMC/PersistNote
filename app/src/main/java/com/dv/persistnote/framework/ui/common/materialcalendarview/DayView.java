@@ -39,6 +39,7 @@ import static com.dv.persistnote.framework.ui.common.materialcalendarview.Materi
 @SuppressLint("ViewConstructor")
 public class DayView extends CheckedTextView {
 
+    private final static boolean ENABLE_SELECT = false;
     private CalendarDay date;
     private int selectionColor = Color.GRAY;
 
@@ -74,6 +75,11 @@ public class DayView extends CheckedTextView {
         setText(getLabel());
     }
 
+ 
+    @Override
+    public void setTextColor(ColorStateList colors) {
+        super.setTextColor(Color.BLACK);
+    }
 
     /**
      * Set the new label formatter and reformat the current label. This preserves current spans.
@@ -102,6 +108,9 @@ public class DayView extends CheckedTextView {
     }
 
     public void setSelectionColor(int color) {
+        if(!ENABLE_SELECT) {
+            return;
+        }
         this.selectionColor = color;
         regenerateBackground();
     }
@@ -181,6 +190,9 @@ public class DayView extends CheckedTextView {
     }
 
     private void regenerateBackground() {
+        if(!ENABLE_SELECT) {
+            return;
+        }
         if (selectionDrawable != null) {
             setBackgroundDrawable(selectionDrawable);
         } else {
@@ -234,8 +246,8 @@ public class DayView extends CheckedTextView {
         // Facade has spans
         List<DayViewFacade.Span> spans = facade.getSpans();
         if (!spans.isEmpty()) {
-            String label = getLabel();
-            SpannableString formattedLabel = new SpannableString(getLabel());
+            String label = getDiplayLabel(facade);
+            SpannableString formattedLabel = new SpannableString(label);
             for (DayViewFacade.Span span : spans) {
                 formattedLabel.setSpan(span.span, 0, label.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             }
@@ -243,11 +255,24 @@ public class DayView extends CheckedTextView {
         }
         // Reset in case it was customized previously
         else {
-            setText(getLabel());
+            setText(getDiplayLabel(facade));
         }
 
+    }
+
+    private String getDiplayLabel(DayViewFacade facade) {
+        String lable;
         if(facade.getTextString() != null) {
-            setText(facade.getTextString());
+            lable = facade.getTextString();
+        } else {
+            lable = getLabel();
         }
+        return lable;
+    }
+
+    @Override
+    public void setChecked(boolean checked) {
+        //单天暂时作为不可checked的 xiaoyh
+//        super.setChecked(checked);
     }
 }

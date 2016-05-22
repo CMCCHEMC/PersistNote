@@ -8,4 +8,5 @@ public class ModelId {
     public static final int OnCommunityLoaded = 1002;
     public static final int OnCommunityNoMore = 1003;
     public static final int OnCommunityRefresh = 1004;
+    public static final int OnCheckInLoaded = 1005;
 }

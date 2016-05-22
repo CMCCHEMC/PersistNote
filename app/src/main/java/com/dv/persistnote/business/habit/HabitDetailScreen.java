@@ -3,9 +3,11 @@ package com.dv.persistnote.business.habit;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Message;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -13,30 +15,34 @@ import android.widget.Toast;
 
 import com.dv.persistnote.R;
 import com.dv.persistnote.base.ResTools;
+import com.dv.persistnote.business.habit.calendar.CheckInCalendar;
 import com.dv.persistnote.framework.ActionId;
 import com.dv.persistnote.framework.DefaultScreen;
 import com.dv.persistnote.framework.ui.IUIObserver;
 import com.dv.persistnote.framework.ui.UICallBacks;
+import com.dv.persistnote.framework.ui.common.materialcalendarview.CalendarDay;
 
 import habit.dao.HabitRecord;
 
 /**
  * Created by Hang on 2016/4/3.
  */
-public class HabitDetailScreen extends DefaultScreen implements IUIObserver {
+public class HabitDetailScreen extends DefaultScreen implements IUIObserver{
 
     private CheckInCalendar mCalendar;
     private TextView mPersistDuration;
     private CheckInWidget mCheckInWidget;
     private TextView mFooter;
+    private long mHabitId;
 
     private ListView mDetailListView;
     private SwipeRefreshLayout mRefreshLayout;
 
     private CommunityDetailAdapter mAdapter;
 
-    public HabitDetailScreen(Context context, UICallBacks callBacks) {
+    public HabitDetailScreen(Context context, UICallBacks callBacks, long habitId) {
         super(context, callBacks);
+        mHabitId = habitId;
         init();
         setBackgroundColor(ResTools.getColor(R.color.default_grey));
     }
@@ -46,12 +52,12 @@ public class HabitDetailScreen extends DefaultScreen implements IUIObserver {
         mDetailListView.setDivider(null);
         mDetailListView.setCacheColorHint(Color.TRANSPARENT);
         mDetailListView.setSelector(new ColorDrawable(Color.TRANSPARENT));
-        mAdapter = new CommunityDetailAdapter();
+        mDetailListView.setOnScrollListener(createScrollListener());
+        mAdapter = new CommunityDetailAdapter(this);
 
         mRefreshLayout = new SwipeRefreshLayout(getContext());
         mRefreshLayout.addView(mDetailListView, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         mRefreshLayout.setColorSchemeColors(ResTools.getColor(R.color.c1));
-//        mRefreshLayout.setEnabled(false);
         mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -66,17 +72,17 @@ public class HabitDetailScreen extends DefaultScreen implements IUIObserver {
     }
 
     private void configHeader() {
-        mCalendar = new CheckInCalendar(getContext());
+        mCalendar = new CheckInCalendar(getContext(), this);
         AbsListView.LayoutParams lp = new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT,
                 AbsListView.LayoutParams.WRAP_CONTENT);
         mCalendar.setLayoutParams(lp);
         mCalendar.setBackgroundColor(ResTools.getColor(R.color.c4));
-        mCalendar.setOnUIObserver(this);
 
         mCheckInWidget = new CheckInWidget(getContext());
         lp = new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT,
                 AbsListView.LayoutParams.WRAP_CONTENT);
         mCheckInWidget.setLayoutParams(lp);
+        mCheckInWidget.setOnUIObserver(this);
 
         mPersistDuration = new TextView(getContext());
         mPersistDuration.setText("第28天");
@@ -92,7 +98,6 @@ public class HabitDetailScreen extends DefaultScreen implements IUIObserver {
         int margin = ResTools.getDimenInt(R.dimen.common_margin_16);
         communityTitle.setPadding(ResTools.getDimenInt(R.dimen.common_margin_16), margin, 0, margin);
         communityTitle.setTextColor(ResTools.getColor(R.color.c2));
-
 
         mDetailListView.addHeaderView(mCalendar);
         mDetailListView.addHeaderView(mCheckInWidget);
@@ -111,22 +116,6 @@ public class HabitDetailScreen extends DefaultScreen implements IUIObserver {
         mFooter.setLayoutParams(lp);
         mDetailListView.addFooterView(mFooter);
 
-        mDetailListView.setOnScrollListener(new AbsListView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(AbsListView view, int scrollState) {
-                int lastVisibleItem = mDetailListView.getLastVisiblePosition();
-                int totalItemCount = mAdapter.getCount();
-                boolean lastItemVisible = totalItemCount > 0 && (lastVisibleItem >= totalItemCount - 1);
-                if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE && lastItemVisible) {
-                    mCallBacks.handleAction(ActionId.OnCommunityLoadMore, null, null);
-                }
-            }
-
-            @Override
-            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-
-            }
-        });
     }
 
     public void setHabitDataById(long habitId) {
@@ -135,6 +124,13 @@ public class HabitDetailScreen extends DefaultScreen implements IUIObserver {
             setTitle(habit.getHabitName());
             setPersistCounts(habit.getPersistCount());
         }
+        mHabitId = habitId;
+        updateCheckInWidget();
+    }
+
+    private void updateCheckInWidget() {
+        boolean checkedToday = CheckInModel.getInstance().isDayCheckedIn(mHabitId, CalendarDay.today().getDate());
+        mCheckInWidget.setChecked(checkedToday ,false);
     }
 
     private void setPersistCounts(int counts) {
@@ -167,16 +163,66 @@ public class HabitDetailScreen extends DefaultScreen implements IUIObserver {
 
     @Override
     public boolean handleAction(int actionId, Object arg, Object result) {
+        boolean handle = true;
         switch (actionId) {
-            case ActionId.OnPageScrollStateChanged:
+            case ActionId.OnCalendarTouchState:
                 int state = (Integer)arg;
-                if(state == ViewPager.SCROLL_STATE_IDLE) {
-                    mRefreshLayout.setEnabled(true);
-                } else {
-                    mRefreshLayout.setEnabled(false);
-                }
-                return true;
+                boolean enable = state == MotionEvent.ACTION_UP || state == MotionEvent.ACTION_CANCEL;
+                mRefreshLayout.setEnabled(enable);
+                mDetailListView.setEnabled(enable);
+                break;
+            case ActionId.OnCheckIn:
+                mCallBacks.handleAction(actionId, mHabitId,result);
+                break;
+            case ActionId.GetHabitId:
+                ((Message)result).obj = mHabitId;
+                break;
+            case ActionId.OnPagerClick:
+                mCalendar.toggleState();
+                break;
+            default:
+                handle = false;
         }
-        return false;
+        if(!handle) {
+            mCallBacks.handleAction(actionId, arg, result);
+        }
+        return handle;
+    }
+
+    public void notifyCheckInDataChange() {
+        mCalendar.invalidateDecorators();
+    }
+
+    public AbsListView.OnScrollListener createScrollListener() {
+        AbsListView.OnScrollListener scrollListener = new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+                //向后加载更多
+                int lastVisibleItem = mDetailListView.getLastVisiblePosition();
+                int totalItemCount = mAdapter.getCount();
+                boolean lastItemVisible = totalItemCount > 0 && (lastVisibleItem >= totalItemCount - 1);
+                if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE && lastItemVisible) {
+                    mCallBacks.handleAction(ActionId.OnCommunityLoadMore, null, null);
+                }
+
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                //向下收起月面板
+                if (mDetailListView.getFirstVisiblePosition() == 0
+                        && mDetailListView.getChildCount() > 0
+                        && mDetailListView.getChildAt(0).getTop() < -50) {
+                    mCalendar.ensureCollapse();
+                }
+
+            }
+        };
+        return scrollListener;
+    }
+
+    public long getHabitId() {
+        return mHabitId;
     }
 }

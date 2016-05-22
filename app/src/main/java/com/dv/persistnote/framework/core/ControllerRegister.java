@@ -19,6 +19,7 @@ public class ControllerRegister{
         registerRootController();
         registerAccountController();
         registerHabitDetailController();
+        registerShareController();
     }
 
     public void registerRootController(){
@@ -48,6 +49,14 @@ public class ControllerRegister{
         mControllerCenter.addPolicy(MessagePolicy.create(controllerID, messageIDs));
     }
 
+    public void registerShareController(){
+        int controllerID = ControllerID.SHARE_CONTROLLER;
+
+        int[] messageIDs = new int[]{
+                MsgDef.MSG_OPEN_SHARE_PLATFORM,
+        };
+        mControllerCenter.addPolicy(MessagePolicy.create(controllerID, messageIDs));
+    }
 
 
 }

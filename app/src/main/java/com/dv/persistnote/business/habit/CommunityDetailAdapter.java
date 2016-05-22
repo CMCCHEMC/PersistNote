@@ -7,12 +7,19 @@ import android.widget.BaseAdapter;
 
 import com.dv.persistnote.R;
 import com.dv.persistnote.base.ContextManager;
+import com.dv.persistnote.framework.ui.IUIObserver;
 
 /**
  * Created by Hang on 2016/4/3.
  */
 public class CommunityDetailAdapter extends BaseAdapter
 {
+    private IUIObserver mObserver;
+
+    public CommunityDetailAdapter(IUIObserver observer) {
+        mObserver = observer;
+    }
+
     @Override
     public int getCount() {
         return CommunityModel.getInstance().getCommunityCount();
@@ -32,7 +39,7 @@ public class CommunityDetailAdapter extends BaseAdapter
     public View getView(int i, View view, ViewGroup viewGroup) {
         GeneralCommunityCard card = null;
         if(view == null) {
-            card = new GeneralCommunityCard(ContextManager.getContext());
+            card = new GeneralCommunityCard(ContextManager.getContext(), mObserver);
         } else {
             card = (GeneralCommunityCard)view;
         }
