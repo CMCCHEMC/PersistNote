@@ -6,4 +6,5 @@ public class ControllerID {
 
     public static final int HABITDETAIL_CONTROLLER = 3;
     public static final int SHARE_CONTROLLER = 4;
+    public static final int NOTE_CONTROLLER = 5;
 }

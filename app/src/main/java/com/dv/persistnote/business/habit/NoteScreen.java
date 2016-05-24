@@ -32,7 +32,7 @@ import habit.dao.HabitRecord;
 /**
  * Created by Hang on 2016/4/3.
  */
-public class NoteScreen extends DefaultScreen implements IUIObserver{
+public class NoteScreen extends DefaultScreen implements IUIObserver, View.OnClickListener{
 
     private LinearLayout mContainer;
 
@@ -48,6 +48,7 @@ public class NoteScreen extends DefaultScreen implements IUIObserver{
 
     protected void init() {
         setTitle("记录一下");
+        mTitleBar.setActionText("完成");
 
         mContainer = new LinearLayout(getContext());
         mContainer.setOrientation(LinearLayout.VERTICAL);
@@ -69,6 +70,7 @@ public class NoteScreen extends DefaultScreen implements IUIObserver{
         photoContainer.setPadding(padding,padding,padding,padding);
         mAddIcon = new ImageView(getContext());
         mAddIcon.setImageDrawable(ResTools.getDrawable(R.drawable.icon_plus));
+        mAddIcon.setOnClickListener(this);
         int iconWidth = (int) ResTools.dpToPx(60);
         photoContainer.addView(mAddIcon, iconWidth, iconWidth);
         lp = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, (int) ResTools.dpToPx(90));
@@ -89,5 +91,12 @@ public class NoteScreen extends DefaultScreen implements IUIObserver{
             mCallBacks.handleAction(actionId, arg, result);
         }
         return handle;
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(v == mAddIcon) {
+            mCallBacks.handleAction(ActionId.OnNotePicSelectClick, null, null);
+        }
     }
 }

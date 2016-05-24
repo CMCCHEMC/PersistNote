@@ -18,6 +18,7 @@ public class DefaultTitleBar extends RelativeLayout implements View.OnClickListe
 
     private ImageView mBackButton;
     private TextView mTitleText;
+    private TextView mActionButton;
 
     private UICallBacks mCallback;
 
@@ -41,10 +42,18 @@ public class DefaultTitleBar extends RelativeLayout implements View.OnClickListe
         lp.addRule(CENTER_IN_PARENT);
         addView(mTitleText, lp);
 
+        mActionButton = new TextView(getContext());
+        mActionButton.setOnClickListener(this);
+        lp = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        lp.addRule(ALIGN_PARENT_RIGHT);
+        lp.addRule(CENTER_VERTICAL);
+        mTitleText.setTextColor(ResTools.getColor(R.color.c3));
+        mTitleText.setTextSize(TypedValue.COMPLEX_UNIT_PX, ResTools.getDimenInt(R.dimen.title_bar_action_text));
+        addView(mActionButton, lp);
+
         setBackgroundColor(ResTools.getColor(R.color.c4));
         int padding = ResTools.getDimenInt(R.dimen.common_margin_16);
         setPadding(padding, 0, padding, 0);
-
     }
 
     public void setTitle(String title) {
@@ -53,10 +62,19 @@ public class DefaultTitleBar extends RelativeLayout implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
-        mCallback.onWindowExitEvent(true);
+        if (view == mBackButton) {
+            mCallback.onWindowExitEvent(true);
+        } else if (view == mActionButton) {
+            mCallback.handleAction(ActionId.OnNoteActionButtonClick, null, null);
+        }
+
     }
 
     public void enableTitleBack(boolean enable) {
         mBackButton.setVisibility(enable ? View.VISIBLE : View.GONE);
+    }
+
+    public void setActionText(String actionText) {
+        mActionButton.setText(actionText);
     }
 }
