@@ -17,6 +17,8 @@ public class ActionId {
     public static final int CommitRegisterUserInfoClick = 110;
     public static final int CommitResetPasswordHomeClick = 111;
     public static final int CommitResetPasswordPasswordClick = 112;
+    public static final int ShowPhotoPicker = 114;
+    public static final int ShowCamera = 115;
 
     public static final int OnDirectEntryClick = 113;
 	

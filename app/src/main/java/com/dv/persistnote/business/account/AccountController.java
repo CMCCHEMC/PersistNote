@@ -1,9 +1,17 @@
 package com.dv.persistnote.business.account;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Message;
+import android.provider.MediaStore;
 import android.view.KeyEvent;
 
+import com.dv.persistnote.R;
+import com.dv.persistnote.base.ContextManager;
+import com.dv.persistnote.base.util.Utilities;
 import com.dv.persistnote.business.LoginScreen;
+import com.dv.persistnote.business.PhotoPickerScreen;
 import com.dv.persistnote.business.RegisterHomeScreen;
 import com.dv.persistnote.business.RegisterOKScreen;
 import com.dv.persistnote.business.RegisterPasswordScreen;
@@ -16,6 +24,8 @@ import com.dv.persistnote.framework.ui.AbstractScreen;
 import com.dv.persistnote.framework.core.AbstractController;
 import com.dv.persistnote.framework.core.BaseEnv;
 import com.dv.persistnote.framework.core.MsgDef;
+
+import java.io.File;
 
 /**
  * Created by Hang on 2016/3/14.
@@ -37,6 +47,10 @@ public class AccountController extends AbstractController{
     private ResetPasswordHomeScreen mResetPasswordHomeScreen;
 
     private ResetPasswordPasswordScreen mResetPasswordPasswordScreen;
+
+    private PhotoPickerScreen mPhotoPickerScreen;
+
+    private File mTmpFile;
 
     public AccountController(BaseEnv baseEnv) {
         super(baseEnv);
@@ -67,8 +81,10 @@ public class AccountController extends AbstractController{
                 mWindowMgr.pushScreen(mLoginScreen, true);
                 break;
             case ActionId.OnRegisterClick:
-                mRegisterHomeScreen = new RegisterHomeScreen(mContext, this);
-                mWindowMgr.pushScreen(mRegisterHomeScreen, true);
+                mPhotoPickerScreen = new PhotoPickerScreen(mContext, this, 0);
+                mWindowMgr.pushScreen(mPhotoPickerScreen, true);
+                //mRegisterHomeScreen = new RegisterHomeScreen(mContext, this);
+                //mWindowMgr.pushScreen(mRegisterHomeScreen, true);
                 break;
             case ActionId.OnDirectEntryClick:
                 mWindowMgr.popScreen(true);
@@ -99,6 +115,18 @@ public class AccountController extends AbstractController{
                 mResetPasswordHomeScreen = new ResetPasswordHomeScreen(mContext, this);
                 mWindowMgr.pushScreen(mResetPasswordHomeScreen, true);
                 break;
+            case ActionId.ShowCamera:
+                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                if(cameraIntent.resolveActivity(ContextManager.getPackageManager()) != null){
+                    // 设置系统相机拍照后的输出路径
+                    // 创建临时文件
+                    mTmpFile = Utilities.createFile(ContextManager.getContext());
+                    cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(mTmpFile));
+                    ((Activity) ContextManager.getContext()).startActivityForResult(cameraIntent, 0);
+
+                }else{
+                    // no camera
+                }
         }
         return false;
     }

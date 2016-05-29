@@ -1,6 +1,7 @@
 package com.dv.persistnote;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.dv.persistnote.base.ContextManager;
@@ -47,5 +48,4 @@ public class PersistNoteActivity extends Activity {
 
         mEnv.getMsgDispatcher().sendMessage(MsgDef.MSG_INIT_ROOTSCREEN);
     }
-
 }

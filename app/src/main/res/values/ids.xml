@@ -119,6 +119,10 @@
 
     <item name="reset_password_p_tv_password_wrong" type="id" />
 
+    <!-- PhotoPickerScreen -->
+    <item name="photo_picker_tb" type="id" />
+    <item name="photo_picker_tb_tv" type="id" />
+
     <!-- HabitItemView -->
     <item name="id_icon" type="id" />
     <item name="id_title" type="id" />
