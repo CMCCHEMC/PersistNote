@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.dv.persistnote.business.habit.SharePreView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/main_photo"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:src="@drawable/fake_card_image"
+        android:scaleType="centerCrop"
+        android:layout_marginLeft="@dimen/common_margin_16"
+        android:layout_marginRight="@dimen/common_margin_16"
+        android:layout_marginTop="@dimen/common_margin_16"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/c2"
+        android:textSize="@dimen/common_text_size_20"
+        android:background="@color/c4"
+        android:layout_centerHorizontal="true"
+        android:layout_alignBottom="@+id/main_photo"
+        android:layout_marginBottom="-16dp"
+        android:text="第23天"/>
+    <!--android:text="突然之间,\n我看到一艘像是火星人的太空船，\n在空中旋风般的朝我飞来，\n它犹如螺旋桨"-->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/c2"
+        android:gravity="center"
+        android:textSize="@dimen/h1"
+        android:layout_centerHorizontal="true"
+        android:lineSpacingMultiplier="1.2f"
+        android:layout_below="@+id/main_photo"
+        android:layout_marginTop="30dp"
+        android:text="如果我打的字很短又不换行，居中就很尴尬了"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/c3"
+        android:textSize="@dimen/h1"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/common_margin_16"
+        android:text="2016.5.30 来自坚持手记 #健身#"/>
+
+</com.dv.persistnote.business.habit.SharePreView>
