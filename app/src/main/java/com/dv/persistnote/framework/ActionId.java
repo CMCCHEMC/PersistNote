@@ -28,4 +28,7 @@ public class ActionId {
     public static final int GetHabitId = 206;
 	public static final int OnCommunityCardShare = 207;
     public static final int OnCalendarTouchState = 208;
+    public static final int OnNoteButtonClick = 209;
+    public static final int OnNoteActionButtonClick = 210;
+    public static final int OnNotePicSelectClick = 211;
 }

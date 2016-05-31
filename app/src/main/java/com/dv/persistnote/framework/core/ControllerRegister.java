@@ -20,6 +20,7 @@ public class ControllerRegister{
         registerAccountController();
         registerHabitDetailController();
         registerShareController();
+        registerNoteController();
     }
 
     public void registerRootController(){
@@ -54,6 +55,16 @@ public class ControllerRegister{
 
         int[] messageIDs = new int[]{
                 MsgDef.MSG_OPEN_SHARE_PLATFORM,
+                MsgDef.MSG_SHARE_TO_WX_TIMELINE
+        };
+        mControllerCenter.addPolicy(MessagePolicy.create(controllerID, messageIDs));
+    }
+
+    public void registerNoteController(){
+        int controllerID = ControllerID.NOTE_CONTROLLER;
+
+        int[] messageIDs = new int[]{
+                MsgDef.MSG_OPEN_NOTE_SCREEN,
         };
         mControllerCenter.addPolicy(MessagePolicy.create(controllerID, messageIDs));
     }

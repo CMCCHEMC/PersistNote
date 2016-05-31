@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Message;
 import android.widget.Toast;
 
+import com.dv.persistnote.base.ContextManager;
 import com.dv.persistnote.framework.core.AbstractController;
 import com.dv.persistnote.framework.core.BaseEnv;
 import com.dv.persistnote.framework.core.MsgDef;
@@ -27,6 +28,8 @@ public class ShareController  extends AbstractController {
             showShare(this.mContext,null,true);
            // Toast.makeText(mContext, "菊花分享接这里\n"+shareData.mTitle, Toast.LENGTH_SHORT).show();
         }
+        else if (msg.what == MsgDef.MSG_SHARE_TO_WX_TIMELINE) {
+            Toast.makeText(ContextManager.getContext(), "发布到社区", Toast.LENGTH_SHORT).show();
     }
 
     public void showShare(Context context, String platformToShare, boolean showContentEdit) {
@@ -34,6 +37,7 @@ public class ShareController  extends AbstractController {
         oks.setSilent(!showContentEdit);
         if (platformToShare != null) {
             oks.setPlatform(platformToShare);
+
         }
         //ShareSDK快捷分享提供两个界面第一个是九宫格 CLASSIC  第二个是SKYBLUE
         oks.setTheme(OnekeyShareTheme.CLASSIC);

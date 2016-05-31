@@ -2,13 +2,16 @@ package com.dv.persistnote.business.habit;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Message;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.Gravity;
 import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,6 +34,7 @@ public class HabitDetailScreen extends DefaultScreen implements IUIObserver{
 
     private CheckInCalendar mCalendar;
     private TextView mPersistDuration;
+    private TextView mNoteButton;
     private CheckInWidget mCheckInWidget;
     private TextView mFooter;
     private long mHabitId;
@@ -84,13 +88,7 @@ public class HabitDetailScreen extends DefaultScreen implements IUIObserver{
         mCheckInWidget.setLayoutParams(lp);
         mCheckInWidget.setOnUIObserver(this);
 
-        mPersistDuration = new TextView(getContext());
-        mPersistDuration.setText("第28天");
-        lp = new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT,
-                ResTools.getDimenInt(R.dimen.calendar_height) * 2);
-        mPersistDuration.setLayoutParams(lp);
-        mPersistDuration.setGravity(Gravity.CENTER);
-        mPersistDuration.setBackgroundColor(ResTools.getColor(R.color.c4));
+        View banner = createBannerContainer();
 
         TextView communityTitle = new TextView(getContext());
         communityTitle.setText(ResTools.getString(R.string.community_title));
@@ -101,8 +99,50 @@ public class HabitDetailScreen extends DefaultScreen implements IUIObserver{
 
         mDetailListView.addHeaderView(mCalendar);
         mDetailListView.addHeaderView(mCheckInWidget);
-        mDetailListView.addHeaderView(mPersistDuration);
+        mDetailListView.addHeaderView(banner);
         mDetailListView.addHeaderView(communityTitle);
+    }
+
+    /**
+     * 包括天数和点击记录的按钮
+     * @return
+     */
+    private View createBannerContainer() {
+        LinearLayout bannerContainer = new LinearLayout(getContext());
+        AbsListView.LayoutParams lp = new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT,
+                ResTools.getDimenInt(R.dimen.calendar_height) * 2);
+        bannerContainer.setLayoutParams(lp);
+        bannerContainer.setBackgroundColor(ResTools.getColor(R.color.c4));
+        bannerContainer.setGravity(Gravity.CENTER);
+        bannerContainer.setPadding((int) ResTools.dpToPx(70), 0, (int) ResTools.dpToPx(70), 0);
+
+        View divider = new View(getContext());
+        divider.setBackgroundColor(ResTools.getColor(R.color.c3));
+
+        LinearLayout.LayoutParams childLp = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT);
+        childLp.weight = 1;
+        int expandPadding = (int) ResTools.dpToPx(10);
+        mPersistDuration = new TextView(getContext());
+        mPersistDuration.setGravity(Gravity.CENTER);
+        mPersistDuration.setPadding(0, expandPadding, 0, expandPadding);
+        mPersistDuration.setTextColor(ResTools.getColor(R.color.c6));
+
+        mNoteButton = new TextView(getContext());
+        mNoteButton.setText("记录一下");
+        mNoteButton.setPadding(0, expandPadding, 0, expandPadding);
+        mNoteButton.setGravity(Gravity.CENTER);
+        mNoteButton.setTextColor(ResTools.getColor(R.color.c6));
+        mNoteButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mCallBacks.handleAction(ActionId.OnNoteButtonClick, null, null);
+            }
+        });
+
+        bannerContainer.addView(mPersistDuration, childLp);
+        bannerContainer.addView(divider, 1, (int) ResTools.dpToPx(20));
+        bannerContainer.addView(mNoteButton, childLp);
+        return bannerContainer;
     }
 
     private void configAutoLoadMore() {
