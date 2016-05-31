@@ -16,6 +16,8 @@
     <dimen name="h4">12dp</dimen>
     <dimen name="h5">10dp</dimen>
 
+    <dimen name="common_text_size_20">20dp</dimen>
+
     <dimen name="common_margin_4">4dp</dimen>
     <dimen name="common_margin_8">8dp</dimen>
     <dimen name="common_margin_16">16dp</dimen>

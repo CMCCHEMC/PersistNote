@@ -15,6 +15,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,6 +41,8 @@ public class NoteScreen extends DefaultScreen implements IUIObserver, View.OnCli
 
     private ImageView mAddIcon;
 
+    private SharePreView mPreView;
+
     public NoteScreen(Context context, UICallBacks callBacks) {
         super(context, callBacks);
         init();
@@ -52,7 +55,11 @@ public class NoteScreen extends DefaultScreen implements IUIObserver, View.OnCli
 
         mContainer = new LinearLayout(getContext());
         mContainer.setOrientation(LinearLayout.VERTICAL);
-        setContent(mContainer);
+
+        ScrollView scrollContainer = new ScrollView(getContext());
+        setContent(scrollContainer);
+        scrollContainer.addView(mContainer);
+
 
         mEditText = new EditText(getContext());
         mEditText.setHint("记录一下吧~");
