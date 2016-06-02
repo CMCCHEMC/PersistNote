@@ -70,7 +70,10 @@ public class HabitDetailController extends AbstractController{
                 }
                 break;
             case ActionId.OnNoteButtonClick:
-                mDispatcher.sendMessage(MsgDef.MSG_OPEN_NOTE_SCREEN);
+                Message msg = Message.obtain();
+                msg.what = MsgDef.MSG_OPEN_NOTE_SCREEN;
+                msg.obj = mDetailScreen.getHabitId();
+                mDispatcher.sendMessage(msg);
                 break;
         }
         return false;

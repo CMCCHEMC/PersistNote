@@ -26,7 +26,7 @@ public class NoteController extends AbstractController{
     @Override
     public void handleMessage(Message msg) {
         if(msg.what == MsgDef.MSG_OPEN_NOTE_SCREEN) {
-            pushNoteWindow();
+            pushNoteWindow((Long)msg.obj);
         }
     }
 
@@ -49,8 +49,9 @@ public class NoteController extends AbstractController{
         return false;
     }
 
-    private void pushNoteWindow() {
+    private void pushNoteWindow(long habitId) {
         mNoteScreen = new NoteScreen(mContext, this);
+        mNoteScreen.setHabitInfo(HabitModel.getInstance().getHabitById(habitId));
         mWindowMgr.pushScreen(mNoteScreen, true);
     }
 
