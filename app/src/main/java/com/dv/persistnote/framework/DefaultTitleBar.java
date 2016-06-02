@@ -77,4 +77,8 @@ public class DefaultTitleBar extends RelativeLayout implements View.OnClickListe
     public void setActionText(String actionText) {
         mActionButton.setText(actionText);
     }
+
+    public View getActionButton() {
+        return mActionButton;
+    }
 }

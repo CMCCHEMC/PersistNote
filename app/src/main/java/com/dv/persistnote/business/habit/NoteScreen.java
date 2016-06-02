@@ -5,7 +5,11 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Message;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,12 +40,10 @@ import habit.dao.HabitRecord;
 public class NoteScreen extends DefaultScreen implements IUIObserver, View.OnClickListener{
 
     private LinearLayout mContainer;
-
     private EditText mEditText;
-
     private ImageView mAddIcon;
-
     private SharePreView mPreView;
+    private TextView mActionButton;
 
     public NoteScreen(Context context, UICallBacks callBacks) {
         super(context, callBacks);
@@ -52,6 +54,7 @@ public class NoteScreen extends DefaultScreen implements IUIObserver, View.OnCli
     protected void init() {
         setTitle("记录一下");
         mTitleBar.setActionText("完成");
+        mActionButton = (TextView)mTitleBar.getActionButton();
 
         mContainer = new LinearLayout(getContext());
         mContainer.setOrientation(LinearLayout.VERTICAL);
@@ -66,6 +69,7 @@ public class NoteScreen extends DefaultScreen implements IUIObserver, View.OnCli
         mEditText.setMaxLines(5);
         mEditText.setGravity(Gravity.TOP);
         mEditText.setBackgroundColor(ResTools.getColor(R.color.c4));
+        mEditText.addTextChangedListener(getTextChangedListener());
         int padding = ResTools.getDimenInt(R.dimen.common_margin_16);
         mEditText.setPadding(padding,padding,padding,padding);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, (int) ResTools.dpToPx(160));
@@ -81,8 +85,32 @@ public class NoteScreen extends DefaultScreen implements IUIObserver, View.OnCli
         int iconWidth = (int) ResTools.dpToPx(60);
         photoContainer.addView(mAddIcon, iconWidth, iconWidth);
         lp = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, (int) ResTools.dpToPx(90));
-        lp.topMargin = ResTools.getDimenInt(R.dimen.common_margin_8);
         mContainer.addView(photoContainer, lp);
+
+        mPreView = (SharePreView)LayoutInflater.from(getContext()).inflate(R.layout.share_preview_layout, null);
+        mPreView.initViews();
+        lp = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, (int) ResTools.dpToPx(500));
+        lp.leftMargin = lp.rightMargin = ResTools.getDimenInt(R.dimen.common_margin_16);
+        lp.topMargin = lp.bottomMargin = ResTools.getDimenInt(R.dimen.common_margin_16);
+        mContainer.addView(mPreView, lp);
+    }
+
+    private TextWatcher getTextChangedListener() {
+        TextWatcher watcher = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                mPreView.setContent(s.toString());
+                int color = TextUtils.isEmpty(s) ? ResTools.getColor(R.color.c3) : ResTools.getColor(R.color.c1);
+                mActionButton.setTextColor(color);
+            }
+        };
+        return watcher;
     }
 
     @Override
@@ -105,5 +133,10 @@ public class NoteScreen extends DefaultScreen implements IUIObserver, View.OnCli
         if(v == mAddIcon) {
             mCallBacks.handleAction(ActionId.OnNotePicSelectClick, null, null);
         }
+    }
+
+    public void setHabitInfo(HabitRecord habit) {
+        mPreView.setPersistCount(habit.getPersistCount());
+        mPreView.setHabitName(habit.getHabitName());
     }
 }
