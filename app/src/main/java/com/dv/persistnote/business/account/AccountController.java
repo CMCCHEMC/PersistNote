@@ -5,9 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Message;
 import android.provider.MediaStore;
-import android.view.KeyEvent;
 
-import com.dv.persistnote.R;
 import com.dv.persistnote.base.ContextManager;
 import com.dv.persistnote.base.util.Utilities;
 import com.dv.persistnote.business.LoginScreen;
@@ -64,6 +62,11 @@ public class AccountController extends AbstractController{
             mWelcomeScreen = new WelcomeScreen(mContext,this);
             mWindowMgr.pushScreen(mWelcomeScreen, false);
         }
+        if(msg.what == MsgDef.MSG_ACCOUNT_CAMERA_RETURN){
+            if(mTmpFile != null) {
+                // TODO:进入剪裁页面
+            }
+        }
     }
 
 
@@ -81,10 +84,10 @@ public class AccountController extends AbstractController{
                 mWindowMgr.pushScreen(mLoginScreen, true);
                 break;
             case ActionId.OnRegisterClick:
-                mPhotoPickerScreen = new PhotoPickerScreen(mContext, this, 0);
-                mWindowMgr.pushScreen(mPhotoPickerScreen, true);
-                //mRegisterHomeScreen = new RegisterHomeScreen(mContext, this);
-                //mWindowMgr.pushScreen(mRegisterHomeScreen, true);
+                //mPhotoPickerScreen = new PhotoPickerScreen(mContext, this, PhotoPickerScreen.ACCOUNT_CONTROLLER);
+                //mWindowMgr.pushScreen(mPhotoPickerScreen, true);
+                mRegisterHomeScreen = new RegisterHomeScreen(mContext, this);
+                mWindowMgr.pushScreen(mRegisterHomeScreen, true);
                 break;
             case ActionId.OnDirectEntryClick:
                 mWindowMgr.popScreen(true);
@@ -115,18 +118,18 @@ public class AccountController extends AbstractController{
                 mResetPasswordHomeScreen = new ResetPasswordHomeScreen(mContext, this);
                 mWindowMgr.pushScreen(mResetPasswordHomeScreen, true);
                 break;
-            case ActionId.ShowCamera:
+            case ActionId.OnACCOUNTShowCamera:
                 Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 if(cameraIntent.resolveActivity(ContextManager.getPackageManager()) != null){
                     // 设置系统相机拍照后的输出路径
                     // 创建临时文件
                     mTmpFile = Utilities.createFile(ContextManager.getContext());
                     cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(mTmpFile));
-                    ((Activity) ContextManager.getContext()).startActivityForResult(cameraIntent, 0);
-
+                    ((Activity) ContextManager.getContext()).startActivityForResult(cameraIntent, PhotoPickerScreen.ACCOUNT_CONTROLLER);
                 }else{
                     // no camera
                 }
+                break;
         }
         return false;
     }

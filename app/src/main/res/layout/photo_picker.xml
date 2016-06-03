@@ -17,8 +17,8 @@
     </GridView>
 
     <ViewStub
-        android:id="@+id/floder_stub"
+        android:id="@+id/folder_stub"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout="@layout/fload_list_layout_stub"/>
+        android:layout="@layout/folder_list_layout_stub"/>
 </FrameLayout>

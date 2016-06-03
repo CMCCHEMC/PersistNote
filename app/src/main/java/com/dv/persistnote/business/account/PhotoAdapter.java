@@ -24,14 +24,10 @@ public class PhotoAdapter extends BaseAdapter {
     private static final int TYPE_PHOTO = 1;
 
     private List<Photo> mDatas;
-    //存放已选中的Photo数据
-    private List<String> mSelectedPhotos;
     private Context mContext;
     private int mWidth;
-    //是否显示相机，默认不显示
-    private boolean mIsShowCamera = false;
-    //照片选择模式，默认单选
-    private int mSelectMode = 0;
+    //是否显示相机，默认显示
+    private boolean mIsShowCamera = true;
 
     public PhotoAdapter(Context context, List<Photo> mDatas) {
         this.mDatas = mDatas;
@@ -104,7 +100,7 @@ public class PhotoAdapter extends BaseAdapter {
                 convertView = LayoutInflater.from(mContext).inflate(
                         R.layout.item_photo_layout, null);
                 holder.photoImageView = (ImageView) convertView.findViewById(R.id.imageview_photo);
-                holder.maskView = convertView.findViewById(R.id.mask);
+                holder.maskView = convertView.findViewById(R.id.checkmark);
                 holder.wrapLayout = (FrameLayout) convertView.findViewById(R.id.wrap_layout);
                 convertView.setTag(holder);
             } else {

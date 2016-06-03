@@ -3,7 +3,7 @@ package com.dv.persistnote.business.account;
 import java.io.Serializable;
 import java.util.List;
 
-public class PhotoFloder implements Serializable {
+public class PhotoFolder implements Serializable {
 
     /* 文件夹名 */
     private String name;

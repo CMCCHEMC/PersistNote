@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.dv.persistnote.base.ContextManager;
+import com.dv.persistnote.business.PhotoPickerScreen;
 import com.dv.persistnote.framework.core.ControllerFactory;
 import com.dv.persistnote.framework.core.ControllerRegister;
 import com.dv.persistnote.framework.core.MsgDef;
@@ -47,5 +48,19 @@ public class PersistNoteActivity extends Activity {
         register.registerControllers();
 
         mEnv.getMsgDispatcher().sendMessage(MsgDef.MSG_INIT_ROOTSCREEN);
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // 相机拍照完成后，返回图片路径
+        switch (requestCode) {
+            case PhotoPickerScreen.ACCOUNT_CONTROLLER:
+                mEnv.getMsgDispatcher().sendMessage(MsgDef.MSG_ACCOUNT_CAMERA_RETURN);
+                break;
+            case PhotoPickerScreen.ROOT_CONTROLLER:
+                mEnv.getMsgDispatcher().sendMessage(MsgDef.MSG_ROOT_CAMERA_RETURN);
+                break;
+            default:
+                break;
+        }
     }
 }

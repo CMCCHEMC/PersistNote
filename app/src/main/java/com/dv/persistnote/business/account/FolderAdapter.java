@@ -16,13 +16,13 @@ import com.dv.persistnote.base.util.Utilities;
 
 import java.util.List;
 
-public class FloderAdapter extends BaseAdapter {
+public class FolderAdapter extends BaseAdapter {
 
-    List<PhotoFloder> mDatas;
+    List<PhotoFolder> mDatas;
     Context mContext;
     int mWidth;
 
-    public FloderAdapter(Context context, List<PhotoFloder> mDatas) {
+    public FolderAdapter(Context context, List<PhotoFolder> mDatas) {
         this.mDatas = mDatas;
         this.mContext = context;
         mWidth = Utilities.dip2px(ContextManager.getContext(),90);
@@ -43,31 +43,29 @@ public class FloderAdapter extends BaseAdapter {
         return position;
     }
 
-
-
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null;
         if (convertView == null) {
             holder = new ViewHolder();
             convertView = LayoutInflater.from(mContext).inflate(
-                    R.layout.item_floder_layout, null);
-            holder.photoIV = (ImageView) convertView.findViewById(R.id.imageview_floder_img);
-            holder.floderNameTV = (TextView) convertView.findViewById(R.id.textview_floder_name);
+                    R.layout.item_folder_layout, null);
+            holder.photoIV = (ImageView) convertView.findViewById(R.id.imageview_folder_img);
+            holder.folderNameTV = (TextView) convertView.findViewById(R.id.textview_folder_name);
             holder.photoNumTV = (TextView) convertView.findViewById(R.id.textview_photo_num);
-            holder.selectIV = (ImageView) convertView.findViewById(R.id.imageview_floder_select);
+            holder.selectIV = (ImageView) convertView.findViewById(R.id.imageview_folder_select);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
         holder.selectIV.setVisibility(View.GONE);
-        PhotoFloder floder = mDatas.get(position);
-        if(floder.isSelected()) {
+        PhotoFolder folder = mDatas.get(position);
+        if(folder.isSelected()) {
             holder.selectIV.setVisibility(View.VISIBLE);
         }
-        holder.floderNameTV.setText(floder.getName());
-        holder.photoNumTV.setText(floder.getPhotoList().size() + "张");
-        Glide.with(ContextManager.getContext()).load(floder.getPhotoList().get(0).getPath())
+        holder.folderNameTV.setText(folder.getName());
+        holder.photoNumTV.setText(folder.getPhotoList().size() + "张");
+        Glide.with(ContextManager.getContext()).load(folder.getPhotoList().get(0).getPath())
                 .placeholder(ResTools.getColor(R.color.c4)).crossFade()
                 .into(holder.photoIV);
         return convertView;
@@ -75,7 +73,7 @@ public class FloderAdapter extends BaseAdapter {
 
     private class ViewHolder {
         private ImageView photoIV;
-        private TextView floderNameTV;
+        private TextView folderNameTV;
         private TextView photoNumTV;
         private ImageView selectIV;
     }

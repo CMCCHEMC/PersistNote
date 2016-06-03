@@ -1,7 +1,6 @@
 package com.dv.persistnote.business.account;
 
 import android.content.ContentResolver;
-import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
@@ -17,15 +16,15 @@ import java.util.Map;
 public class PhotoUtils {
 
 
-    public static Map<String, PhotoFloder> getPhotos() {
-        Map<String, PhotoFloder> floderMap = new HashMap<String, PhotoFloder>();
+    public static Map<String, PhotoFolder> getPhotos() {
+        Map<String, PhotoFolder> folderMap = new HashMap<String, PhotoFolder>();
 
         String allPhotosKey = "所有图片";
-        PhotoFloder allFloder = new PhotoFloder();
-        allFloder.setName(allPhotosKey);
-        allFloder.setDirPath(allPhotosKey);
-        allFloder.setPhotoList(new ArrayList<Photo>());
-        floderMap.put(allPhotosKey, allFloder);
+        PhotoFolder allFolder = new PhotoFolder();
+        allFolder.setName(allPhotosKey);
+        allFolder.setDirPath(allPhotosKey);
+        allFolder.setPhotoList(new ArrayList<Photo>());
+        folderMap.put(allPhotosKey, allFolder);
 
         Uri imageUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
         ContentResolver mContentResolver = ContextManager.getContext().getContentResolver();
@@ -51,27 +50,27 @@ public class PhotoUtils {
             }
             String dirPath = parentFile.getAbsolutePath();
 
-            if (floderMap.containsKey(dirPath)) {
+            if (folderMap.containsKey(dirPath)) {
                 Photo photo = new Photo(path);
-                PhotoFloder photoFloder = floderMap.get(dirPath);
-                photoFloder.getPhotoList().add(photo);
-                floderMap.get(allPhotosKey).getPhotoList().add(photo);
+                PhotoFolder photoFolder = folderMap.get(dirPath);
+                photoFolder.getPhotoList().add(photo);
+                folderMap.get(allPhotosKey).getPhotoList().add(photo);
                 continue;
             } else {
-                // 初始化imageFloder
-                PhotoFloder photoFloder = new PhotoFloder();
+                // 初始化imageFolder
+                PhotoFolder photoFolder = new PhotoFolder();
                 List<Photo> photoList = new ArrayList<Photo>();
                 Photo photo = new Photo(path);
                 photoList.add(photo);
-                photoFloder.setPhotoList(photoList);
-                photoFloder.setDirPath(dirPath);
-                photoFloder.setName(dirPath.substring(dirPath.lastIndexOf(File.separator) + 1, dirPath.length()));
-                floderMap.put(dirPath, photoFloder);
-                floderMap.get(allPhotosKey).getPhotoList().add(photo);
+                photoFolder.setPhotoList(photoList);
+                photoFolder.setDirPath(dirPath);
+                photoFolder.setName(dirPath.substring(dirPath.lastIndexOf(File.separator) + 1, dirPath.length()));
+                folderMap.put(dirPath, photoFolder);
+                folderMap.get(allPhotosKey).getPhotoList().add(photo);
             }
         }
         mCursor.close();
-        return floderMap;
+        return folderMap;
     }
 
 }
