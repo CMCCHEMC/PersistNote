@@ -16,9 +16,9 @@ import java.util.List;
 import habit.dao.HabitRecord;
 
 /**
- * Created by Hang on 2016/3/13.
+ * Created by QinZheng on 2016/6/3.
 */
-public class RootScreen extends DefaultScreen {
+public class RootScreen extends RootPresetScreen {
 
     private LinearLayout mContainer;
 
@@ -26,7 +26,6 @@ public class RootScreen extends DefaultScreen {
         super(context, callBacks);
         init();
         setTitle(ResTools.getString(R.string.app_name));
-        enableTitleBack(false);
         setBackgroundColor(ResTools.getColor(R.color.default_grey));
     }
 

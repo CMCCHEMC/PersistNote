@@ -1,7 +1,10 @@
 package com.dv.persistnote.business;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Message;
+import android.provider.MediaStore;
 import android.util.SparseArray;
 import android.view.KeyEvent;
 import android.widget.Toast;
@@ -14,6 +17,7 @@ import com.dv.persistnote.base.network.bean.Result;
 import com.dv.persistnote.base.network.bean.TransResult;
 import com.dv.persistnote.base.network.bean.ZHOther;
 import com.dv.persistnote.base.network.bean.ZHResult;
+import com.dv.persistnote.base.util.Utilities;
 import com.dv.persistnote.business.account.AccountModel;
 import com.dv.persistnote.business.habit.HabitModel;
 import com.dv.persistnote.framework.ActionId;
@@ -24,6 +28,7 @@ import com.dv.persistnote.framework.model.ModelId;
 import com.dv.persistnote.framework.ui.AbstractScreen;
 import com.dv.persistnote.framework.ui.AbstractTabContentView;
 
+import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.HashMap;
@@ -43,6 +48,9 @@ public class RootController extends AbstractController {
     private RootScreen mRootScreen;
     private SparseArray<AbstractTabContentView> mTabViews = new SparseArray<AbstractTabContentView>();
 
+    private PhotoPickerScreen mPhotoPickerScreen;
+    private File mTmpFile;
+
     private long mClickBackFirstTime = 0;
 
     public RootController(BaseEnv baseEnv) {
@@ -55,6 +63,11 @@ public class RootController extends AbstractController {
             mWindowMgr.createWindowStack(mRootScreen);
             HabitModel.getInstance().requestHabitList(this);
             checkLoginState();
+        }
+        if(msg.what == MsgDef.MSG_ROOT_CAMERA_RETURN){
+            if(mTmpFile != null) {
+                mRootScreen.setAvatar(mTmpFile.getAbsolutePath());
+            }
         }
     }
 
@@ -76,6 +89,29 @@ public class RootController extends AbstractController {
                 msg.what = MsgDef.MSG_OPEN_HABIT_DETAIL;
                 msg.obj = arg;
                 mDispatcher.sendMessage(msg);
+                break;
+            case ActionId.OnROOTPhotoPickerClose:
+                mWindowMgr.popScreen(true);
+                break;
+            case ActionId.OnROOTPhotoPickerCommit:
+                mRootScreen.setAvatar((String)arg);
+                mWindowMgr.popScreen(true);
+                break;
+            case ActionId.OnROOTShowCamera:
+                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                if(cameraIntent.resolveActivity(ContextManager.getPackageManager()) != null){
+                    // 设置系统相机拍照后的输出路径
+                    // 创建临时文件
+                    mTmpFile = Utilities.createFile(ContextManager.getContext());
+                    cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(mTmpFile));
+                    ((Activity) ContextManager.getContext()).startActivityForResult(cameraIntent, PhotoPickerScreen.ROOT_CONTROLLER);
+                }else{
+                    // no camera
+                }
+                break;
+            case ActionId.OnROOTShowPhotoPicker:
+                mPhotoPickerScreen = new PhotoPickerScreen(mContext, this, PhotoPickerScreen.ROOT_CONTROLLER);
+                mWindowMgr.pushScreen(mPhotoPickerScreen, true);
                 break;
         }
         return false;

@@ -20,4 +20,8 @@ public class MsgDef {
     public static final int MSG_SHARE_TO_WX_TIMELINE = generateID();
 
     public static final int MSG_OPEN_NOTE_SCREEN = generateID();
+
+    public static final int MSG_ACCOUNT_CAMERA_RETURN = generateID();
+
+    public static final int MSG_ROOT_CAMERA_RETURN = generateID();
 }
