@@ -35,5 +35,8 @@
      <string name="more_click_back">再按一次退出哦</string>
     <string name="community_title">社区动态</string>
 
+    <!-- PhotoPicker Strings -->
+    <string name="all_photo">全部照片</string>
+
 
 </resources>
