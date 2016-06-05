@@ -55,6 +55,7 @@ public class HabitItemView extends RelativeLayout {
 
         lp = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         mSubTitle = new TextView(getContext());
+        mSubTitle.setTextColor(ResTools.getColor(R.color.c3));
         lp.addRule(RIGHT_OF, R.id.id_icon);
         lp.addRule(BELOW, R.id.id_title);
         addView(mSubTitle, lp);

@@ -28,6 +28,7 @@ public class ControllerRegister{
 
         int[] messageIDs = new int[]{
                 MsgDef.MSG_INIT_ROOTSCREEN,
+                MsgDef.MSG_ROOT_CAMERA_RETURN
                 };
         mControllerCenter.addPolicy(MessagePolicy.create(controllerID, messageIDs));
     }
@@ -37,6 +38,7 @@ public class ControllerRegister{
 
         int[] messageIDs = new int[]{
                 MsgDef.MSG_SHOW_WELCOME_SCREEN,
+                MsgDef.MSG_ACCOUNT_CAMERA_RETURN
         };
         mControllerCenter.addPolicy(MessagePolicy.create(controllerID, messageIDs));
     }
