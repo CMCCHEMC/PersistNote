@@ -20,6 +20,12 @@ android {
             keyAlias "persistnote"
             keyPassword KEY_PASSWORD
         }
+        debug {
+            storeFile file("app.keystore")
+            storePassword KEYSTORE_PASSWORD
+            keyAlias "persistnote"
+            keyPassword KEY_PASSWORD
+        }
     }
 
     buildTypes {

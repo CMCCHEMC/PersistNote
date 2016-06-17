@@ -39,8 +39,8 @@ public class NoteController extends AbstractController{
     public boolean handleAction(int actionId, Object arg, Object result) {
         switch (actionId) {
             case ActionId.OnNoteActionButtonClick:
-                mWindowMgr.popScreen(true);
-                sendMessage(MsgDef.MSG_SHARE_TO_WX_TIMELINE);
+//                mWindowMgr.popScreen(true);
+                sendMessage(MsgDef.MSG_SHARE_TO_WX_TIMELINE, 0,0, mNoteScreen.getShareData());
                 break;
             case ActionId.OnNotePicSelectClick:
                 Toast.makeText(ContextManager.getContext(), "打开图片选择", Toast.LENGTH_SHORT).show();

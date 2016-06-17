@@ -1,7 +1,12 @@
 package com.dv.persistnote.business.habit;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
+import android.graphics.Paint;
+import android.graphics.PaintFlagsDrawFilter;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Message;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -26,6 +31,7 @@ import android.widget.Toast;
 import com.dv.persistnote.R;
 import com.dv.persistnote.base.ResTools;
 import com.dv.persistnote.business.habit.calendar.CheckInCalendar;
+import com.dv.persistnote.business.share.ShareData;
 import com.dv.persistnote.framework.ActionId;
 import com.dv.persistnote.framework.DefaultScreen;
 import com.dv.persistnote.framework.ui.IUIObserver;
@@ -138,5 +144,24 @@ public class NoteScreen extends DefaultScreen implements IUIObserver, View.OnCli
     public void setHabitInfo(HabitRecord habit) {
         mPreView.setPersistCount(habit.getPersistCount());
         mPreView.setHabitName(habit.getHabitName());
+    }
+
+    public ShareData getShareData() {
+        final ShareData shareData = new ShareData();
+        shareData.mTitle = "今天是坚持<天 ";
+        shareData.mBitmap = getScaleSnapShot(mPreView, 0.5f);
+        return shareData;
+    }
+
+    private static Bitmap getScaleSnapShot(View view, float scale) {
+        Bitmap bitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.RGB_565);
+        Canvas canvas = new Canvas(bitmap);
+        canvas.setDrawFilter(new PaintFlagsDrawFilter(0, Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG));
+        view.draw(canvas);
+
+        Matrix matrix = new Matrix();
+        matrix.postScale(scale, scale); //长和宽放大缩小的比例
+        Bitmap resizeBmp = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+        return resizeBmp;
     }
 }

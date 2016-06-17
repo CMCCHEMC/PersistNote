@@ -32,6 +32,8 @@ public class ShareController  extends AbstractController {
             showShare(this.mContext, null, true);
         } else if (msg.what == MsgDef.MSG_SHARE_TO_WX_TIMELINE) {
             Toast.makeText(ContextManager.getContext(), "发布到社区", Toast.LENGTH_SHORT).show();
+            mShareData = (ShareData) msg.obj;
+            showShare(this.mContext, null, true);
         }
     }
 
@@ -46,11 +48,11 @@ public class ShareController  extends AbstractController {
         oks.setDialogMode();
         // 在自动授权时可以禁用SSO方式
         oks.disableSSOWhenAuthorize();
-        if(false && mShareData.mBitmap != null) {
+        if(mShareData.mBitmap != null) {
             oks.setShareContentCustomizeCallback(new ShareContentCustomizeCallback() {
                 @Override
                 public void onShare(Platform platform, Platform.ShareParams paramsToShare) {
-                    if ("Wechat".equals(platform.getName()) || "WechatMoments".equals(platform.getName())) {
+                    if (true || "Wechat".equals(platform.getName()) || "WechatMoments".equals(platform.getName())) {
                         paramsToShare.setShareType(Platform.SHARE_IMAGE);
                         paramsToShare.setImageData(mShareData.mBitmap);
                         // paramsToShare.setImagePath(_picPath);
@@ -64,11 +66,6 @@ public class ShareController  extends AbstractController {
         }
         //oks.setImageUrl(mShareData.mImageUrl); //微信不绕过审核分享链接
         oks.show(context);
-    }
-
-    private void sharePicCallBack()
-    {
-
     }
 
     @Override
