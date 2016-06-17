@@ -42,7 +42,8 @@ public class ShareController  extends AbstractController {
         oks.setSilent(!showContentEdit);
         if (platformToShare != null) {
             oks.setPlatform(platformToShare);
-        }       //ShareSDK快捷分享提供两个界面第一个是九宫格 CLASSIC  第二个是SKYBLUE
+        }
+        //ShareSDK快捷分享提供两个界面第一个是九宫格 CLASSIC  第二个是SKYBLUE
         oks.setTheme(OnekeyShareTheme.CLASSIC);
         // 令编辑页面显示为Dialog模式
         oks.setDialogMode();

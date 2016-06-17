@@ -13,7 +13,7 @@
         android:layout_marginRight="@dimen/common_margin_16"
         android:layout_marginTop="@dimen/common_margin_16"
         android:scaleType="centerCrop"
-        android:src="@drawable/fake_card_image" />
+        android:src="@drawable/fake_card_image_v2" />
 
     <TextView
         android:id="@+id/preview_persist_count"

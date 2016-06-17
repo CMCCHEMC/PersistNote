@@ -24,6 +24,7 @@ import android.widget.ImageView.ScaleType;
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.onekeyshare.CustomerLogo;
 
+import com.dv.persistnote.base.ResTools;
 import com.mob.tools.gui.ViewPagerAdapter;
 import com.mob.tools.utils.R;
 
@@ -104,7 +105,7 @@ public abstract class PlatformPageAdapter extends ViewPagerAdapter implements On
 		int lineCount = panelHeight / cellHeight;
 		LinearLayout[] llCells = new LinearLayout[lineCount * lineSize];
 		llPanel.setTag(llCells);
-		int cellBack = R.getBitmapRes(context, "ssdk_oks_classic_platform_cell_back");
+		int cellBack = ResTools.getColor(com.dv.persistnote.R.color.c4);
 		LinearLayout.LayoutParams lp;
 		for (int i = 0; i < lineCount; i++) {
 			LinearLayout llLine = new LinearLayout(context);
@@ -113,17 +114,12 @@ public abstract class PlatformPageAdapter extends ViewPagerAdapter implements On
 
 			for (int j = 0; j < lineSize; j++) {
 				llCells[i * lineSize + j] = new LinearLayout(context);
-				llCells[i * lineSize + j].setBackgroundResource(cellBack);
+				llCells[i * lineSize + j].setBackgroundColor(cellBack);
 				llCells[i * lineSize + j].setOrientation(LinearLayout.VERTICAL);
 				lp = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, cellHeight);
 				lp.weight = 1;
 				llLine.addView(llCells[i * lineSize + j], lp);
 
-				if (j < lineSize - 1) {
-					View vSep = new View(context);
-					lp = new LinearLayout.LayoutParams(sepLineWidth, LayoutParams.MATCH_PARENT);
-					llLine.addView(vSep, lp);
-				}
 			}
 
 			View vSep = new View(context);
@@ -151,20 +147,19 @@ public abstract class PlatformPageAdapter extends ViewPagerAdapter implements On
 	}
 
 	private void refreshPanel(LinearLayout[] llCells, Object[] logos) {
-		int cellBack = R.getBitmapRes(page.getContext(), "ssdk_oks_classic_platform_cell_back");
-		int disableBack = R.getBitmapRes(page.getContext(), "ssdk_oks_classic_platfrom_cell_back_nor");
+		int cellBack = ResTools.getColor(com.dv.persistnote.R.color.c4);
 		for (int i = 0; i < logos.length; i++) {
 			ImageView ivLogo = R.forceCast(llCells[i].getChildAt(0));
 			TextView tvName = R.forceCast(llCells[i].getChildAt(1));
 			if (logos[i] == null) {
 				ivLogo.setVisibility(View.INVISIBLE);
 				tvName.setVisibility(View.INVISIBLE);
-				llCells[i].setBackgroundResource(disableBack);
+				llCells[i].setBackgroundColor(cellBack);
 				llCells[i].setOnClickListener(null);
 			} else {
 				ivLogo.setVisibility(View.VISIBLE);
 				tvName.setVisibility(View.VISIBLE);
-				llCells[i].setBackgroundResource(cellBack);
+				llCells[i].setBackgroundColor(cellBack);
 				llCells[i].setOnClickListener(this);
 				llCells[i].setTag(logos[i]);
 
