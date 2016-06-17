@@ -8,8 +8,8 @@ android {
         applicationId "com.dv.persistnote"
         minSdkVersion 14
         targetSdkVersion 23
-        versionCode 8
-        versionName "0.1.7"
+        versionCode 9
+        versionName "0.1.8"
     }
 
     //签名配置
